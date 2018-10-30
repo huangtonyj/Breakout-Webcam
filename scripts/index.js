@@ -112,8 +112,8 @@
 
   // Get canvas
   canvas = document.getElementById("coinAnimation");
-  canvas.width = 100;
-  canvas.height = 100;
+  canvas.width = 46;
+  canvas.height = 46;
 
   // Create sprite sheet
   coinImage = new Image();
@@ -121,8 +121,8 @@
   // Create sprite
   coin = sprite({
     context: canvas.getContext("2d"),
-    width: 100,
-    height: 100,
+    width: 46,
+    height: 46,
     image: coinImage,
     numberOfFrames: 10,
     ticksPerFrame: 4
