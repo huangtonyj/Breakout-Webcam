@@ -1,6 +1,6 @@
 # Breakout-Webcam
 
-Breakout-Webcam is a classic Atari game controlled with hand movements captured from webcam
+Breakout-Webcam is a classic Atari game controlled with hand movements captured from webcam.
 
 ## Background and Overview
 
@@ -10,7 +10,7 @@ The webcam gesture uses a low latency and light weight image recognition model t
 
 ## Functionality and MVP Features
 
-In building Breakout-Webcam, users will be able to
+In building Breakout-Webcam, users will be able to:
 
 - [ ] Learn how to play from instructions rendered from a modal upon initialization
 - [ ] Control moving platform with arrow keys or mouse input
