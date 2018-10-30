@@ -2,10 +2,10 @@
 
 		module.exports = {
 		  context: __dirname,
-		  entry: "./index.js",
+		  entry: "./scripts/index.js",
 		  output: {
 		    path: path.resolve(__dirname),
-		    filename: "bundle.js"
+		    filename: "./scripts/bundle.js"
 		  },
 		  module: {
 		    // rules: [{

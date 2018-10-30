@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./scripts/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./index.js":
-/*!******************!*\
-  !*** ./index.js ***!
-  \******************/
+/***/ "./scripts/index.js":
+/*!**************************!*\
+  !*** ./scripts/index.js ***!
+  \**************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -99,7 +99,9 @@ const h1 = document.getElementById('test');
 document.addEventListener('click', () => alert('hello, webpack is running'))
 
 
-console.log('testing webpack bundle.js');
+console.log('testing webpack bundle.js from scripts folder');
+console.log('take2');
+
 
 
 /***/ })
