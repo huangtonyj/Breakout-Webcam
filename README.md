@@ -22,7 +22,6 @@ In building Breakout-Webcam, users will be able to:
 
 - `Vanilla Javascript` for overall game logic
 - `HTML5 Canvas` for rendering game objects
-- `React.js` for updating reactive components (i.e. scoreboard)
 - `Tensorflow and Mobilenet` for image recognition
 - `Webpack/Parcel` to bundle up scripts
 
