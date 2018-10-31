@@ -19,13 +19,15 @@ class Platform {
   update() {
     // this.clearPlatformPath();
 
+    window.addEventListener('mousemove', (event) =>
+      this.x = event.clientX - 1.25 * (this.width)
+    )
+
     this.context.beginPath();
 
     this.context.fillStyle = this.fillStyle;
     this.context.fill();
     this.context.fillRect(this.x, this.y, this.width, this.height);
-
-    this.x -= 3;
 
     if(this.x > this.canvas.width - this.width) {
       this.x = this.canvas.width - this.width
