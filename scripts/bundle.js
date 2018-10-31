@@ -93,15 +93,62 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+class Ball {
+  constructor(canvas, options) {
+    this.canvas = canvas;
+    this.context = this.canvas.getContext('2d');
 
+    this.x_i = options.x_i;
+    this.y_i = options.y_i;
+    this.x = this.x_i;
+    this.y = this.y_i;
+    
+    this.ballVelocity = 3;
+    this.dx = this.ballVelocity;
+    this.dy = -this.ballVelocity;
+    
+    this.ballRadius = 10;
+    this.fillStyle = 'orange';
+    this.strokeStyle = 'black';
+  }
 
-// class Ball {
-//   constructor() {
-//     this.radius = 10;
-//     this.color = red;
+  update() {
+    this.clearBallPath();
 
-//   }
-// }
+    this.context.beginPath();
+    this.context.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, false);
+
+    this.context.fillStyle = this.fillStyle;
+    this.context.fill();
+    
+    this.context.strokeStyle = this.strokeStyle;
+    this.context.stroke();
+
+    this.x += this.dx;
+    this.y += this.dy;
+
+    if ((this.x > this.canvas.width - this.ballRadius) || (this.x < this.ballRadius)) {
+      this.dx *= -1;      
+    }
+
+    if (this.y < this.ballRadius) {
+      this.dy *= -1;
+    } else if (this.y > (this.canvas.height - this.ballRadius)) {
+      this.x = this.x_i;
+      this.y = this.y_i;
+      this.dx = this.ballVelocity;
+      this.dy = -this.ballVelocity;
+    }
+  }
+
+  clearBallPath() {
+    // Need a more elaborate algo
+    this.context.clearRect(this.x - 15, this.y - 15, this.ballRadius * 3, this.ballRadius * 3)
+  }
+
+}
+
+module.exports = Ball;
 
 /***/ }),
 
@@ -112,7 +159,8 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ./ball.js */ "./scripts/ball.js")
+const Ball = __webpack_require__(/*! ./ball */ "./scripts/ball.js");
+const Platform = __webpack_require__(/*! ./platform */ "./scripts/platform.js");
 
 const canvas = document.getElementById('canvasRoot');
 // canvas.width = window.innerWidth;
@@ -120,45 +168,59 @@ const canvas = document.getElementById('canvasRoot');
 canvas.width = 1000;
 canvas.height = 700;
 
-const c = canvas.getContext('2d');
+const canvasContext = canvas.getContext('2d');
 
 // Platform
-// const platformWidth = 150;
-// const platformHeight = 15;
-// let platformX = (canvas.width - platformWidth) / 2;
-// let platformY = (canvas.height - platformHeight - 15);
+const platformWidth = 150;
+const platformHeight = 15;
+let platformX = (canvas.width - platformWidth) / 2;
+let platformY = (canvas.height - platformHeight - 15);
 
-// c.fillRect(platformX, platformY, platformWidth, platformHeight)
+canvasContext.beginPath();
+canvasContext.fillRect(platformX, platformY, platformWidth, platformHeight)
+
+const platform = new Platform(canvas, platformWidth, platformHeight)
 
 
 // Ball
 const ballRadius = 10;
-let x = 900;
-let dx = 5;
+const ballVelocity = 3;
+
+const ball = new Ball(canvas,
+  {
+    x_i: platformX + (platformWidth/2),
+    y_i: platformY - platformHeight
+  })
 
 function animate () {
   requestAnimationFrame(animate);
-  
-  c.clearRect(0, 0, canvas.width, canvas.height)
-  
-  c.beginPath();
-  c.arc(x, 50, ballRadius, 0, Math.PI * 2, false);
-  c.strokeStyle = 'black'
-  c.stroke();
-  c.fillStyle = 'red';
-  c.fill();
 
-  x += dx;
-
-  if ((x > canvas.width - ballRadius) || (x < ballRadius)) {
-    dx *= -1;
-  }
-
-
+  ball.update();
 
 }
 
 animate();
+
+/***/ }),
+
+/***/ "./scripts/platform.js":
+/*!*****************************!*\
+  !*** ./scripts/platform.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+class Platform {
+  constructor(canvas, options) {
+    this.canvas = canvas;
+    // this.x_i = options.x_i;
+    // this.y_i = options.y_i;
+
+    this.context = this.canvas.getContext('2d');
+  }
+}
+
+module.exports = Platform;
 
 /***/ })
 
