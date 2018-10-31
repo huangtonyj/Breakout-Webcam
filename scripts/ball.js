@@ -1,14 +1,17 @@
 class Ball {
   constructor(options) {
     this.canvas = options.canvas;
-    this.context = this.canvas.getContext('2d');
-    this.x = options.x;
-    this.y = options.y;
+    this.x_i = options.x_i;
+    this.y_i = options.y_i;
 
+    this.context = this.canvas.getContext('2d');
+    
     this.ballVelocity = 3;
 
     this.dx = this.ballVelocity;
     this.dy = -this.ballVelocity;
+    this.x = this.x_i;
+    this.y = this.y_i;
 
     this.ballRadius = 10;
     this.fillStyle = 'green';
@@ -34,8 +37,13 @@ class Ball {
       this.dx *= -1;      
     }
 
-    if ((this.y > this.canvas.height - this.ballRadius) || (this.y < this.ballRadius)) {
+    if (this.y < this.ballRadius) {
       this.dy *= -1;
+    } else if (this.y > (this.canvas.height - this.ballRadius)) {
+      this.x = this.x_i;
+      this.y = this.y_i;
+      this.dx = this.ballVelocity;
+      this.dy = -this.ballVelocity;
     }
   }
 
