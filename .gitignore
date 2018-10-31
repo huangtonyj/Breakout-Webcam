@@ -3,5 +3,5 @@
 .DS_Store
 assets/.DS_Store
 
-bundle.js
-bundle.js.map
+scripts/bundle.js
+scripts/bundle.js.map
