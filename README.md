@@ -37,7 +37,6 @@ In building Breakout-Webcam, users will be able to:
 - Day 3
   - [ ] Render bricks
   - [ ] Destroy brick upon collision
-  - [ ] Implement gravitational/accelerated ball motion
 - Day 4
   - [ ] Finalize game
   - [ ] Style webpage
