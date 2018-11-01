@@ -43,7 +43,11 @@ class Game {
   checkCollisions() {
     this.ball.collideWithPlatform();
 
-    this.bricks.forEach((brick) => this.ball.collideWithBrick(brick));
+    this.bricks.forEach((brick, idx) => {
+      if (this.ball.collideWithBrick(brick)) {
+        this.bricks.splice(idx, 1);
+      }
+    })
   }
 
   step(timeDelta) {

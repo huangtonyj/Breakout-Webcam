@@ -48,8 +48,14 @@ class Ball {
     this.dy = -this.ballVelocity;
   }
 
-  collideWithBrick() {
+  collideWithBrick(brick) {
+    const brickY = (this.y + this.radius >= brick.pos.y + brick.size.height) && (this.y <= brick.pos.y + brick.size.height);
+    const brickX = (this.x >= brick.pos.x) && (this.x <= brick.pos.x + brick.size.width);
     
+    if (brickX && brickY) {
+      this.dy *= -1;
+      return true
+    }
   }
 
   collideWithPlatform() {
@@ -57,7 +63,11 @@ class Ball {
     const platformX = (this.x >= this.platform.x) && (this.x <= this.platform.x + this.platform.width);
 
     if (platformY && platformX) {
-        this.dy *= -1
+      this.dy *= -1;
+      // this.dy = Math.sin(this.dy) * 10;
+      // this.dx = Math.cos(this.dx) * 10;
+      // this.dy *= (Math.sin(this.x - this.platform.x + (this.platform.width / 2))).abs * -1;
+      // this.dx *= Math.cos(this.x - this.platform.x + (this.platform.width / 2));
     }
   }
   
