@@ -107,9 +107,11 @@ class Ball {
     this.resetBall();
   }
 
-  move(delta) {
-    this.x += this.dx;
-    this.y += this.dy;
+  move(timeDelta) {
+    const velocityScale = timeDelta / NORMAL_FRAME_TIME_DELTA;
+
+    this.x += this.dx * velocityScale;
+    this.y += this.dy * velocityScale;
 
     if ((this.x > this.ctx.canvas.width - this.ballRadius) || (this.x <= this.ballRadius)) { 
       this.dx *= -1; 
@@ -118,6 +120,7 @@ class Ball {
     if (this.y < this.ballRadius) { 
       this.dy *= -1;
     } else if (this.y > (this.ctx.canvas.height - this.ballRadius)) { 
+      console.log('Lose');      
       this.resetBall();
     }    
   }
@@ -138,8 +141,9 @@ class Ball {
     this.dx = this.ballVelocity;
     this.dy = -this.ballVelocity;
   }
-
 }
+
+const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
 
 module.exports = Ball;
 
@@ -214,9 +218,7 @@ class Game {
     this.ball = new Ball(ctx, this.platform);
     this.bricks = [];
 
-    this.addBricks();
-    console.log(ctx.canvas.width);
-    
+    this.addBricks();    
   }
 
   addBricks() {
@@ -244,20 +246,18 @@ class Game {
     this.bricks.forEach((brick) => brick.draw());
     this.platform.draw();
     this.ball.draw();
-
   }
 
   checkCollisions() {
     // console.log('checking collisions');
   }
 
-  step(delta) {
-    // console.log(delta);
-    this.platform.move(delta);
-    this.ball.move(delta);
+  step(timeDelta) {
+    // this.platform.move(timeDelta);
+    this.ball.move(timeDelta);
+
     this.checkCollisions();
   }
-
 }
 
 Game.BG_COLOR = "#000000";
@@ -265,11 +265,8 @@ Game.DIM_X = window.innerWidth * 0.8;
 Game.DIM_Y = window.innerHeight * 0.8;
 Game.FPS = 32;
 
-Game.BRICK_ROWS = 3;
-Game.BRICK_COLS = 5;
-Game.BRICK_GAP = 10;
 Game.BRICK_POS = {
-  rows: 3,
+  rows: 5,
   cols: 7,
   gap: 10
 }
@@ -339,11 +336,20 @@ class Platform {
 
     this.x_mid = this.x + (this.width / 2);
     this.y_top = this.y;
+
+    this.velocity = 15;
+
+    this.handleMove()
   }
 
-  move(delta) {
-    // this.x += dx;
-    // console.log(`platform moved by ${delta}`);
+  handleMove() {
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === "ArrowLeft") && (this.x > 0)) {
+        this.x -= this.velocity;
+      } else if ((e.key === "ArrowRight") && (this.x < this.ctx.canvas.width - this.width)) {
+        this.x += this.velocity;
+      }
+    })
   }
 
   draw() {
@@ -353,6 +359,8 @@ class Platform {
      this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
+
+const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
 
 module.exports = Platform;
 

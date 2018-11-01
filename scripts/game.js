@@ -9,9 +9,7 @@ class Game {
     this.ball = new Ball(ctx, this.platform);
     this.bricks = [];
 
-    this.addBricks();
-    console.log(ctx.canvas.width);
-    
+    this.addBricks();    
   }
 
   addBricks() {
@@ -39,20 +37,18 @@ class Game {
     this.bricks.forEach((brick) => brick.draw());
     this.platform.draw();
     this.ball.draw();
-
   }
 
   checkCollisions() {
     // console.log('checking collisions');
   }
 
-  step(delta) {
-    // console.log(delta);
-    this.platform.move(delta);
-    this.ball.move(delta);
+  step(timeDelta) {
+    // this.platform.move(timeDelta);
+    this.ball.move(timeDelta);
+
     this.checkCollisions();
   }
-
 }
 
 Game.BG_COLOR = "#000000";
@@ -60,11 +56,8 @@ Game.DIM_X = window.innerWidth * 0.8;
 Game.DIM_Y = window.innerHeight * 0.8;
 Game.FPS = 32;
 
-Game.BRICK_ROWS = 3;
-Game.BRICK_COLS = 5;
-Game.BRICK_GAP = 10;
 Game.BRICK_POS = {
-  rows: 3,
+  rows: 5,
   cols: 7,
   gap: 10
 }
