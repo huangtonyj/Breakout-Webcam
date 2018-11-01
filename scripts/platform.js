@@ -1,4 +1,5 @@
 class Platform {
+
   constructor(ctx) {    
     this.ctx = ctx
 
@@ -35,6 +36,7 @@ class Platform {
      this.ctx.fill();
      this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
+  
 }
 
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;

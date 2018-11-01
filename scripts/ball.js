@@ -1,4 +1,5 @@
 class Ball {
+
   constructor(ctx, platform) {
     this.ctx = ctx;
 
@@ -46,6 +47,7 @@ class Ball {
     this.dx = this.ballVelocity;
     this.dy = -this.ballVelocity;
   }
+  
 }
 
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;

@@ -3,6 +3,7 @@ const Ball = require('./ball');
 const Brick = require('./brick');
 
 class Game {
+  
   constructor(ctx) {
     this.ctx = ctx;
     this.platform = new Platform(ctx);
@@ -44,11 +45,11 @@ class Game {
   }
 
   step(timeDelta) {
-    // this.platform.move(timeDelta);
     this.ball.move(timeDelta);
 
     this.checkCollisions();
   }
+
 }
 
 Game.BG_COLOR = "#000000";

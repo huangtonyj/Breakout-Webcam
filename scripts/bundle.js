@@ -94,6 +94,7 @@
 /***/ (function(module, exports) {
 
 class Ball {
+
   constructor(ctx, platform) {
     this.ctx = ctx;
 
@@ -141,6 +142,7 @@ class Ball {
     this.dx = this.ballVelocity;
     this.dy = -this.ballVelocity;
   }
+  
 }
 
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
@@ -212,6 +214,7 @@ const Ball = __webpack_require__(/*! ./ball */ "./scripts/ball.js");
 const Brick = __webpack_require__(/*! ./brick */ "./scripts/brick.js");
 
 class Game {
+  
   constructor(ctx) {
     this.ctx = ctx;
     this.platform = new Platform(ctx);
@@ -253,11 +256,11 @@ class Game {
   }
 
   step(timeDelta) {
-    // this.platform.move(timeDelta);
     this.ball.move(timeDelta);
 
     this.checkCollisions();
   }
+
 }
 
 Game.BG_COLOR = "#000000";
@@ -288,6 +291,7 @@ module.exports = Game;
 /***/ (function(module, exports) {
 
 class GameView {
+  
   constructor(game, ctx) {
     this.ctx = ctx;
     this.game = game;
@@ -308,6 +312,7 @@ class GameView {
 
     requestAnimationFrame(this.animate.bind(this));
   }
+
 }
 
 module.exports = GameView;
@@ -322,6 +327,7 @@ module.exports = GameView;
 /***/ (function(module, exports) {
 
 class Platform {
+
   constructor(ctx) {    
     this.ctx = ctx
 
@@ -358,6 +364,7 @@ class Platform {
      this.ctx.fill();
      this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
+  
 }
 
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;

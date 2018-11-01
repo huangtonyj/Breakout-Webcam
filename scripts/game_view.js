@@ -1,4 +1,5 @@
 class GameView {
+  
   constructor(game, ctx) {
     this.ctx = ctx;
     this.game = game;
@@ -19,6 +20,7 @@ class GameView {
 
     requestAnimationFrame(this.animate.bind(this));
   }
+
 }
 
 module.exports = GameView;
