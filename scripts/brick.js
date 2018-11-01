@@ -1,20 +1,17 @@
 class Brick {
 
-  constructor(game, pos) {
+  constructor(game, size, pos) {
     this.game = game;
-    this.color = 'white'; // Random color palette later
-
-    this.width = 100;
-    this.height = 15;
-
+    this.size = size;
     this.pos = pos;
+
+    this.color = 'white'; // Random color palette later
   }
 
-  draw(ctx) {
-    
-    ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+  draw() {
+    this.game.ctx.beginPath();
+    this.game.ctx.fillStyle = this.color;
+    this.game.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height);
   }
 
 }

@@ -1,14 +1,13 @@
 class Platform {
-  constructor() {
-    this.canvas = canvas;
-    this.context = this.canvas.getContext('2d');
+  constructor(ctx) {    
+    this.ctx = ctx
 
     this.width = 100;
     this.height = 15;
-    this.fillStyle = 'black';
+    this.fillStyle = 'white';
 
-    this.x_i = (this.canvas.width - this.width) / 2;
-    this.y_i = (this.canvas.height - this.height) - 15;
+    this.x_i = (ctx.canvas.width - this.width) / 2;
+    this.y_i = (ctx.canvas.height - this.height) - 15;
     this.x = this.x_i;
     this.y = this.y_i;
 
@@ -22,17 +21,16 @@ class Platform {
     if (leftPressed) {this.move(-1)}
   }
 
-  move(dx) {
-    this.x += dx;
-    console.log('moved');
+  move(delta) {
+    // this.x += dx;
+    console.log(`platform moved by ${delta}`);
   }
 
   draw() {
-     this.context.beginPath();
-
-     this.context.fillStyle = this.fillStyle;
-     this.context.fill();
-     this.context.fillRect(this.x, this.y, this.width, this.height);
+     this.ctx.beginPath();
+     this.ctx.fillStyle = this.fillStyle;
+     this.ctx.fill();
+     this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
 

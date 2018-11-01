@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.height = (window.innerHeight) * 0.8;
 
   const ctx = canvas.getContext('2d');
-  const game = new Game();
+  const game = new Game(ctx);
   new Gameview(game, ctx).start();
 });
 
@@ -179,21 +179,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 class Brick {
 
-  constructor(game, pos) {
+  constructor(game, size, pos) {
     this.game = game;
-    this.color = 'white'; // Random color palette later
-
-    this.width = 100;
-    this.height = 15;
-
+    this.size = size;
     this.pos = pos;
+
+    this.color = 'white'; // Random color palette later
   }
 
-  draw(ctx) {
-    
-    ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+  draw() {
+    this.game.ctx.beginPath();
+    this.game.ctx.fillStyle = this.color;
+    this.game.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height);
   }
 
 }
@@ -214,8 +211,9 @@ const Ball = __webpack_require__(/*! ./ball */ "./scripts/ball.js");
 const Brick = __webpack_require__(/*! ./brick */ "./scripts/brick.js");
 
 class Game {
-  constructor() {
-    // this.platform = new Platform();
+  constructor(ctx) {
+    this.ctx = ctx;
+    this.platform = new Platform(ctx);
     // this.ball = new Ball();
     this.bricks = [];
 
@@ -223,30 +221,44 @@ class Game {
   }
 
   addBricks() {
-    for (let i = 0; i < Game.BRICK_ROWS; i++){
-      for (let i = 0; i < Game.BRICK_COLS; i++) {
-        let pos = {x: 20, y: 50};
-        this.bricks.push(new Brick(this, pos));
-        
-      }
+    const pos = {
+      x: Game.DIM_X * 0.05,
+      y: Game.BRICK_SIZE.height
     }
+
+    for (let i = 0; i < Game.BRICK_POS.rows; i++) {
+      for (let i = 0; i < Game.BRICK_POS.cols; i++) {
+        this.bricks.push(new Brick(this, Game.BRICK_SIZE, Object.assign({}, pos)));
+        pos.x += Game.BRICK_POS.gap + Game.BRICK_SIZE.width;
+      }
+      pos.x = Game.DIM_X * 0.05,
+      pos.y += Game.BRICK_SIZE.height * 2;
+    }    
   }
 
   draw(ctx) {
+    // console.log(ctx.canvas.height);
+    
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 
     ctx.fillStyle = Game.BG_COLOR;
     ctx.fillRect(0, 0, Game.DIM_X, Game.DIM_Y);
 
-    this.bricks.forEach((brick) => brick.draw(ctx));
+    this.bricks.forEach((brick) => brick.draw());
+    this.platform.draw();
 
+  }
+
+  checkCollisions() {
+    // console.log('checking collisions');
   }
 
   step(delta) {
     // console.log(delta);
+    // this.platform.move(delta);
+    // this.ball.move(delta);
+    this.checkCollisions();
   }
-
-
 
 }
 
@@ -258,9 +270,15 @@ Game.FPS = 32;
 Game.BRICK_ROWS = 3;
 Game.BRICK_COLS = 5;
 Game.BRICK_GAP = 10;
+Game.BRICK_POS = {
+  rows: 3,
+  cols: 7,
+  gap: 10
+}
+
 Game.BRICK_SIZE = {
-  width: (Game.DIM_X * 0.9),
-  height: 15
+  width: ((Game.DIM_X * 0.9) - ((Game.BRICK_POS.cols - 1) * Game.BRICK_POS.gap)) / Game.BRICK_POS.cols,
+  height: 25
 }
 
 module.exports = Game;
@@ -309,16 +327,15 @@ module.exports = GameView;
 /***/ (function(module, exports) {
 
 class Platform {
-  constructor() {
-    this.canvas = canvas;
-    this.context = this.canvas.getContext('2d');
+  constructor(ctx) {    
+    this.ctx = ctx
 
     this.width = 100;
     this.height = 15;
-    this.fillStyle = 'black';
+    this.fillStyle = 'white';
 
-    this.x_i = (this.canvas.width - this.width) / 2;
-    this.y_i = (this.canvas.height - this.height) - 15;
+    this.x_i = (ctx.canvas.width - this.width) / 2;
+    this.y_i = (ctx.canvas.height - this.height) - 15;
     this.x = this.x_i;
     this.y = this.y_i;
 
@@ -332,17 +349,16 @@ class Platform {
     if (leftPressed) {this.move(-1)}
   }
 
-  move(dx) {
-    this.x += dx;
-    console.log('moved');
+  move(delta) {
+    // this.x += dx;
+    console.log(`platform moved by ${delta}`);
   }
 
   draw() {
-     this.context.beginPath();
-
-     this.context.fillStyle = this.fillStyle;
-     this.context.fill();
-     this.context.fillRect(this.x, this.y, this.width, this.height);
+     this.ctx.beginPath();
+     this.ctx.fillStyle = this.fillStyle;
+     this.ctx.fill();
+     this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
 
