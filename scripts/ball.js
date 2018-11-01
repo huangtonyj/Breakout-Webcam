@@ -64,10 +64,7 @@ class Ball {
 
     if (platformY && platformX) {
       this.dy *= -1;
-      // this.dy = Math.sin(this.dy) * 10;
-      // this.dx = Math.cos(this.dx) * 10;
-      // this.dy *= (Math.sin(this.x - this.platform.x + (this.platform.width / 2))).abs * -1;
-      // this.dx *= Math.cos(this.x - this.platform.x + (this.platform.width / 2));
+      this.dx *= Math.cos(this.x - this.platform.x + (this.platform.width / 2));
     }
   }
   
