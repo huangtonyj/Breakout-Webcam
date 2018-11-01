@@ -143,8 +143,14 @@ class Ball {
     this.dy = -this.ballVelocity;
   }
 
-  collideWithBrick() {
+  collideWithBrick(brick) {
+    const brickY = (this.y + this.radius >= brick.pos.y + brick.size.height) && (this.y <= brick.pos.y + brick.size.height);
+    const brickX = (this.x >= brick.pos.x) && (this.x <= brick.pos.x + brick.size.width);
     
+    if (brickX && brickY) {
+      this.dy *= -1;
+      return true
+    }
   }
 
   collideWithPlatform() {
@@ -152,7 +158,8 @@ class Ball {
     const platformX = (this.x >= this.platform.x) && (this.x <= this.platform.x + this.platform.width);
 
     if (platformY && platformX) {
-        this.dy *= -1
+      this.dy *= -1 * 1.1;
+      this.dx *= Math.sqrt((1 + Math.cos(this.x - this.platform.x + (this.platform.width / 2))));
     }
   }
   
@@ -267,7 +274,11 @@ class Game {
   checkCollisions() {
     this.ball.collideWithPlatform();
 
-    this.bricks.forEach((brick) => this.ball.collideWithBrick(brick));
+    this.bricks.forEach((brick, idx) => {
+      if (this.ball.collideWithBrick(brick)) {
+        this.bricks.splice(idx, 1);
+      }
+    })
   }
 
   step(timeDelta) {
@@ -284,7 +295,7 @@ Game.DIM_Y = window.innerHeight * 0.8;
 Game.FPS = 32;
 
 Game.BRICK_POS = {
-  rows: 1,
+  rows: 5,
   cols: 7,
   gap: 10
 }

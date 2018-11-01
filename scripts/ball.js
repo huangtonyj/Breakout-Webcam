@@ -63,7 +63,7 @@ class Ball {
     const platformX = (this.x >= this.platform.x) && (this.x <= this.platform.x + this.platform.width);
 
     if (platformY && platformX) {
-      this.dy *= -1;
+      this.dy *= -1 * 1.1;
       this.dx *= Math.sqrt((1 + Math.cos(this.x - this.platform.x + (this.platform.width / 2))));
     }
   }

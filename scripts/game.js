@@ -64,7 +64,7 @@ Game.DIM_Y = window.innerHeight * 0.8;
 Game.FPS = 32;
 
 Game.BRICK_POS = {
-  rows: 1,
+  rows: 5,
   cols: 7,
   gap: 10
 }
