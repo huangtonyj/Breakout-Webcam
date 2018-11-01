@@ -14,15 +14,7 @@ class Ball {
   }
 
   update() {
-    // this.clearBallPath();
-
-    this.context.beginPath();
-    this.context.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, false);
-
-    this.context.fillStyle = this.fillStyle;
-    this.context.fill();
-    this.context.strokeStyle = this.strokeStyle;
-    this.context.stroke();
+    this.draw();
 
     this.x += this.dx;
     this.y += this.dy;
@@ -38,16 +30,21 @@ class Ball {
     }    
   }
 
+  draw() {
+    this.context.beginPath();
+    this.context.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, false);
+
+    this.context.fillStyle = this.fillStyle;
+    this.context.fill();
+    this.context.strokeStyle = this.strokeStyle;
+    this.context.stroke();
+  }
+
   resetBall() {
     this.x = this.platform.x_mid;
     this.y = this.platform.y_top;
     this.dx = this.ballVelocity;
     this.dy = -this.ballVelocity;
-  }
-
-  clearBallPath() {
-    // Need a more elaborate algo
-    this.context.clearRect(this.x - 15, this.y - 15, this.ballRadius * 3, this.ballRadius * 3)
   }
 
 }

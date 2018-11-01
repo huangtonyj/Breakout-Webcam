@@ -94,56 +94,52 @@
 /***/ (function(module, exports) {
 
 class Ball {
-  constructor(canvas, options) {
+  constructor(canvas, platform) {
     this.canvas = canvas;
     this.context = this.canvas.getContext('2d');
 
-    this.x_i = options.x_i;
-    this.y_i = options.y_i;
-    this.x = this.x_i;
-    this.y = this.y_i;
+    this.platform = platform;
     
     this.ballVelocity = 3;
-    this.dx = this.ballVelocity;
-    this.dy = -this.ballVelocity;
-    
-    this.ballRadius = 10;
+    this.ballRadius = 8;
     this.fillStyle = 'orange';
     this.strokeStyle = 'black';
+
+    this.resetBall();
   }
 
   update() {
-    this.clearBallPath();
+    this.draw();
 
+    this.x += this.dx;
+    this.y += this.dy;
+
+    if ((this.x > this.canvas.width - this.ballRadius) || (this.x <= this.ballRadius)) { 
+      this.dx *= -1; 
+    }
+
+    if (this.y < this.ballRadius) { 
+      this.dy *= -1;
+    } else if (this.y > (this.canvas.height - this.ballRadius)) { 
+      this.resetBall();
+    }    
+  }
+
+  draw() {
     this.context.beginPath();
     this.context.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, false);
 
     this.context.fillStyle = this.fillStyle;
     this.context.fill();
-    
     this.context.strokeStyle = this.strokeStyle;
     this.context.stroke();
-
-    this.x += this.dx;
-    this.y += this.dy;
-
-    if ((this.x > this.canvas.width - this.ballRadius) || (this.x < this.ballRadius)) {
-      this.dx *= -1;      
-    }
-
-    if (this.y < this.ballRadius) {
-      this.dy *= -1;
-    } else if (this.y > (this.canvas.height - this.ballRadius)) {
-      this.x = this.x_i;
-      this.y = this.y_i;
-      this.dx = this.ballVelocity;
-      this.dy = -this.ballVelocity;
-    }
   }
 
-  clearBallPath() {
-    // Need a more elaborate algo
-    this.context.clearRect(this.x - 15, this.y - 15, this.ballRadius * 3, this.ballRadius * 3)
+  resetBall() {
+    this.x = this.platform.x_mid;
+    this.y = this.platform.y_top;
+    this.dx = this.ballVelocity;
+    this.dy = -this.ballVelocity;
   }
 
 }
@@ -159,47 +155,149 @@ module.exports = Ball;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Ball = __webpack_require__(/*! ./ball */ "./scripts/ball.js");
-const Platform = __webpack_require__(/*! ./platform */ "./scripts/platform.js");
+const Game = __webpack_require__(/*! ./game */ "./scripts/game.js");
+const Gameview = __webpack_require__(/*! ./game_view */ "./scripts/game_view.js");
 
-const canvas = document.getElementById('canvasRoot');
-// canvas.width = window.innerWidth;
-// canvas.height = window.innerHeight;
-canvas.width = 1000;
-canvas.height = 700;
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('canvasRoot');
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = (window.innerHeight) * 0.8;
 
-const canvasContext = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d');
+  const game = new Game();
+  new Gameview(game, ctx).start();
+});
 
-// Platform
-const platformWidth = 150;
-const platformHeight = 15;
-let platformX = (canvas.width - platformWidth) / 2;
-let platformY = (canvas.height - platformHeight - 15);
+/***/ }),
 
-canvasContext.beginPath();
-canvasContext.fillRect(platformX, platformY, platformWidth, platformHeight)
+/***/ "./scripts/brick.js":
+/*!**************************!*\
+  !*** ./scripts/brick.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-const platform = new Platform(canvas, platformWidth, platformHeight)
+class Brick {
 
+  constructor(game, pos) {
+    this.game = game;
+    this.color = 'white'; // Random color palette later
 
-// Ball
-const ballRadius = 10;
-const ballVelocity = 3;
+    this.width = 100;
+    this.height = 15;
 
-const ball = new Ball(canvas,
-  {
-    x_i: platformX + (platformWidth/2),
-    y_i: platformY - platformHeight
-  })
+    this.pos = pos;
+  }
 
-function animate () {
-  requestAnimationFrame(animate);
-
-  ball.update();
+  draw(ctx) {
+    
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+  }
 
 }
 
-animate();
+module.exports = Brick;
+
+/***/ }),
+
+/***/ "./scripts/game.js":
+/*!*************************!*\
+  !*** ./scripts/game.js ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Platform = __webpack_require__(/*! ./platform */ "./scripts/platform.js");
+const Ball = __webpack_require__(/*! ./ball */ "./scripts/ball.js");
+const Brick = __webpack_require__(/*! ./brick */ "./scripts/brick.js");
+
+class Game {
+  constructor() {
+    // this.platform = new Platform();
+    // this.ball = new Ball();
+    this.bricks = [];
+
+    this.addBricks();
+  }
+
+  addBricks() {
+    for (let i = 0; i < Game.BRICK_ROWS; i++){
+      for (let i = 0; i < Game.BRICK_COLS; i++) {
+        let pos = {x: 20, y: 50};
+        this.bricks.push(new Brick(this, pos));
+        
+      }
+    }
+  }
+
+  draw(ctx) {
+    ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+
+    ctx.fillStyle = Game.BG_COLOR;
+    ctx.fillRect(0, 0, Game.DIM_X, Game.DIM_Y);
+
+    this.bricks.forEach((brick) => brick.draw(ctx));
+
+  }
+
+  step(delta) {
+    // console.log(delta);
+  }
+
+
+
+}
+
+Game.BG_COLOR = "#000000";
+Game.DIM_X = window.innerWidth * 0.8;
+Game.DIM_Y = window.innerHeight * 0.8;
+Game.FPS = 32;
+
+Game.BRICK_ROWS = 3;
+Game.BRICK_COLS = 5;
+Game.BRICK_GAP = 10;
+Game.BRICK_SIZE = {
+  width: (Game.DIM_X * 0.9),
+  height: 15
+}
+
+module.exports = Game;
+
+/***/ }),
+
+/***/ "./scripts/game_view.js":
+/*!******************************!*\
+  !*** ./scripts/game_view.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+class GameView {
+  constructor(game, ctx) {
+    this.ctx = ctx;
+    this.game = game;
+  }
+
+  start() {
+    this.lastTime = 0;
+
+    requestAnimationFrame(this.animate.bind(this));
+  }
+
+  animate(time) {
+    const timeDelta = time - this.lastTime;
+
+    this.game.step(timeDelta);
+    this.game.draw(this.ctx);
+    this.lastTime = time;
+
+    requestAnimationFrame(this.animate.bind(this));
+  }
+}
+
+module.exports = GameView;
 
 /***/ }),
 
@@ -211,12 +309,40 @@ animate();
 /***/ (function(module, exports) {
 
 class Platform {
-  constructor(canvas, options) {
+  constructor() {
     this.canvas = canvas;
-    // this.x_i = options.x_i;
-    // this.y_i = options.y_i;
-
     this.context = this.canvas.getContext('2d');
+
+    this.width = 100;
+    this.height = 15;
+    this.fillStyle = 'black';
+
+    this.x_i = (this.canvas.width - this.width) / 2;
+    this.y_i = (this.canvas.height - this.height) - 15;
+    this.x = this.x_i;
+    this.y = this.y_i;
+
+    this.x_mid = this.x + (this.width / 2);
+    this.y_top = this.y;
+  }
+
+  render(rightPressed, leftPressed) {
+    this.draw();
+    if (rightPressed) {this.move(1)}
+    if (leftPressed) {this.move(-1)}
+  }
+
+  move(dx) {
+    this.x += dx;
+    console.log('moved');
+  }
+
+  draw() {
+     this.context.beginPath();
+
+     this.context.fillStyle = this.fillStyle;
+     this.context.fill();
+     this.context.fillRect(this.x, this.y, this.width, this.height);
   }
 }
 

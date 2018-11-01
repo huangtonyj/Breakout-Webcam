@@ -1,9 +1,9 @@
 class Platform {
-  constructor(canvas, options) {
+  constructor() {
     this.canvas = canvas;
     this.context = this.canvas.getContext('2d');
 
-    this.width = 150;
+    this.width = 100;
     this.height = 15;
     this.fillStyle = 'black';
 
@@ -16,29 +16,23 @@ class Platform {
     this.y_top = this.y;
   }
 
-  update() {
-    // this.clearPlatformPath();
-
-    window.addEventListener('mousemove', (event) =>
-      this.x = event.clientX - 1.25 * (this.width)
-    )
-
-    this.context.beginPath();
-
-    this.context.fillStyle = this.fillStyle;
-    this.context.fill();
-    this.context.fillRect(this.x, this.y, this.width, this.height);
-
-    if(this.x > this.canvas.width - this.width) {
-      this.x = this.canvas.width - this.width
-    } else if (this.x <= 0) {
-      this.x = 0
-    }
-    this.x_mid = this.x + (this.width / 2);
+  render(rightPressed, leftPressed) {
+    this.draw();
+    if (rightPressed) {this.move(1)}
+    if (leftPressed) {this.move(-1)}
   }
 
-  clearPlatformPath() {
-    this.context.clearRect(this.x - 1, this.y, this.width + 2, this.height)
+  move(dx) {
+    this.x += dx;
+    console.log('moved');
+  }
+
+  draw() {
+     this.context.beginPath();
+
+     this.context.fillStyle = this.fillStyle;
+     this.context.fill();
+     this.context.fillRect(this.x, this.y, this.width, this.height);
   }
 }
 

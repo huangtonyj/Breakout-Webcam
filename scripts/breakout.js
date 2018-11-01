@@ -1,25 +1,12 @@
-const Ball = require('./ball');
-const Platform = require('./platform');
+const Game = require('./game');
+const Gameview = require('./game_view');
 
-// Canvas
-const canvas = document.getElementById('canvasRoot');
-  canvas.width = window.innerWidth * 0.8;
-  canvas.height = (window.innerHeight) * 0.8;
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('canvasRoot');
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = (window.innerHeight) * 0.8;
 
-// Platform
-const platform = new Platform(canvas)
-
-// Ball
-const ball = new Ball(canvas, platform)
-
-
-// Animate
-function animate () {
-  canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-  requestAnimationFrame(animate);
-
-  platform.update();
-  ball.update();
-}
-
-animate();
+  const ctx = canvas.getContext('2d');
+  const game = new Game();
+  new Gameview(game, ctx).start();
+});
