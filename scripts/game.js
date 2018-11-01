@@ -41,7 +41,9 @@ class Game {
   }
 
   checkCollisions() {
-    // console.log('checking collisions');
+    this.ball.collideWithPlatform();
+
+    this.bricks.forEach((brick) => this.ball.collideWithBrick(brick));
   }
 
   step(timeDelta) {
@@ -58,7 +60,7 @@ Game.DIM_Y = window.innerHeight * 0.8;
 Game.FPS = 32;
 
 Game.BRICK_POS = {
-  rows: 5,
+  rows: 1,
   cols: 7,
   gap: 10
 }

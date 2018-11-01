@@ -5,8 +5,8 @@ class Ball {
 
     this.platform = platform;
     
-    this.ballVelocity = 3;
-    this.ballRadius = 8;
+    this.ballVelocity = 6;
+    this.radius = 8;
     this.fillStyle = 'orange';
     this.strokeStyle = 'black';
 
@@ -19,13 +19,13 @@ class Ball {
     this.x += this.dx * velocityScale;
     this.y += this.dy * velocityScale;
 
-    if ((this.x > this.ctx.canvas.width - this.ballRadius) || (this.x <= this.ballRadius)) { 
+    if ((this.x > this.ctx.canvas.width - this.radius) || (this.x <= this.radius)) { 
       this.dx *= -1; 
     }
 
-    if (this.y < this.ballRadius) { 
+    if (this.y < this.radius) { 
       this.dy *= -1;
-    } else if (this.y > (this.ctx.canvas.height - this.ballRadius)) { 
+    } else if (this.y > (this.ctx.canvas.height - this.radius)) { 
       console.log('Lose');      
       this.resetBall();
     }    
@@ -33,7 +33,7 @@ class Ball {
 
   draw() {
     this.ctx.beginPath();
-    this.ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, false);
+    this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
 
     this.ctx.fillStyle = this.fillStyle;
     this.ctx.fill();
@@ -42,10 +42,23 @@ class Ball {
   }
 
   resetBall() {
-    this.x = this.platform.x_mid;
-    this.y = this.platform.y_top;
+    this.x = this.platform.x + (this.platform.width / 2);
+    this.y = this.platform.y - 20;
     this.dx = this.ballVelocity;
     this.dy = -this.ballVelocity;
+  }
+
+  collideWithBrick() {
+    
+  }
+
+  collideWithPlatform() {
+    const platformY = (this.y + this.radius >= this.platform.y) && (this.y <= this.platform.y);
+    const platformX = (this.x >= this.platform.x) && (this.x <= this.platform.x + this.platform.width);
+
+    if (platformY && platformX) {
+        this.dy *= -1
+    }
   }
   
 }

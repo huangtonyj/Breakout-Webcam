@@ -3,17 +3,14 @@ class Platform {
   constructor(ctx) {    
     this.ctx = ctx
 
-    this.width = 100;
+    this.width = 150;
     this.height = 15;
     this.fillStyle = 'white';
 
-    this.x_i = (ctx.canvas.width - this.width) / 2;
-    this.y_i = (ctx.canvas.height - this.height) - 15;
-    this.x = this.x_i;
-    this.y = this.y_i;
+    this.x = (ctx.canvas.width - this.width) / 2;
+    this.y = (ctx.canvas.height - this.height) - 15;
 
     this.x_mid = this.x + (this.width / 2);
-    this.y_top = this.y;
 
     this.velocity = 15;
 
