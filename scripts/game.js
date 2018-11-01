@@ -6,10 +6,12 @@ class Game {
   constructor(ctx) {
     this.ctx = ctx;
     this.platform = new Platform(ctx);
-    // this.ball = new Ball();
+    this.ball = new Ball(ctx, this.platform);
     this.bricks = [];
 
     this.addBricks();
+    console.log(ctx.canvas.width);
+    
   }
 
   addBricks() {
@@ -28,9 +30,7 @@ class Game {
     }    
   }
 
-  draw(ctx) {
-    // console.log(ctx.canvas.height);
-    
+  draw(ctx) {    
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 
     ctx.fillStyle = Game.BG_COLOR;
@@ -38,6 +38,7 @@ class Game {
 
     this.bricks.forEach((brick) => brick.draw());
     this.platform.draw();
+    this.ball.draw();
 
   }
 
@@ -47,8 +48,8 @@ class Game {
 
   step(delta) {
     // console.log(delta);
-    // this.platform.move(delta);
-    // this.ball.move(delta);
+    this.platform.move(delta);
+    this.ball.move(delta);
     this.checkCollisions();
   }
 

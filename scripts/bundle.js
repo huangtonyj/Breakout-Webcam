@@ -94,9 +94,8 @@
 /***/ (function(module, exports) {
 
 class Ball {
-  constructor(canvas, platform) {
-    this.canvas = canvas;
-    this.context = this.canvas.getContext('2d');
+  constructor(ctx, platform) {
+    this.ctx = ctx;
 
     this.platform = platform;
     
@@ -108,31 +107,29 @@ class Ball {
     this.resetBall();
   }
 
-  update() {
-    this.draw();
-
+  move(delta) {
     this.x += this.dx;
     this.y += this.dy;
 
-    if ((this.x > this.canvas.width - this.ballRadius) || (this.x <= this.ballRadius)) { 
+    if ((this.x > this.ctx.canvas.width - this.ballRadius) || (this.x <= this.ballRadius)) { 
       this.dx *= -1; 
     }
 
     if (this.y < this.ballRadius) { 
       this.dy *= -1;
-    } else if (this.y > (this.canvas.height - this.ballRadius)) { 
+    } else if (this.y > (this.ctx.canvas.height - this.ballRadius)) { 
       this.resetBall();
     }    
   }
 
   draw() {
-    this.context.beginPath();
-    this.context.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, false);
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, false);
 
-    this.context.fillStyle = this.fillStyle;
-    this.context.fill();
-    this.context.strokeStyle = this.strokeStyle;
-    this.context.stroke();
+    this.ctx.fillStyle = this.fillStyle;
+    this.ctx.fill();
+    this.ctx.strokeStyle = this.strokeStyle;
+    this.ctx.stroke();
   }
 
   resetBall() {
@@ -214,10 +211,12 @@ class Game {
   constructor(ctx) {
     this.ctx = ctx;
     this.platform = new Platform(ctx);
-    // this.ball = new Ball();
+    this.ball = new Ball(ctx, this.platform);
     this.bricks = [];
 
     this.addBricks();
+    console.log(ctx.canvas.width);
+    
   }
 
   addBricks() {
@@ -236,9 +235,7 @@ class Game {
     }    
   }
 
-  draw(ctx) {
-    // console.log(ctx.canvas.height);
-    
+  draw(ctx) {    
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 
     ctx.fillStyle = Game.BG_COLOR;
@@ -246,6 +243,7 @@ class Game {
 
     this.bricks.forEach((brick) => brick.draw());
     this.platform.draw();
+    this.ball.draw();
 
   }
 
@@ -255,8 +253,8 @@ class Game {
 
   step(delta) {
     // console.log(delta);
-    // this.platform.move(delta);
-    // this.ball.move(delta);
+    this.platform.move(delta);
+    this.ball.move(delta);
     this.checkCollisions();
   }
 
@@ -343,15 +341,9 @@ class Platform {
     this.y_top = this.y;
   }
 
-  render(rightPressed, leftPressed) {
-    this.draw();
-    if (rightPressed) {this.move(1)}
-    if (leftPressed) {this.move(-1)}
-  }
-
   move(delta) {
     // this.x += dx;
-    console.log(`platform moved by ${delta}`);
+    // console.log(`platform moved by ${delta}`);
   }
 
   draw() {

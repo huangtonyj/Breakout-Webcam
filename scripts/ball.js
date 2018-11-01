@@ -1,7 +1,6 @@
 class Ball {
-  constructor(canvas, platform) {
-    this.canvas = canvas;
-    this.context = this.canvas.getContext('2d');
+  constructor(ctx, platform) {
+    this.ctx = ctx;
 
     this.platform = platform;
     
@@ -13,31 +12,29 @@ class Ball {
     this.resetBall();
   }
 
-  update() {
-    this.draw();
-
+  move(delta) {
     this.x += this.dx;
     this.y += this.dy;
 
-    if ((this.x > this.canvas.width - this.ballRadius) || (this.x <= this.ballRadius)) { 
+    if ((this.x > this.ctx.canvas.width - this.ballRadius) || (this.x <= this.ballRadius)) { 
       this.dx *= -1; 
     }
 
     if (this.y < this.ballRadius) { 
       this.dy *= -1;
-    } else if (this.y > (this.canvas.height - this.ballRadius)) { 
+    } else if (this.y > (this.ctx.canvas.height - this.ballRadius)) { 
       this.resetBall();
     }    
   }
 
   draw() {
-    this.context.beginPath();
-    this.context.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, false);
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, false);
 
-    this.context.fillStyle = this.fillStyle;
-    this.context.fill();
-    this.context.strokeStyle = this.strokeStyle;
-    this.context.stroke();
+    this.ctx.fillStyle = this.fillStyle;
+    this.ctx.fill();
+    this.ctx.strokeStyle = this.strokeStyle;
+    this.ctx.stroke();
   }
 
   resetBall() {

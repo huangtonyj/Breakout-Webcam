@@ -15,15 +15,9 @@ class Platform {
     this.y_top = this.y;
   }
 
-  render(rightPressed, leftPressed) {
-    this.draw();
-    if (rightPressed) {this.move(1)}
-    if (leftPressed) {this.move(-1)}
-  }
-
   move(delta) {
     // this.x += dx;
-    console.log(`platform moved by ${delta}`);
+    // console.log(`platform moved by ${delta}`);
   }
 
   draw() {
