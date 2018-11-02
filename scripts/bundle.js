@@ -24363,7 +24363,7 @@ module.exports = Ball;
 const Game = __webpack_require__(/*! ./game */ "./scripts/game.js");
 const Gameview = __webpack_require__(/*! ./game_view */ "./scripts/game_view.js");
 
-const tf_controls = __webpack_require__(/*! ./tf/index_tf */ "./scripts/tf/index_tf.js");
+__webpack_require__(/*! ./tf/index_tf */ "./scripts/tf/index_tf.js");
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('canvasRoot');
@@ -24374,7 +24374,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const game = new Game(ctx);
   new Gameview(game, ctx).start();
 
-  // tf_controls.init()
 });
 
 
@@ -24429,6 +24428,7 @@ class Game {
     this.bricks = [];
 
     this.addBricks();    
+    // Refactor TF webcam into class and pass this.platform to it.
   }
 
   addBricks() {
@@ -24556,6 +24556,7 @@ class Platform {
     this.velocity = 15;
 
     this.handleMove()
+    this.handleMoveFromWebcam()
   }
 
   handleMove() {
@@ -24566,6 +24567,16 @@ class Platform {
         this.x += this.velocity;
       }
     })
+  }
+
+  handleMoveFromWebcam(direction) {
+    if ((direction =='left') && (this.x > 0)) {
+      console.log('left from platform');      
+      this.x -= this.velocity;
+    } else if ((direction == 'left') && (this.x < this.ctx.canvas.width - this.width)) {
+      console.log('right from platform');
+      this.x += this.velocity;
+    }
   }
 
   draw() {
@@ -24912,6 +24923,7 @@ __webpack_require__.r(__webpack_exports__);
 // const CONTROLS = ['up', 'down', 'left', 'right'];
 // const CONTROL_CODES = [38, 40, 37, 39];
 const CONTROLS = ['up', 'left', 'right'];
+const CONTROL_LOGS = ['__', 'left', 'right'];
 const CONTROL_CODES = [38, 37, 39];
 
 const trainStatusElement = document.getElementById('train-status');
@@ -24964,7 +24976,7 @@ function startPacman() {
 
 function predictClass(classId) {
   // console.log(CONTROL_CODES[classId]);
-  console.log(CONTROLS[classId]);
+  console.log(CONTROL_LOGS[classId]);
   
   // google.pacman.keyPressed(CONTROL_CODES[classId]);
   // document.body.setAttribute('data-active', CONTROLS[classId]);

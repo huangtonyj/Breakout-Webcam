@@ -11,6 +11,7 @@ class Game {
     this.bricks = [];
 
     this.addBricks();    
+    // Refactor TF webcam into class and pass this.platform to it.
   }
 
   addBricks() {

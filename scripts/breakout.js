@@ -1,7 +1,7 @@
 const Game = require('./game');
 const Gameview = require('./game_view');
 
-const tf_controls = require('./tf/index_tf');
+require('./tf/index_tf');
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('canvasRoot');
@@ -12,5 +12,4 @@ document.addEventListener('DOMContentLoaded', () => {
   const game = new Game(ctx);
   new Gameview(game, ctx).start();
 
-  // tf_controls.init()
 });

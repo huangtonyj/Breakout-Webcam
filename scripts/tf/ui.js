@@ -19,6 +19,7 @@ import * as tf from '@tensorflow/tfjs';
 // const CONTROLS = ['up', 'down', 'left', 'right'];
 // const CONTROL_CODES = [38, 40, 37, 39];
 const CONTROLS = ['up', 'left', 'right'];
+const CONTROL_LOGS = ['__', 'left', 'right'];
 const CONTROL_CODES = [38, 37, 39];
 
 const trainStatusElement = document.getElementById('train-status');
@@ -71,7 +72,7 @@ export function startPacman() {
 
 export function predictClass(classId) {
   // console.log(CONTROL_CODES[classId]);
-  console.log(CONTROLS[classId]);
+  console.log(CONTROL_LOGS[classId]);
   
   // google.pacman.keyPressed(CONTROL_CODES[classId]);
   // document.body.setAttribute('data-active', CONTROLS[classId]);

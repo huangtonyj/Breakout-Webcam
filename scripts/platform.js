@@ -15,6 +15,7 @@ class Platform {
     this.velocity = 15;
 
     this.handleMove()
+    this.handleMoveFromWebcam()
   }
 
   handleMove() {
@@ -25,6 +26,16 @@ class Platform {
         this.x += this.velocity;
       }
     })
+  }
+
+  handleMoveFromWebcam(direction) {
+    if ((direction =='left') && (this.x > 0)) {
+      console.log('left from platform');      
+      this.x -= this.velocity;
+    } else if ((direction == 'left') && (this.x < this.ctx.canvas.width - this.width)) {
+      console.log('right from platform');
+      this.x += this.velocity;
+    }
   }
 
   draw() {
