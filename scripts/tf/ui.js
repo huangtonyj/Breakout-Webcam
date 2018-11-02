@@ -16,17 +16,13 @@
  */
 import * as tf from '@tensorflow/tfjs';
 
-// const CONTROLS = ['up', 'down', 'left', 'right'];
-// const CONTROL_CODES = [38, 40, 37, 39];
 const CONTROLS = ['up', 'left', 'right'];
 const CONTROL_LOGS = ['__', 'left', 'right'];
-const CONTROL_CODES = [38, 37, 39];
 
 const trainStatusElement = document.getElementById('train-status');
 const statusElement = document.getElementById('status');
 
 const upButton = document.getElementById('up');
-// const downButton = document.getElementById('down');
 const leftButton = document.getElementById('left');
 const rightButton = document.getElementById('right');
 
@@ -37,45 +33,14 @@ export function init() {
 }
 
 
-
-
-
-// Set hyper params from UI values.
-// const learningRateElement = document.getElementById('learningRate');
-// export const getLearningRate = () => +learningRateElement.value;
-
-// const batchSizeFractionElement = document.getElementById('batchSizeFraction');
-// export const getBatchSizeFraction = () => +batchSizeFractionElement.value;
-
-// const epochsElement = document.getElementById('epochs');
-// export const getEpochs = () => +epochsElement.value;
-
-// const denseUnitsElement = document.getElementById('dense-units');
-// export const getDenseUnits = () => +denseUnitsElement.value;
-
-// export const getLearningRate = 0.0001;
-// export const getBatchSizeFraction = 0.4;
-// export const getEpochs = 20;
-// export const getDenseUnits = 100;
-
-
-
-
-
-export function startPacman() {
-  // google.pacman.startGameplay();
-  console.log('start game');
-  
+export function startTfPrediction() {
+  console.log('starting tf prediction');  
 }
 
 
 
 export function predictClass(classId) {
-  // console.log(CONTROL_CODES[classId]);
   console.log(CONTROL_LOGS[classId]);
-  
-  // google.pacman.keyPressed(CONTROL_CODES[classId]);
-  // document.body.setAttribute('data-active', CONTROLS[classId]);
 }
 
 
@@ -101,7 +66,6 @@ export function setExampleHandler(handler) {
 
 
 let mouseDown = false;
-// const totals = [0, 0, 0, 0];
 const totals = [0, 0, 0];
 
 
@@ -124,14 +88,9 @@ async function handler(label) {
 upButton.addEventListener('mousedown', () => handler(0));
 upButton.addEventListener('mouseup', () => mouseDown = false);
 
-// downButton.addEventListener('mousedown', () => handler(1));
-// downButton.addEventListener('mouseup', () => mouseDown = false);
-
-// leftButton.addEventListener('mousedown', () => handler(2));
 leftButton.addEventListener('mousedown', () => handler(1));
 leftButton.addEventListener('mouseup', () => mouseDown = false);
 
-// rightButton.addEventListener('mousedown', () => handler(3));
 rightButton.addEventListener('mousedown', () => handler(2));
 rightButton.addEventListener('mouseup', () => mouseDown = false);
 
