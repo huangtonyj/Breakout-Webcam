@@ -16,38 +16,68 @@
  */
 import * as tf from '@tensorflow/tfjs';
 
-const CONTROLS = ['up', 'down', 'left', 'right'];
-const CONTROL_CODES = [38, 40, 37, 39];
+// const CONTROLS = ['up', 'down', 'left', 'right'];
+// const CONTROL_CODES = [38, 40, 37, 39];
+const CONTROLS = ['up', 'left', 'right'];
+const CONTROL_CODES = [38, 37, 39];
+
+const trainStatusElement = document.getElementById('train-status');
+const statusElement = document.getElementById('status');
+
+const upButton = document.getElementById('up');
+// const downButton = document.getElementById('down');
+const leftButton = document.getElementById('left');
+const rightButton = document.getElementById('right');
+
 
 export function init() {
   document.getElementById('controller').style.display = '';
   statusElement.style.display = 'none';
 }
 
-const trainStatusElement = document.getElementById('train-status');
+
+
+
 
 // Set hyper params from UI values.
-const learningRateElement = document.getElementById('learningRate');
-export const getLearningRate = () => +learningRateElement.value;
+// const learningRateElement = document.getElementById('learningRate');
+// export const getLearningRate = () => +learningRateElement.value;
 
-const batchSizeFractionElement = document.getElementById('batchSizeFraction');
-export const getBatchSizeFraction = () => +batchSizeFractionElement.value;
+// const batchSizeFractionElement = document.getElementById('batchSizeFraction');
+// export const getBatchSizeFraction = () => +batchSizeFractionElement.value;
 
-const epochsElement = document.getElementById('epochs');
-export const getEpochs = () => +epochsElement.value;
+// const epochsElement = document.getElementById('epochs');
+// export const getEpochs = () => +epochsElement.value;
 
-const denseUnitsElement = document.getElementById('dense-units');
-export const getDenseUnits = () => +denseUnitsElement.value;
-const statusElement = document.getElementById('status');
+// const denseUnitsElement = document.getElementById('dense-units');
+// export const getDenseUnits = () => +denseUnitsElement.value;
+
+// export const getLearningRate = 0.0001;
+// export const getBatchSizeFraction = 0.4;
+// export const getEpochs = 20;
+// export const getDenseUnits = 100;
+
+
+
+
 
 export function startPacman() {
-  google.pacman.startGameplay();
+  // google.pacman.startGameplay();
+  console.log('start game');
+  
 }
 
+
+
 export function predictClass(classId) {
-  google.pacman.keyPressed(CONTROL_CODES[classId]);
-  document.body.setAttribute('data-active', CONTROLS[classId]);
+  // console.log(CONTROL_CODES[classId]);
+  console.log(CONTROLS[classId]);
+  
+  // google.pacman.keyPressed(CONTROL_CODES[classId]);
+  // document.body.setAttribute('data-active', CONTROLS[classId]);
 }
+
+
 
 export function isPredicting() {
   statusElement.style.visibility = 'visible';
@@ -59,17 +89,20 @@ export function trainStatus(status) {
   trainStatusElement.innerText = status;
 }
 
+
+
+
 export let addExampleHandler;
 export function setExampleHandler(handler) {
   addExampleHandler = handler;
 }
-let mouseDown = false;
-const totals = [0, 0, 0, 0];
 
-const upButton = document.getElementById('up');
-const downButton = document.getElementById('down');
-const leftButton = document.getElementById('left');
-const rightButton = document.getElementById('right');
+
+
+let mouseDown = false;
+// const totals = [0, 0, 0, 0];
+const totals = [0, 0, 0];
+
 
 const thumbDisplayed = {};
 
@@ -90,14 +123,19 @@ async function handler(label) {
 upButton.addEventListener('mousedown', () => handler(0));
 upButton.addEventListener('mouseup', () => mouseDown = false);
 
-downButton.addEventListener('mousedown', () => handler(1));
-downButton.addEventListener('mouseup', () => mouseDown = false);
+// downButton.addEventListener('mousedown', () => handler(1));
+// downButton.addEventListener('mouseup', () => mouseDown = false);
 
-leftButton.addEventListener('mousedown', () => handler(2));
+// leftButton.addEventListener('mousedown', () => handler(2));
+leftButton.addEventListener('mousedown', () => handler(1));
 leftButton.addEventListener('mouseup', () => mouseDown = false);
 
-rightButton.addEventListener('mousedown', () => handler(3));
+// rightButton.addEventListener('mousedown', () => handler(3));
+rightButton.addEventListener('mousedown', () => handler(2));
 rightButton.addEventListener('mouseup', () => mouseDown = false);
+
+
+
 
 export function drawThumb(img, label) {
   if (thumbDisplayed[label] == null) {
@@ -105,6 +143,9 @@ export function drawThumb(img, label) {
     draw(img, thumbCanvas);
   }
 }
+
+
+
 
 export function draw(image, canvas) {
   const [width, height] = [224, 224];

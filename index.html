@@ -17,6 +17,82 @@
   </div>
   
   <canvas id="canvasRoot"></canvas>
+
+  <div id='tf'>
+    
+    <div id="status">Loading mobilenet...</div>
+
+    <div id='controller'>Hello from controller div</div>
+
+
+
+
+    <div class="panel-cell panel-cell-center">
+      <div class="thumb-box">
+        <div class="thumb-box-outer">
+          <div class="thumb-box-inner">
+            <canvas class="thumb" width=224 height=224 id="up-thumb"></canvas>
+          </div>
+          <button class="record-button" id="up" /><span>Add Sample</span></button>
+        </div>
+        <p>
+          <span id="up-total">0</span> examples
+        </p>
+      </div>
+    </div><!-- ./panel-cell -->
+
+
+    <div class="panel-cell panel-cell-left">
+      <div class="thumb-box">
+        <div class="thumb-box-outer">
+          <div class="thumb-box-inner">
+            <canvas class="thumb" width=224 height=224 id="left-thumb"></canvas>
+          </div>
+          <button class="record-button" id="left" /><span>Add Sample</span></button>
+        </div>
+        <p>
+          <span id="left-total">0</span> examples
+        </p>
+      </div>
+    </div><!-- ./panel-cell -->
+
+
+    <div class="panel-cell panel-cell-right">
+      <div class="thumb-box">
+        <div class="thumb-box-outer">
+          <div class="thumb-box-inner">
+            <canvas class="thumb" width=224 height=224 id="right-thumb"></canvas>
+          </div>
+          <button class="record-button" id="right" /><span>Add Sample</span></button>
+        </div>
+        <p>
+          <span id="right-total">0</span> examples
+        </p>
+      </div>
+    </div><!-- ./panel-cell -->
+
+
+
+    <!-- Big buttons. -->
+    <div class="panel-row big-buttons">
+      <button id="train">
+        <!-- <img width="66" height="66" src="./images/button.svg" /> -->
+        <span id="train-status">TRAIN MODEL</span>
+      </button>
+      <button id="predict">
+        <!-- <img width="66" height="66" src="./images/button.svg" /> -->
+        <span>PLAY</span>
+      </button>
+    </div><!-- /.panel-row -->
+
+
+    <div class="webcam-box-outer">
+      <div class="webcam-box-inner">
+        <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
+      </div>
+    </div>
+
+  </div>
     
 </body>
 <script src="./scripts/bundle.js"></script>
