@@ -10,7 +10,8 @@ class Game {
     this.ball = new Ball(ctx, this.platform);
     this.bricks = [];
 
-    this.addBricks();    
+    this.addBricks();   
+    this.listenForMovements(); 
     // Refactor TF webcam into class and pass this.platform to it.
   }
 
@@ -30,6 +31,28 @@ class Game {
     }    
   }
 
+  listenForMovements() {
+    document.addEventListener('keydown', (e) => {
+      this.platform.handleMove(e.key)
+    })
+  }
+  
+  checkCollisions() {
+    this.ball.collideWithPlatform();
+    
+    this.bricks.forEach((brick, idx) => {
+      if (this.ball.collideWithBrick(brick)) {
+        this.bricks.splice(idx, 1);
+      }
+    })
+  }
+  
+  step(timeDelta) {
+    this.ball.move(timeDelta);
+    
+    this.checkCollisions();
+  }
+  
   draw(ctx) {    
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 
@@ -40,23 +63,7 @@ class Game {
     this.platform.draw();
     this.ball.draw();
   }
-
-  checkCollisions() {
-    this.ball.collideWithPlatform();
-
-    this.bricks.forEach((brick, idx) => {
-      if (this.ball.collideWithBrick(brick)) {
-        this.bricks.splice(idx, 1);
-      }
-    })
-  }
-
-  step(timeDelta) {
-    this.ball.move(timeDelta);
-
-    this.checkCollisions();
-  }
-
+  
 }
 
 Game.BG_COLOR = "#000000";

@@ -12,28 +12,13 @@ class Platform {
 
     this.x_mid = this.x + (this.width / 2);
 
-    this.velocity = 15;
-
-    this.handleMove()
-    this.handleMoveFromWebcam()
+    this.velocity = 20;
   }
 
-  handleMove() {
-    document.addEventListener('keydown', (e) => {
-      if ((e.key === "ArrowLeft") && (this.x > 0)) {
-        this.x -= this.velocity;
-      } else if ((e.key === "ArrowRight") && (this.x < this.ctx.canvas.width - this.width)) {
-        this.x += this.velocity;
-      }
-    })
-  }
-
-  handleMoveFromWebcam(direction) {
-    if ((direction =='left') && (this.x > 0)) {
-      console.log('left from platform');      
+  handleMove(dir) {
+    if ((dir === "ArrowLeft") && (this.x > 0)) {
       this.x -= this.velocity;
-    } else if ((direction == 'left') && (this.x < this.ctx.canvas.width - this.width)) {
-      console.log('right from platform');
+    } else if ((dir === "ArrowRight") && (this.x < this.ctx.canvas.width - this.width)) {
       this.x += this.velocity;
     }
   }
