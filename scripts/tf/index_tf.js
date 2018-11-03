@@ -22,7 +22,6 @@ import * as ui from './ui';
 import {Webcam} from './webcam';
 
 // The number of classes we want to predict. In this example, we will be
-// predicting 4 classes for up, down, left, and right.
 // predicting 3 classes for up, down, left, and right.
 const NUM_CLASSES = 3;
 const getLearningRate = 0.0001;
@@ -102,8 +101,8 @@ async function train() {
   });
 
   // Creates the optimizers which drives training of the model.
-  // const optimizer = tf.train.adam(ui.getLearningRate());
   const optimizer = tf.train.adam(getLearningRate);
+
   // We use categoricalCrossentropy which is the loss function we use for
   // categorical classification which measures the error between our predicted
   // probability distribution over classes (probability that an input is of each
@@ -114,7 +113,6 @@ async function train() {
   // number of examples that are collected depends on how many examples the user
   // collects. This allows us to have a flexible batch size.
   const batchSize =
-      // Math.floor(controllerDataset.xs.shape[0] * ui.getBatchSizeFraction());
       Math.floor(controllerDataset.xs.shape[0] * getBatchSizeFraction);
   if (!(batchSize > 0)) {
     throw new Error(
@@ -124,7 +122,6 @@ async function train() {
   // Train the model! Model.fit() will shuffle xs & ys so we don't have to.
   model.fit(controllerDataset.xs, controllerDataset.ys, {
     batchSize,
-    // epochs: ui.getEpochs(),
     epochs: getEpochs,
     callbacks: {
       onBatchEnd: async (batch, logs) => {
