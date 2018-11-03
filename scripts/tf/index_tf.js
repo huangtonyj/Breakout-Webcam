@@ -134,6 +134,7 @@ async function train() {
 let isPredicting = false;
 
 async function predict() {
+  isPredicting = true;
   ui.isPredicting();
   while (isPredicting) {
     const predictedClass = tf.tidy(() => {

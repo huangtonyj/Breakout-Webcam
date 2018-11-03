@@ -1,6 +1,8 @@
 const Platform = require('./platform');
 const Ball = require('./ball');
 const Brick = require('./brick');
+const TfWebcamControl = require('./tf_webcam_control/tf_webcam_control')
+// const tfControls = require('./tf/index_tf');
 
 class Game {
   
@@ -9,10 +11,11 @@ class Game {
     this.platform = new Platform(ctx);
     this.ball = new Ball(ctx, this.platform);
     this.bricks = [];
+    // Refactor TF webcam into class and pass this.platform to it.
+    this.TfWebcamControl = new TfWebcamControl(this.platform);
 
     this.addBricks();   
-    this.listenForMovements(); 
-    // Refactor TF webcam into class and pass this.platform to it.
+    this.listenForMovements();
   }
 
   addBricks() {
@@ -34,7 +37,18 @@ class Game {
   listenForMovements() {
     document.addEventListener('keydown', (e) => {
       this.platform.handleMove(e.key)
+      // refactor into switch case,
+        // call play game
+        // or move platform
     })
+
+    // document.getElementById('predict').addEventListener('click', () => {
+    //   // ui.startTfPrediction();
+    //   // isPredicting = true;
+    //   tfControls.predict();
+    // });
+
+    // document.getElementById('webcamPredictions')
   }
   
   checkCollisions() {

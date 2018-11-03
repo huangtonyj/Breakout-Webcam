@@ -1,7 +1,7 @@
 const Game = require('./game');
 const Gameview = require('./game_view');
 
-require('./tf/index_tf');
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('canvasRoot');

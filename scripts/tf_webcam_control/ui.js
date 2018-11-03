@@ -30,6 +30,7 @@ const rightButton = document.getElementById('right');
 export function init() {
   document.getElementById('controller').style.display = '';
   statusElement.style.display = 'none';
+  console.log('ui was called!');
 }
 
 

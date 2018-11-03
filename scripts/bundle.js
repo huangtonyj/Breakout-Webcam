@@ -24363,7 +24363,7 @@ module.exports = Ball;
 const Game = __webpack_require__(/*! ./game */ "./scripts/game.js");
 const Gameview = __webpack_require__(/*! ./game_view */ "./scripts/game_view.js");
 
-__webpack_require__(/*! ./tf/index_tf */ "./scripts/tf/index_tf.js");
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('canvasRoot');
@@ -24418,6 +24418,8 @@ module.exports = Brick;
 const Platform = __webpack_require__(/*! ./platform */ "./scripts/platform.js");
 const Ball = __webpack_require__(/*! ./ball */ "./scripts/ball.js");
 const Brick = __webpack_require__(/*! ./brick */ "./scripts/brick.js");
+const TfWebcamControl = __webpack_require__(/*! ./tf_webcam_control/tf_webcam_control */ "./scripts/tf_webcam_control/tf_webcam_control.js")
+// const tfControls = require('./tf/index_tf');
 
 class Game {
   
@@ -24426,9 +24428,11 @@ class Game {
     this.platform = new Platform(ctx);
     this.ball = new Ball(ctx, this.platform);
     this.bricks = [];
-
-    this.addBricks();    
     // Refactor TF webcam into class and pass this.platform to it.
+    this.TfWebcamControl = new TfWebcamControl(this.platform);
+
+    this.addBricks();   
+    this.listenForMovements();
   }
 
   addBricks() {
@@ -24447,6 +24451,39 @@ class Game {
     }    
   }
 
+  listenForMovements() {
+    document.addEventListener('keydown', (e) => {
+      this.platform.handleMove(e.key)
+      // refactor into switch case,
+        // call play game
+        // or move platform
+    })
+
+    // document.getElementById('predict').addEventListener('click', () => {
+    //   // ui.startTfPrediction();
+    //   // isPredicting = true;
+    //   tfControls.predict();
+    // });
+
+    // document.getElementById('webcamPredictions')
+  }
+  
+  checkCollisions() {
+    this.ball.collideWithPlatform();
+    
+    this.bricks.forEach((brick, idx) => {
+      if (this.ball.collideWithBrick(brick)) {
+        this.bricks.splice(idx, 1);
+      }
+    })
+  }
+  
+  step(timeDelta) {
+    this.ball.move(timeDelta);
+    
+    this.checkCollisions();
+  }
+  
   draw(ctx) {    
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 
@@ -24457,23 +24494,7 @@ class Game {
     this.platform.draw();
     this.ball.draw();
   }
-
-  checkCollisions() {
-    this.ball.collideWithPlatform();
-
-    this.bricks.forEach((brick, idx) => {
-      if (this.ball.collideWithBrick(brick)) {
-        this.bricks.splice(idx, 1);
-      }
-    })
-  }
-
-  step(timeDelta) {
-    this.ball.move(timeDelta);
-
-    this.checkCollisions();
-  }
-
+  
 }
 
 Game.BG_COLOR = "#000000";
@@ -24553,28 +24574,13 @@ class Platform {
 
     this.x_mid = this.x + (this.width / 2);
 
-    this.velocity = 15;
-
-    this.handleMove()
-    this.handleMoveFromWebcam()
+    this.velocity = 20;
   }
 
-  handleMove() {
-    document.addEventListener('keydown', (e) => {
-      if ((e.key === "ArrowLeft") && (this.x > 0)) {
-        this.x -= this.velocity;
-      } else if ((e.key === "ArrowRight") && (this.x < this.ctx.canvas.width - this.width)) {
-        this.x += this.velocity;
-      }
-    })
-  }
-
-  handleMoveFromWebcam(direction) {
-    if ((direction =='left') && (this.x > 0)) {
-      console.log('left from platform');      
+  handleMove(dir) {
+    if ((dir === "ArrowLeft") && (this.x > 0)) {
       this.x -= this.velocity;
-    } else if ((direction == 'left') && (this.x < this.ctx.canvas.width - this.width)) {
-      console.log('right from platform');
+    } else if ((dir === "ArrowRight") && (this.x < this.ctx.canvas.width - this.width)) {
       this.x += this.velocity;
     }
   }
@@ -24594,17 +24600,13 @@ module.exports = Platform;
 
 /***/ }),
 
-/***/ "./scripts/tf/controller_dataset.js":
-/*!******************************************!*\
-  !*** ./scripts/tf/controller_dataset.js ***!
-  \******************************************/
-/*! exports provided: ControllerDataset */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./scripts/tf_webcam_control/controller_dataset.js":
+/*!*********************************************************!*\
+  !*** ./scripts/tf_webcam_control/controller_dataset.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ControllerDataset", function() { return ControllerDataset; });
-/* harmony import */ var _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @tensorflow/tfjs */ "./node_modules/@tensorflow/tfjs/dist/tf.esm.js");
 /**
  * @license
  * Copyright 2018 Google LLC. All Rights Reserved.
@@ -24621,8 +24623,7 @@ __webpack_require__.r(__webpack_exports__);
  * limitations under the License.
  * =============================================================================
  */
-
-
+const tf = __webpack_require__(/*! @tensorflow/tfjs */ "./node_modules/@tensorflow/tfjs/dist/tf.esm.js");
 /**
  * A dataset for webcam controls which allows the user to add example Tensors
  * for particular labels. This object will concat them into two large xs and ys.
@@ -24640,22 +24641,22 @@ class ControllerDataset {
    */
   addExample(example, label) {
     // One-hot encode the label.
-    const y = _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["tidy"](
-        () => _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["oneHot"](_tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["tensor1d"]([label]).toInt(), this.numClasses));
+    const y = tf.tidy(
+        () => tf.oneHot(tf.tensor1d([label]).toInt(), this.numClasses));
 
     if (this.xs == null) {
       // For the first example that gets added, keep example and y so that the
       // ControllerDataset owns the memory of the inputs. This makes sure that
       // if addExample() is called in a tf.tidy(), these Tensors will not get
       // disposed.
-      this.xs = _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["keep"](example);
-      this.ys = _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["keep"](y);
+      this.xs = tf.keep(example);
+      this.ys = tf.keep(y);
     } else {
       const oldX = this.xs;
-      this.xs = _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["keep"](oldX.concat(example, 0));
+      this.xs = tf.keep(oldX.concat(example, 0));
 
       const oldY = this.ys;
-      this.ys = _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["keep"](oldY.concat(y, 0));
+      this.ys = tf.keep(oldY.concat(y, 0));
 
       oldX.dispose();
       oldY.dispose();
@@ -24664,22 +24665,17 @@ class ControllerDataset {
   }
 }
 
+module.exports = ControllerDataset;
 
 /***/ }),
 
-/***/ "./scripts/tf/index_tf.js":
-/*!********************************!*\
-  !*** ./scripts/tf/index_tf.js ***!
-  \********************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./scripts/tf_webcam_control/tf_webcam_control.js":
+/*!********************************************************!*\
+  !*** ./scripts/tf_webcam_control/tf_webcam_control.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @tensorflow/tfjs */ "./node_modules/@tensorflow/tfjs/dist/tf.esm.js");
-/* harmony import */ var _controller_dataset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controller_dataset */ "./scripts/tf/controller_dataset.js");
-/* harmony import */ var _ui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui */ "./scripts/tf/ui.js");
-/* harmony import */ var _webcam__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./webcam */ "./scripts/tf/webcam.js");
 /**
  * @license
  * Copyright 2018 Google LLC. All Rights Reserved.
@@ -24697,202 +24693,216 @@ __webpack_require__.r(__webpack_exports__);
  * =============================================================================
  */
 
+// import * as tf from '@tensorflow/tfjs';
 
+// import {
+//   ControllerDataset
+// } from './controller_dataset';
+// import * as ui from './ui';
+// import {
+//   Webcam
+// } from './webcam';
 
+const tf = __webpack_require__(/*! @tensorflow/tfjs */ "./node_modules/@tensorflow/tfjs/dist/tf.esm.js");
+const ControllerDataset = __webpack_require__ (/*! ./controller_dataset */ "./scripts/tf_webcam_control/controller_dataset.js");
+const ui = __webpack_require__(/*! ./ui */ "./scripts/tf_webcam_control/ui.js");
+const Webcam = __webpack_require__(/*! ./webcam */ "./scripts/tf_webcam_control/webcam.js");
 
-
-
-
-// The number of classes we want to predict. In this example, we will be
-// predicting 4 classes for up, down, left, and right.
-// predicting 3 classes for up, down, left, and right.
 const NUM_CLASSES = 3;
 const getLearningRate = 0.0001;
 const getBatchSizeFraction = 0.4;
 const getEpochs = 20;
 const getDenseUnits = 100;
+const CONTROLS = ['__', 'ArrowLeft', 'ArrowRight'];
 
-// A webcam class that generates Tensors from the images from the webcam.
-const webcam = new _webcam__WEBPACK_IMPORTED_MODULE_3__["Webcam"](document.getElementById('webcam'));
+class TfWebcamControl {
 
-// The dataset object where we will store activations.
-const controllerDataset = new _controller_dataset__WEBPACK_IMPORTED_MODULE_1__["ControllerDataset"](NUM_CLASSES);
+  constructor(platform) {
+    this.platform = platform;
+    this.webcam = new Webcam(document.getElementById('webcam'));
+    this.controllerDataset = new ControllerDataset(NUM_CLASSES);
+  
+    // this.model;
 
-let decapitatedMobilenet;
-let model;
+    this.init();
 
-// Loads mobilenet and returns a model that returns the internal activation
-// we'll use as input to our classifier model.
-async function loadDecapitatedMobilenet() {
-  const mobilenet = await _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["loadModel"](
-      'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
-
-  // Return a model that outputs an internal activation.
-  const layer = mobilenet.getLayer('conv_pw_13_relu');
-  return _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["model"]({inputs: mobilenet.inputs, outputs: layer.output});
-}
-
-// When the UI buttons are pressed, read a frame from the webcam and associate
-// it with the class label given by the button. up, down, left, right are
-// labels 0, 1, 2, 3 respectively.
-_ui__WEBPACK_IMPORTED_MODULE_2__["setExampleHandler"](label => {
-  _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["tidy"](() => {
-    const img = webcam.capture();
-    controllerDataset.addExample(decapitatedMobilenet.predict(img), label);
-
-    // Draw the preview thumbnail.
-    _ui__WEBPACK_IMPORTED_MODULE_2__["drawThumb"](img, label);
-  });
-});
-
-/**
- * Sets up and trains the classifier.
- */
-async function train() {
-  if (controllerDataset.xs == null) {
-    throw new Error('Add some examples before training!');
-  }
-
-  // Creates a 2-layer fully connected model. By creating a separate model,
-  // rather than adding layers to the mobilenet model, we "freeze" the weights
-  // of the mobilenet model, and only train weights from the new model.
-  model = _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["sequential"]({
-    layers: [
-      // Flattens the input to a vector so we can use it in a dense layer. While
-      // technically a layer, this only performs a reshape (and has no training
-      // parameters).
-      _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["layers"].flatten({
-        inputShape: decapitatedMobilenet.outputs[0].shape.slice(1)
-      }),
-      // Layer 1.
-      _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["layers"].dense({
-        // units: ui.getDenseUnits(),
-        units: getDenseUnits,
-        activation: 'relu',
-        kernelInitializer: 'varianceScaling',
-        useBias: true
-      }),
-      // Layer 2. The number of units of the last layer should correspond
-      // to the number of classes we want to predict.
-      _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["layers"].dense({
-        units: NUM_CLASSES,
-        kernelInitializer: 'varianceScaling',
-        useBias: false,
-        activation: 'softmax'
-      })
-    ]
-  });
-
-  // Creates the optimizers which drives training of the model.
-  // const optimizer = tf.train.adam(ui.getLearningRate());
-  const optimizer = _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["train"].adam(getLearningRate);
-  // We use categoricalCrossentropy which is the loss function we use for
-  // categorical classification which measures the error between our predicted
-  // probability distribution over classes (probability that an input is of each
-  // class), versus the label (100% probability in the true class)>
-  model.compile({optimizer: optimizer, loss: 'categoricalCrossentropy'});
-
-  // We parameterize batch size as a fraction of the entire dataset because the
-  // number of examples that are collected depends on how many examples the user
-  // collects. This allows us to have a flexible batch size.
-  const batchSize =
-      // Math.floor(controllerDataset.xs.shape[0] * ui.getBatchSizeFraction());
-      Math.floor(controllerDataset.xs.shape[0] * getBatchSizeFraction);
-  if (!(batchSize > 0)) {
-    throw new Error(
-        `Batch size is 0 or NaN. Please choose a non-zero fraction.`);
-  }
-
-  // Train the model! Model.fit() will shuffle xs & ys so we don't have to.
-  model.fit(controllerDataset.xs, controllerDataset.ys, {
-    batchSize,
-    // epochs: ui.getEpochs(),
-    epochs: getEpochs,
-    callbacks: {
-      onBatchEnd: async (batch, logs) => {
-        _ui__WEBPACK_IMPORTED_MODULE_2__["trainStatus"]('Loss: ' + logs.loss.toFixed(5));
-      }
-    }
-  });
-}
-
-let isPredicting = false;
-
-async function predict() {
-  _ui__WEBPACK_IMPORTED_MODULE_2__["isPredicting"]();
-  while (isPredicting) {
-    const predictedClass = _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["tidy"](() => {
-      // Capture the frame from the webcam.
-      const img = webcam.capture();
-
-      // Make a prediction through mobilenet, getting the internal activation of
-      // the mobilenet model, i.e., "embeddings" of the input images.
-      const embeddings = decapitatedMobilenet.predict(img);
-
-      // Make a prediction through our newly-trained model using the embeddings
-      // from mobilenet as input.
-      const predictions = model.predict(embeddings);
-
-      // Returns the index with the maximum probability. This number corresponds
-      // to the class the model thinks is the most probable given the input.
-      return predictions.as1D().argMax();
+    document.getElementById('train').addEventListener('click', async () => {
+      ui.trainStatus('Training...');
+      await tf.nextFrame();
+      await tf.nextFrame();
+      this.isPredicting = false;
+      this.train();
     });
 
-    const classId = (await predictedClass.data())[0];
-    predictedClass.dispose();
-
-    _ui__WEBPACK_IMPORTED_MODULE_2__["predictClass"](classId);
-    await _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["nextFrame"]();
+    document.getElementById('predict').addEventListener('click', () => {
+      ui.startTfPrediction();
+      this.isPredicting = true;
+      this.predict();
+    });
   }
-  _ui__WEBPACK_IMPORTED_MODULE_2__["donePredicting"]();
+  
+  async init() {
+    await this.loadSetupWebcam();
+    console.log('webcam on');
+
+    this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
+    console.log(this.decapitatedMobilenet);
+
+    tf.tidy(() => this.decapitatedMobilenet.predict(this.webcam.capture()));
+
+    ui.init();
+
+    // TONY: MOVE THIS, REFACTOR IT
+    ui.setExampleHandler(label => {
+      tf.tidy(() => {
+        const img = this.webcam.capture();
+        this.controllerDataset.addExample(this.decapitatedMobilenet.predict(img), label);
+
+        // Draw the preview thumbnail.
+        ui.drawThumb(img, label);
+      });
+    });
+  }
+
+  async loadSetupWebcam () {
+    try {
+      await this.webcam.setup();
+    } catch (e) {
+      document.getElementById('no-webcam').style.display = 'block';
+    }
+  }
+
+  async loadDecapitatedMobilenet() {
+    const mobilenet = await tf.loadModel(
+      'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
+
+    // Return a model that outputs an internal activation.
+    const layer = mobilenet.getLayer('conv_pw_13_relu');
+    return tf.model({
+      inputs: mobilenet.inputs,
+      outputs: layer.output
+    });
+  }
+
+  async train() {
+    if (this.controllerDataset.xs == null) {
+      throw new Error('Add some examples before training!');
+    }
+
+    // Creates a 2-layer fully connected model. By creating a separate model,
+    // rather than adding layers to the mobilenet model, we "freeze" the weights
+    // of the mobilenet model, and only train weights from the new model.
+    this.model = tf.sequential({
+      layers: [
+        // Flattens the input to a vector so we can use it in a dense layer. While
+        // technically a layer, this only performs a reshape (and has no training
+        // parameters).
+        tf.layers.flatten({
+          inputShape: this.decapitatedMobilenet.outputs[0].shape.slice(1)
+        }),
+        // Layer 1.
+        tf.layers.dense({
+          // units: ui.getDenseUnits(),
+          units: getDenseUnits,
+          activation: 'relu',
+          kernelInitializer: 'varianceScaling',
+          useBias: true
+        }),
+        // Layer 2. The number of units of the last layer should correspond
+        // to the number of classes we want to predict.
+        tf.layers.dense({
+          units: NUM_CLASSES,
+          kernelInitializer: 'varianceScaling',
+          useBias: false,
+          activation: 'softmax'
+        })
+      ]
+    });
+
+    // Creates the optimizers which drives training of the model.
+    const optimizer = tf.train.adam(getLearningRate);
+
+    // We use categoricalCrossentropy which is the loss function we use for
+    // categorical classification which measures the error between our predicted
+    // probability distribution over classes (probability that an input is of each
+    // class), versus the label (100% probability in the true class)>
+    this.model.compile({
+      optimizer: optimizer,
+      loss: 'categoricalCrossentropy'
+    });
+
+    // We parameterize batch size as a fraction of the entire dataset because the
+    // number of examples that are collected depends on how many examples the user
+    // collects. This allows us to have a flexible batch size.
+    const batchSize =
+      Math.floor(this.controllerDataset.xs.shape[0] * getBatchSizeFraction);
+    if (!(batchSize > 0)) {
+      throw new Error(
+        `Batch size is 0 or NaN. Please choose a non-zero fraction.`);
+    }
+
+    // Train the model! Model.fit() will shuffle xs & ys so we don't have to.
+    this.model.fit(this.controllerDataset.xs, this.controllerDataset.ys, {
+      batchSize,
+      epochs: getEpochs,
+      callbacks: {
+        onBatchEnd: async (batch, logs) => {
+          ui.trainStatus('Loss: ' + logs.loss.toFixed(5));
+        }
+      }
+    });
+
+    console.log(this.model);
+    
+  }
+
+  async predict() {
+    ui.isPredicting();
+    while (this.isPredicting) {
+      const predictedClass = tf.tidy(() => {
+        // Capture the frame from the webcam.
+        const img = this.webcam.capture();
+
+        // Make a prediction through mobilenet, getting the internal activation of
+        // the mobilenet model, i.e., "embeddings" of the input images.
+        const embeddings = this.decapitatedMobilenet.predict(img);
+
+        // Make a prediction through our newly-trained model using the embeddings
+        // from mobilenet as input.
+        const predictions = this.model.predict(embeddings);
+
+        // Returns the index with the maximum probability. This number corresponds
+        // to the class the model thinks is the most probable given the input.
+        return predictions.as1D().argMax();
+      });
+
+      const classId = (await predictedClass.data())[0];
+      predictedClass.dispose();
+
+      ui.predictClass(classId);
+      this.platform.handleMove(CONTROLS[classId])
+      await tf.nextFrame();
+    }
+    ui.donePredicting();
+  }
+
 }
 
-document.getElementById('train').addEventListener('click', async () => {
-  _ui__WEBPACK_IMPORTED_MODULE_2__["trainStatus"]('Training...');
-  await _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["nextFrame"]();
-  await _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["nextFrame"]();
-  isPredicting = false;
-  train();
-});
-document.getElementById('predict').addEventListener('click', () => {
-  _ui__WEBPACK_IMPORTED_MODULE_2__["startPacman"]();
-  isPredicting = true;
-  predict();
-});
-
-async function init() {
-  try {
-    await webcam.setup();
-  } catch (e) {
-    document.getElementById('no-webcam').style.display = 'block';
-  }
-  decapitatedMobilenet = await loadDecapitatedMobilenet();
-
-  // Warm up the model. This uploads weights to the GPU and compiles the WebGL
-  // programs so the first time we collect data from the webcam it will be
-  // quick.
-  _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["tidy"](() => decapitatedMobilenet.predict(webcam.capture()));
-
-  _ui__WEBPACK_IMPORTED_MODULE_2__["init"]();
-}
-
-// Initialize the application.
-init();
-
+module.exports = TfWebcamControl;
 
 /***/ }),
 
-/***/ "./scripts/tf/ui.js":
-/*!**************************!*\
-  !*** ./scripts/tf/ui.js ***!
-  \**************************/
-/*! exports provided: init, startPacman, predictClass, isPredicting, donePredicting, trainStatus, addExampleHandler, setExampleHandler, drawThumb, draw */
+/***/ "./scripts/tf_webcam_control/ui.js":
+/*!*****************************************!*\
+  !*** ./scripts/tf_webcam_control/ui.js ***!
+  \*****************************************/
+/*! exports provided: init, startTfPrediction, predictClass, isPredicting, donePredicting, trainStatus, addExampleHandler, setExampleHandler, drawThumb, draw */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "init", function() { return init; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startPacman", function() { return startPacman; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startTfPrediction", function() { return startTfPrediction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "predictClass", function() { return predictClass; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isPredicting", function() { return isPredicting; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "donePredicting", function() { return donePredicting; });
@@ -24920,17 +24930,13 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
-// const CONTROLS = ['up', 'down', 'left', 'right'];
-// const CONTROL_CODES = [38, 40, 37, 39];
 const CONTROLS = ['up', 'left', 'right'];
 const CONTROL_LOGS = ['__', 'left', 'right'];
-const CONTROL_CODES = [38, 37, 39];
 
 const trainStatusElement = document.getElementById('train-status');
 const statusElement = document.getElementById('status');
 
 const upButton = document.getElementById('up');
-// const downButton = document.getElementById('down');
 const leftButton = document.getElementById('left');
 const rightButton = document.getElementById('right');
 
@@ -24938,48 +24944,19 @@ const rightButton = document.getElementById('right');
 function init() {
   document.getElementById('controller').style.display = '';
   statusElement.style.display = 'none';
+  console.log('ui was called!');
 }
 
 
-
-
-
-// Set hyper params from UI values.
-// const learningRateElement = document.getElementById('learningRate');
-// export const getLearningRate = () => +learningRateElement.value;
-
-// const batchSizeFractionElement = document.getElementById('batchSizeFraction');
-// export const getBatchSizeFraction = () => +batchSizeFractionElement.value;
-
-// const epochsElement = document.getElementById('epochs');
-// export const getEpochs = () => +epochsElement.value;
-
-// const denseUnitsElement = document.getElementById('dense-units');
-// export const getDenseUnits = () => +denseUnitsElement.value;
-
-// export const getLearningRate = 0.0001;
-// export const getBatchSizeFraction = 0.4;
-// export const getEpochs = 20;
-// export const getDenseUnits = 100;
-
-
-
-
-
-function startPacman() {
-  // google.pacman.startGameplay();
-  console.log('start game');
-  
+function startTfPrediction() {
+  console.log('starting tf prediction');  
 }
 
 
 
 function predictClass(classId) {
-  // console.log(CONTROL_CODES[classId]);
   console.log(CONTROL_LOGS[classId]);
-  
-  // google.pacman.keyPressed(CONTROL_CODES[classId]);
-  // document.body.setAttribute('data-active', CONTROLS[classId]);
+  document.getElementById('webcamPredictions').innerText = CONTROL_LOGS[classId];
 }
 
 
@@ -25005,7 +24982,6 @@ function setExampleHandler(handler) {
 
 
 let mouseDown = false;
-// const totals = [0, 0, 0, 0];
 const totals = [0, 0, 0];
 
 
@@ -25028,14 +25004,9 @@ async function handler(label) {
 upButton.addEventListener('mousedown', () => handler(0));
 upButton.addEventListener('mouseup', () => mouseDown = false);
 
-// downButton.addEventListener('mousedown', () => handler(1));
-// downButton.addEventListener('mouseup', () => mouseDown = false);
-
-// leftButton.addEventListener('mousedown', () => handler(2));
 leftButton.addEventListener('mousedown', () => handler(1));
 leftButton.addEventListener('mouseup', () => mouseDown = false);
 
-// rightButton.addEventListener('mousedown', () => handler(3));
 rightButton.addEventListener('mousedown', () => handler(2));
 rightButton.addEventListener('mouseup', () => mouseDown = false);
 
@@ -25070,17 +25041,13 @@ function draw(image, canvas) {
 
 /***/ }),
 
-/***/ "./scripts/tf/webcam.js":
-/*!******************************!*\
-  !*** ./scripts/tf/webcam.js ***!
-  \******************************/
-/*! exports provided: Webcam */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./scripts/tf_webcam_control/webcam.js":
+/*!*********************************************!*\
+  !*** ./scripts/tf_webcam_control/webcam.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Webcam", function() { return Webcam; });
-/* harmony import */ var _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @tensorflow/tfjs */ "./node_modules/@tensorflow/tfjs/dist/tf.esm.js");
 /**
  * @license
  * Copyright 2018 Google LLC. All Rights Reserved.
@@ -25098,7 +25065,7 @@ __webpack_require__.r(__webpack_exports__);
  * =============================================================================
  */
 
-
+const tf = __webpack_require__(/*! @tensorflow/tfjs */ "./node_modules/@tensorflow/tfjs/dist/tf.esm.js");
 /**
  * A class that wraps webcam video elements to capture Tensor4Ds.
  */
@@ -25115,9 +25082,9 @@ class Webcam {
    * Returns a batched image (1-element batch) of shape [1, w, h, c].
    */
   capture() {
-    return _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["tidy"](() => {
+    return tf.tidy(() => {
       // Reads the image as a Tensor from the webcam <video> element.
-      const webcamImage = _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["fromPixels"](this.webcamElement);
+      const webcamImage = tf.fromPixels(this.webcamElement);
 
       // Crop the image so we're using the center square of the rectangular
       // webcam.
@@ -25128,7 +25095,7 @@ class Webcam {
 
       // Normalize the image between -1 and 1. The image comes in between 0-255,
       // so we divide by 127 and subtract 1.
-      return batchedImage.toFloat().div(_tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["scalar"](127)).sub(_tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["scalar"](1));
+      return batchedImage.toFloat().div(tf.scalar(127)).sub(tf.scalar(1));
     });
   }
 
@@ -25187,6 +25154,8 @@ class Webcam {
     });
   }
 }
+
+module.exports = Webcam;
 
 
 /***/ }),
