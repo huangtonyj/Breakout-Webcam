@@ -25,13 +25,17 @@ import {
   Webcam
 } from './webcam';
 
+// const tf = require('@tensorflow/tfjs');
+// const ControllerDataset = require ('./controller_dataset')
+// const ui =
+
 const NUM_CLASSES = 3;
 const getLearningRate = 0.0001;
 const getBatchSizeFraction = 0.4;
 const getEpochs = 20;
 const getDenseUnits = 100;
 
-class TfWebcamPrediction {
+export class TfWebcamControl {
 
   constructor(platform) {
     this.platform = platform;
@@ -39,18 +43,32 @@ class TfWebcamPrediction {
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
     // this.decapitatedMobilenet;
     // this.model;
+
+    this.loadSetupWebcam();
   }
 
-  async loadDecapitatedMobilenet() {
-    const mobilenet = await tf.loadModel(
-      'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
-
-    // Return a model that outputs an internal activation.
-    const layer = mobilenet.getLayer('conv_pw_13_relu');
-    return tf.model({
-      inputs: mobilenet.inputs,
-      outputs: layer.output
-    });
+  async loadSetupWebcam () {
+    try {
+      await this.webcam.setup();
+    } catch (e) {
+      document.getElementById('no-webcam').style.display = 'block';
+    }
+    console.log('webcam on');
+    
   }
+
+  // async loadDecapitatedMobilenet() {
+  //   const mobilenet = await tf.loadModel(
+  //     'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
+
+  //   // Return a model that outputs an internal activation.
+  //   const layer = mobilenet.getLayer('conv_pw_13_relu');
+  //   return tf.model({
+  //     inputs: mobilenet.inputs,
+  //     outputs: layer.output
+  //   });
+  // }
 
 }
+
+module.exports = TfWebcamControl;
