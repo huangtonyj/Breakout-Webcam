@@ -24363,18 +24363,55 @@ module.exports = Ball;
 const Game = __webpack_require__(/*! ./game */ "./scripts/game.js");
 const Gameview = __webpack_require__(/*! ./game_view */ "./scripts/game_view.js");
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('canvasRoot');
     canvas.width = window.innerWidth * 0.8;
-    canvas.height = (window.innerHeight) * 0.8;
+    canvas.height = (window.innerHeight) * 0.6;
 
   const ctx = canvas.getContext('2d');
   const game = new Game(ctx);
   new Gameview(game, ctx).start();
 
+  const modalInit = document.getElementById('modal-init');
+  const modalLeft = document.getElementById('modal-left');
+  const modalRight = document.getElementById('modal-right');
+  const modalNeutral = document.getElementById('modal-neutral');
+    
+  // Use keyboard to play game
+  document.getElementById('button-keyboard')
+    .addEventListener('click', () => {
+      modalInit.style.display = 'none';
+    });
+
+  // Initial model training steps
+  document.getElementById('button-webcam')
+    .addEventListener('click', () => {
+      modalInit.style.display = 'none';
+      modalLeft.style.display = 'block';
+    });
+
+  document.getElementById('button-right')
+    .addEventListener('click', () => {
+      modalLeft.style.display = 'none';
+      modalRight.style.display = 'block';
+    });
+
+  document.getElementById('button-neutral')
+    .addEventListener('click', () => {
+      modalRight.style.display = 'none';
+      modalNeutral.style.display = 'block';
+    });
+
+  document.getElementById('button-train')
+    .addEventListener('click', () => {
+      modalNeutral.style.display = 'none';
+      // Init TF Controls
+      console.log('init tf controls, attach game to it');
+      
+    });
+
 });
+
 
 
 /***/ }),
@@ -24419,7 +24456,6 @@ const Platform = __webpack_require__(/*! ./platform */ "./scripts/platform.js");
 const Ball = __webpack_require__(/*! ./ball */ "./scripts/ball.js");
 const Brick = __webpack_require__(/*! ./brick */ "./scripts/brick.js");
 const TfWebcamControl = __webpack_require__(/*! ./tf_webcam_control/tf_webcam_control */ "./scripts/tf_webcam_control/tf_webcam_control.js")
-// const tfControls = require('./tf/index_tf');
 
 class Game {
   
@@ -24427,9 +24463,10 @@ class Game {
     this.ctx = ctx;
     this.platform = new Platform(ctx);
     this.ball = new Ball(ctx, this.platform);
+    // this.TfWebcamControl = new TfWebcamControl(this.platform);
+    
     this.bricks = [];
-    // Refactor TF webcam into class and pass this.platform to it.
-    this.TfWebcamControl = new TfWebcamControl(this.platform);
+    this.startGame = false;
 
     this.addBricks();   
     this.listenForMovements();
@@ -24453,19 +24490,20 @@ class Game {
 
   listenForMovements() {
     document.addEventListener('keydown', (e) => {
-      this.platform.handleMove(e.key)
-      // refactor into switch case,
-        // call play game
-        // or move platform
+      switch (e.code) {
+        case 'ArrowLeft':
+          this.platform.handleMove('ArrowLeft');
+          break;
+
+        case 'ArrowRight':
+          this.platform.handleMove('ArrowRight');
+          break;
+
+        case 'Space':
+          this.startGame = !this.startGame;
+          break;
+      }
     })
-
-    // document.getElementById('predict').addEventListener('click', () => {
-    //   // ui.startTfPrediction();
-    //   // isPredicting = true;
-    //   tfControls.predict();
-    // });
-
-    // document.getElementById('webcamPredictions')
   }
   
   checkCollisions() {
@@ -24479,7 +24517,11 @@ class Game {
   }
   
   step(timeDelta) {
-    this.ball.move(timeDelta);
+    if (this.startGame) {
+      this.ball.move(timeDelta)
+    } else {
+      this.ball.resetBall();
+    }
     
     this.checkCollisions();
   }
@@ -24503,7 +24545,7 @@ Game.DIM_Y = window.innerHeight * 0.8;
 Game.FPS = 32;
 
 Game.BRICK_POS = {
-  rows: 5,
+  rows: 3,
   cols: 7,
   gap: 10
 }
@@ -24721,8 +24763,6 @@ class TfWebcamControl {
     this.platform = platform;
     this.webcam = new Webcam(document.getElementById('webcam'));
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
-  
-    // this.model;
 
     this.init();
 
@@ -24752,7 +24792,7 @@ class TfWebcamControl {
 
     ui.init();
 
-    // TONY: MOVE THIS, REFACTOR IT
+    // REFACTOR THIS LATER
     ui.setExampleHandler(label => {
       tf.tidy(() => {
         const img = this.webcam.capture();

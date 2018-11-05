@@ -11,14 +11,90 @@
 <body>
   
   <div>
-    <h1 id='test'>
+    <h1 id='Greeting'>
       Hello, Brick it Out!
     </h1>  
   </div>
   
   <canvas id="canvasRoot"></canvas>
 
-  <div id='tf'>
+
+  <div id='modal-init' class='modal'>
+    <div class='modal-content'>
+      <h1 id='Greeting'>
+        Welcome to Brick-Out!
+      </h1>
+      <h3>
+        Want to try playing the game by waving your hand? (webcam required)
+      </h3>
+      
+      <div>
+        <button id='button-webcam'>
+          Lets do it! 😈
+        </button>
+        
+        <button id='button-keyboard' class='close'>
+          No thanks, I will use the keyboard
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div id='modal-left' class='modal'>
+    <div class='modal-content'>
+      Sample Left
+      <div class="panel-cell panel-cell-left">
+        <div class="thumb-box">
+          <div class="thumb-box-outer">
+            <div class="thumb-box-inner">
+              <canvas class="thumb" width=224 height=224 id="left-thumb"></canvas>
+            </div>
+            <button class="record-button" id="left" /><span>Add Sample</span></button>
+          </div>
+          <p>
+            <span id="left-total">0</span> examples
+          </p>
+        </div>
+      </div><!-- ./panel-cell -->
+
+
+      <button id='button-right'>
+        next step
+      </button>
+    </div>
+  </div>
+
+  <div id='modal-right' class='modal'>
+    <div class='modal-content'>
+        Sample Right
+        <button id='button-neutral'>
+        next step
+        </button>
+    </div>
+  </div>
+
+  <div id='modal-neutral' class='modal'>
+    <div class='modal-content'>
+        Sample Neutral
+        <button id='button-train'>
+          Train and Play
+        </button>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div id='tf' class=''>
     
     <div id="status">Loading mobilenet...</div>
 

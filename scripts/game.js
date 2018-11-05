@@ -2,7 +2,6 @@ const Platform = require('./platform');
 const Ball = require('./ball');
 const Brick = require('./brick');
 const TfWebcamControl = require('./tf_webcam_control/tf_webcam_control')
-// const tfControls = require('./tf/index_tf');
 
 class Game {
   
@@ -10,9 +9,10 @@ class Game {
     this.ctx = ctx;
     this.platform = new Platform(ctx);
     this.ball = new Ball(ctx, this.platform);
+    // this.TfWebcamControl = new TfWebcamControl(this.platform);
+    
     this.bricks = [];
-    // Refactor TF webcam into class and pass this.platform to it.
-    this.TfWebcamControl = new TfWebcamControl(this.platform);
+    this.startGame = false;
 
     this.addBricks();   
     this.listenForMovements();
@@ -36,19 +36,20 @@ class Game {
 
   listenForMovements() {
     document.addEventListener('keydown', (e) => {
-      this.platform.handleMove(e.key)
-      // refactor into switch case,
-        // call play game
-        // or move platform
+      switch (e.code) {
+        case 'ArrowLeft':
+          this.platform.handleMove('ArrowLeft');
+          break;
+
+        case 'ArrowRight':
+          this.platform.handleMove('ArrowRight');
+          break;
+
+        case 'Space':
+          this.startGame = !this.startGame;
+          break;
+      }
     })
-
-    // document.getElementById('predict').addEventListener('click', () => {
-    //   // ui.startTfPrediction();
-    //   // isPredicting = true;
-    //   tfControls.predict();
-    // });
-
-    // document.getElementById('webcamPredictions')
   }
   
   checkCollisions() {
@@ -62,7 +63,11 @@ class Game {
   }
   
   step(timeDelta) {
-    this.ball.move(timeDelta);
+    if (this.startGame) {
+      this.ball.move(timeDelta)
+    } else {
+      this.ball.resetBall();
+    }
     
     this.checkCollisions();
   }
@@ -86,7 +91,7 @@ Game.DIM_Y = window.innerHeight * 0.8;
 Game.FPS = 32;
 
 Game.BRICK_POS = {
-  rows: 5,
+  rows: 3,
   cols: 7,
   gap: 10
 }

@@ -43,8 +43,6 @@ class TfWebcamControl {
     this.platform = platform;
     this.webcam = new Webcam(document.getElementById('webcam'));
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
-  
-    // this.model;
 
     this.init();
 
@@ -74,7 +72,7 @@ class TfWebcamControl {
 
     ui.init();
 
-    // TONY: MOVE THIS, REFACTOR IT
+    // REFACTOR THIS LATER
     ui.setExampleHandler(label => {
       tf.tidy(() => {
         const img = this.webcam.capture();
