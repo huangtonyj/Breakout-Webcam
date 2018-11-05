@@ -47,9 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('button-train')
     .addEventListener('click', () => {
       modalNeutral.style.display = 'none';
-      // Init TF Controls
-      console.log('init tf controls, attach game to it');
-      
     });
 
 });

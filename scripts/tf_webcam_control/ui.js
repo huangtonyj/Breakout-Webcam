@@ -28,14 +28,14 @@ const rightButton = document.getElementById('right');
 // 
 
 export function init() {
-  document.getElementById('controller').style.display = '';
-  statusElement.style.display = 'none';
-  console.log('ui was called!');
+  // document.getElementById('controller').style.display = '';
+  // statusElement.style.display = 'none';
+  // console.log('ui was called!');
 }
 
 
 export function startTfPrediction() {
-  console.log('starting tf prediction');  
+  // console.log('starting tf prediction');  
 }
 
 
@@ -81,8 +81,6 @@ async function handler(label) {
     addExampleHandler(label);
     document.body.setAttribute('data-active', CONTROLS[label]);
     total.innerText = totals[label]++;
-    console.log('captured');
-    
     await tf.nextFrame();
   }
   document.body.removeAttribute('data-active');

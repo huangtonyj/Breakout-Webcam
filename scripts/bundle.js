@@ -24336,8 +24336,8 @@ class Ball {
   }
 
   collideWithPlatform() {
-    const platformY = (this.y + this.radius >= this.platform.y) && (this.y <= this.platform.y);
-    const platformX = (this.x >= this.platform.x) && (this.x <= this.platform.x + this.platform.width);
+    const platformY = (this.y + this.radius >= this.platform.y) && (this.y - this.radius <= this.platform.y);
+    const platformX = (this.x + this.radius >= this.platform.x) && (this.x - this.radius <= this.platform.x + this.platform.width);
 
     if (platformY && platformX) {
       this.dy *= -1 * 1.1;
@@ -24409,9 +24409,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('button-train')
     .addEventListener('click', () => {
       modalNeutral.style.display = 'none';
-      // Init TF Controls
-      console.log('init tf controls, attach game to it');
-      
     });
 
 });
@@ -24789,10 +24786,10 @@ class TfWebcamControl {
   
   async init() {
     await this.loadSetupWebcam();
-    console.log('webcam on');
+      console.log('webcam on');
 
     this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
-    console.log(this.decapitatedMobilenet);
+      console.log(this.decapitatedMobilenet);
 
     tf.tidy(() => this.decapitatedMobilenet.predict(this.webcam.capture()));
 
@@ -24988,14 +24985,14 @@ const rightButton = document.getElementById('right');
 // 
 
 function init() {
-  document.getElementById('controller').style.display = '';
-  statusElement.style.display = 'none';
-  console.log('ui was called!');
+  // document.getElementById('controller').style.display = '';
+  // statusElement.style.display = 'none';
+  // console.log('ui was called!');
 }
 
 
 function startTfPrediction() {
-  console.log('starting tf prediction');  
+  // console.log('starting tf prediction');  
 }
 
 
@@ -25041,8 +25038,6 @@ async function handler(label) {
     addExampleHandler(label);
     document.body.setAttribute('data-active', CONTROLS[label]);
     total.innerText = totals[label]++;
-    console.log('captured');
-    
     await _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["nextFrame"]();
   }
   document.body.removeAttribute('data-active');

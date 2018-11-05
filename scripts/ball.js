@@ -59,8 +59,8 @@ class Ball {
   }
 
   collideWithPlatform() {
-    const platformY = (this.y + this.radius >= this.platform.y) && (this.y <= this.platform.y);
-    const platformX = (this.x >= this.platform.x) && (this.x <= this.platform.x + this.platform.width);
+    const platformY = (this.y + this.radius >= this.platform.y) && (this.y - this.radius <= this.platform.y);
+    const platformX = (this.x + this.radius >= this.platform.x) && (this.x - this.radius <= this.platform.x + this.platform.width);
 
     if (platformY && platformX) {
       this.dy *= -1 * 1.1;
