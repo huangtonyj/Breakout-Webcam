@@ -1,4 +1,5 @@
 body {
+  background-color: rgb(240, 240, 240);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -6,7 +7,7 @@ body {
 }
 
 h1 {
-  color: lightblue;
+  color: rgb(95, 167, 190);
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   margin: 10px;
@@ -16,6 +17,14 @@ h3 {
   font-size: 24px;
   font-weight: 500;
   font-family: Arial, Helvetica, sans-serif;
+  margin: 10px;
+}
+
+h4 {
+  font-size: 20px;
+  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0px 5px 10px 5px;
 }
 
 p {
@@ -49,6 +58,28 @@ video {
   justify-content: center;
 }
 
+.webcam-box {
+  margin: 15px;
+  z-index: 2;
+}
+
+.thumb-box{
+  border: 1px solid rgb(190, 190, 190);
+  width: 350px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  justify-content: center;
+}
+
+.thumb{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  width: 224px;
+  height: 224px;
+  margin: 10px auto;
+}
 
 .modal {
   position: fixed;
@@ -59,20 +90,24 @@ video {
   height: 100%;
   /* overflow: auto; */
   background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  /* 15% from the top and centered */
+  position: static;
+  background-color: rgb(240, 240, 240);
+  margin: 5% auto;
   padding: 20px;
   border: 1px solid #888;
   border-radius: 10px;
   width: 80%;
-  /* Could be more or less, depending on screen size */
+  max-width: 750px;
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
 }
 
 
@@ -93,7 +128,7 @@ video {
 }
 
 #modal-win {
-  display: block;
+  display: none;
 }
 
 ul {

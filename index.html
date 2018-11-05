@@ -19,16 +19,19 @@
   
   <div id='game-div'>
     <p>
-      Score: <span id='score-counter'>0</span>
+      🎰 <span id='score-counter'>0</span> ⭐️
     </p>
     <canvas id="canvasRoot"></canvas>
   </div>
   
-  <div class="webcam-box-outer">
+  <div class="webcam-box">
+      <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
+  </div>
+  <!-- <div class="webcam-box-outer">
     <div class="webcam-box-inner">
       <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
     </div>
-  </div>
+  </div> -->
 
 
 
@@ -41,16 +44,16 @@
         Welcome to Breakout-Webcam!
       </h1>
       <h3>
-Want to play by waving your 👋? (📷 required)
+        Want to play by waving your 👋? (📷 required)
       </h3>
       
       <div>
         <button id='button-webcam'>
-👍✋Lets do it!🤚👐
+          👍✋ Let's do it! 🤚👐
         </button>
         
         <button id='button-keyboard' class='close'>
-👎No thanks. Keyboard please. 🙁
+          👎 Keyboard please. ⌨️
         </button>
       </div>
 
@@ -59,10 +62,12 @@ Want to play by waving your 👋? (📷 required)
 
   <div id='modal-left' class='modal'>
     <div class='modal-content'>
-      So i m pretty dumb right now, you need to teach me what is left and right.
-      I will move accordingly depending on how well i learn.
-      
-      Sample Left
+      <h4>
+        First, you need to teach me what is left and right.
+      </h4>
+      <h4>
+        Please show me 100 pictures of a ✋ on the left side.
+      </h4>
 
       <!-- <div class="webcam-box-outer">
         <div class="webcam-box-inner">
@@ -70,29 +75,34 @@ Want to play by waving your 👋? (📷 required)
         </div>
       </div> -->
 
-      <div class="panel-cell panel-cell-left">
+      <!-- <div class="panel-cell panel-cell-left"> -->
         <div class="thumb-box">
-          <div class="thumb-box-outer">
-            <div class="thumb-box-inner">
+          <!-- <div class="thumb-box-outer"> -->
+            <!-- <div class="thumb-box-inner"> -->
               <canvas class="thumb" width=224 height=224 id="left-thumb"></canvas>
-            </div>
+            <!-- </div> -->
             <button class="record-button" id="left" /><span>Add Sample</span></button>
-          </div>
+          <!-- </div> -->
           <p>
             <span id="left-total">0</span> examples
           </p>
         </div>
-      </div><!-- ./panel-cell -->
+      <!-- </div> -->
 
       <button id='button-right'>
-        next step
+        👉️ ️️Next Step 👉
       </button>
     </div>
   </div>
 
   <div id='modal-right' class='modal'>
     <div class='modal-content'>
-      Sample Right
+      <h4>
+        Now the right hand.
+      </h4>
+      <h4>
+        Please show me 100 pictures of a 🤚 on the right side.
+      </h4>
 
       <!-- <div class="webcam-box-outer">
         <div class="webcam-box-inner">
@@ -115,14 +125,19 @@ Want to play by waving your 👋? (📷 required)
       </div><!-- ./panel-cell -->
 
       <button id='button-neutral'>
-        next step
+        👉️ ️️Next Step 👉
       </button>
     </div>
   </div>
 
   <div id='modal-neutral' class='modal'>
     <div class='modal-content'>
-      Sample Neutral
+      <h4>
+        Thanks! I also need to know what is not left or right.
+      </h4>
+      <h4>
+        Please show me 100 pictures of a 🖐 in the middle.
+      </h4>
 
       <!-- <div class="webcam-box-outer">
         <div class="webcam-box-inner">
@@ -145,7 +160,7 @@ Want to play by waving your 👋? (📷 required)
       </div><!-- ./panel-cell -->
 
       <button id='button-train'>
-        Train and Play
+        🎮 Train and Play 🕹
       </button>
 
       <!-- Big buttons. -->
@@ -165,7 +180,7 @@ Want to play by waving your 👋? (📷 required)
   <div id='modal-win' class='modal'>
     <div class='modal-content'>
       <h1>
-🎊 💯 Congrats! You win! 🎉 🎈
+        🎊 💯 Congrats! You win! 🎉 🎈
       </h1>  
 
       <h3>
@@ -173,17 +188,17 @@ Want to play by waving your 👋? (📷 required)
       </h3>
 
       <ul>
-<li> 
-<a href='https://www.linkedin.com/in/tonyjhuang/' target="_blank">
-    <i class="fab fa-linkedin-in"></i> LinkedIn
-  </a>
-</li>
-
-<li> 
-<a href='https://github.com/huangtonyj' target="_blank">
-<i class="fab fa-github-square"></i> GitHub
-  </a>
-</li>
+        <li> 
+        <a href='https://github.com/huangtonyj' target="_blank">
+        <i class="fab fa-github-square"></i> GitHub
+          </a>
+        </li>
+        
+        <li> 
+        <a href='https://www.linkedin.com/in/tonyjhuang/' target="_blank">
+            <i class="fab fa-linkedin-in"></i> LinkedIn
+          </a>
+        </li>
       </ul>
 
     </div>
