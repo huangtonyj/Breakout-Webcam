@@ -7,34 +7,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" type = "text/css" href="./styles/index.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body>
   
-  <div>
+  <div class='header'>
     <h1 id='Greeting'>
-      Hello, Brick it Out!
+      Breakout-Webcam!
     </h1>  
   </div>
   
-  <canvas id="canvasRoot"></canvas>
+  <div id='game-div'>
+    <p>
+      Score: <span id='score-counter'>0</span>
+    </p>
+    <canvas id="canvasRoot"></canvas>
+  </div>
+  
+  <div class="webcam-box-outer">
+    <div class="webcam-box-inner">
+      <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
+    </div>
+  </div>
 
 
+
+
+
+  <!-- Greeting Modals -->
   <div id='modal-init' class='modal'>
     <div class='modal-content'>
       <h1 id='Greeting'>
-        Welcome to Brick-Out!
+        Welcome to Breakout-Webcam!
       </h1>
       <h3>
-        Want to try playing the game by waving your hand? (webcam required)
+Want to play by waving your 👋? (📷 required)
       </h3>
       
       <div>
         <button id='button-webcam'>
-          Lets do it! 😈
+👍✋Lets do it!🤚👐
         </button>
         
         <button id='button-keyboard' class='close'>
-          No thanks, I will use the keyboard
+👎No thanks. Keyboard please. 🙁
         </button>
       </div>
 
@@ -43,7 +59,17 @@
 
   <div id='modal-left' class='modal'>
     <div class='modal-content'>
+      So i m pretty dumb right now, you need to teach me what is left and right.
+      I will move accordingly depending on how well i learn.
+      
       Sample Left
+
+      <!-- <div class="webcam-box-outer">
+        <div class="webcam-box-inner">
+          <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
+        </div>
+      </div> -->
+
       <div class="panel-cell panel-cell-left">
         <div class="thumb-box">
           <div class="thumb-box-outer">
@@ -58,7 +84,6 @@
         </div>
       </div><!-- ./panel-cell -->
 
-
       <button id='button-right'>
         next step
       </button>
@@ -67,19 +92,100 @@
 
   <div id='modal-right' class='modal'>
     <div class='modal-content'>
-        Sample Right
-        <button id='button-neutral'>
+      Sample Right
+
+      <!-- <div class="webcam-box-outer">
+        <div class="webcam-box-inner">
+          <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
+        </div>
+      </div> -->
+
+      <div class="panel-cell panel-cell-right">
+        <div class="thumb-box">
+          <div class="thumb-box-outer">
+            <div class="thumb-box-inner">
+              <canvas class="thumb" width=224 height=224 id="right-thumb"></canvas>
+            </div>
+            <button class="record-button" id="right" /><span>Add Sample</span></button>
+          </div>
+          <p>
+            <span id="right-total">0</span> examples
+          </p>
+        </div>
+      </div><!-- ./panel-cell -->
+
+      <button id='button-neutral'>
         next step
-        </button>
+      </button>
     </div>
   </div>
 
   <div id='modal-neutral' class='modal'>
     <div class='modal-content'>
-        Sample Neutral
-        <button id='button-train'>
-          Train and Play
+      Sample Neutral
+
+      <!-- <div class="webcam-box-outer">
+        <div class="webcam-box-inner">
+          <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
+        </div>
+      </div> -->
+
+      <div class="panel-cell panel-cell-center">
+        <div class="thumb-box">
+          <div class="thumb-box-outer">
+            <div class="thumb-box-inner">
+              <canvas class="thumb" width=224 height=224 id="up-thumb"></canvas>
+            </div>
+            <button class="record-button" id="up" /><span>Add Sample</span></button>
+          </div>
+          <p>
+            <span id="up-total">0</span> examples
+          </p>
+        </div>
+      </div><!-- ./panel-cell -->
+
+      <button id='button-train'>
+        Train and Play
+      </button>
+
+      <!-- Big buttons. -->
+      <div class="panel-row big-buttons">
+        <button id="train">
+          <span id="train-status">TRAIN MODEL</span>
         </button>
+        <button id="predict">
+          <span>PLAY</span>
+        </button>
+      </div><!-- /.panel-row -->
+    </div>
+  </div>
+
+
+  <!-- Game Over Modal -->
+  <div id='modal-win' class='modal'>
+    <div class='modal-content'>
+      <h1>
+🎊 💯 Congrats! You win! 🎉 🎈
+      </h1>  
+
+      <h3>
+        Enjoyed the game? Check out my profile on:
+      </h3>
+
+      <ul>
+<li> 
+<a href='https://www.linkedin.com/in/tonyjhuang/' target="_blank">
+    <i class="fab fa-linkedin-in"></i> LinkedIn
+  </a>
+</li>
+
+<li> 
+<a href='https://github.com/huangtonyj' target="_blank">
+<i class="fab fa-github-square"></i> GitHub
+  </a>
+</li>
+      </ul>
+
     </div>
   </div>
 
@@ -96,79 +202,10 @@
 
   <div id='tf' class=''>
     
-    <div id="status">Loading mobilenet...</div>
+    <div id="status"></div>
 
-    <div id='controller'>Hello from controller div</div>
-    <p id='webcamPredictions'>none</p>
-
-
-
-
-    <div class="panel-cell panel-cell-center">
-      <div class="thumb-box">
-        <div class="thumb-box-outer">
-          <div class="thumb-box-inner">
-            <canvas class="thumb" width=224 height=224 id="up-thumb"></canvas>
-          </div>
-          <button class="record-button" id="up" /><span>Add Sample</span></button>
-        </div>
-        <p>
-          <span id="up-total">0</span> examples
-        </p>
-      </div>
-    </div><!-- ./panel-cell -->
-
-
-    <div class="panel-cell panel-cell-left">
-      <div class="thumb-box">
-        <div class="thumb-box-outer">
-          <div class="thumb-box-inner">
-            <canvas class="thumb" width=224 height=224 id="left-thumb"></canvas>
-          </div>
-          <button class="record-button" id="left" /><span>Add Sample</span></button>
-        </div>
-        <p>
-          <span id="left-total">0</span> examples
-        </p>
-      </div>
-    </div><!-- ./panel-cell -->
-
-
-    <div class="panel-cell panel-cell-right">
-      <div class="thumb-box">
-        <div class="thumb-box-outer">
-          <div class="thumb-box-inner">
-            <canvas class="thumb" width=224 height=224 id="right-thumb"></canvas>
-          </div>
-          <button class="record-button" id="right" /><span>Add Sample</span></button>
-        </div>
-        <p>
-          <span id="right-total">0</span> examples
-        </p>
-      </div>
-    </div><!-- ./panel-cell -->
-
-
-
-    <!-- Big buttons. -->
-    <div class="panel-row big-buttons">
-      <button id="train">
-        <!-- <img width="66" height="66" src="./images/button.svg" /> -->
-        <span id="train-status">TRAIN MODEL</span>
-      </button>
-      <button id="predict">
-        <!-- <img width="66" height="66" src="./images/button.svg" /> -->
-        <span>PLAY</span>
-      </button>
-    </div><!-- /.panel-row -->
-
-
-    <div class="webcam-box-outer">
-      <div class="webcam-box-inner">
-        <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
-      </div>
-    </div>
-
+    <div id='controller'></div>
+  
   </div>
     
 </body>
