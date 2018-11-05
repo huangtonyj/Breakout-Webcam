@@ -24786,7 +24786,6 @@ class TfWebcamControl {
   
   async init() {
     await this.loadSetupWebcam();
-      console.log('webcam on');
 
     this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
       console.log(this.decapitatedMobilenet);
