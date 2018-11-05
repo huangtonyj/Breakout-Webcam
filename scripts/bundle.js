@@ -24633,12 +24633,18 @@ class Platform {
   }
 
   handleMove(dir) {
-    console.log(dir);
-    
+    const leftGlow = document.getElementById('sideglow-left');
+    const rightGLow = document.getElementById('sideglow-right');
+   
     if ((dir === "ArrowLeft") && (this.x > 0)) {
+      leftGlow.style.boxShadow = "0px 0px 50px 20px rgba(0, 128, 0, 0.5)";
       this.x -= this.velocity;
+      setTimeout(() => leftGlow.style.boxShadow = '', 750);
+
     } else if ((dir === "ArrowRight") && (this.x < this.ctx.canvas.width - this.width)) {
+      rightGLow.style.boxShadow = "0px 0px 50px 20px rgba(0, 128, 0, 0.5)";
       this.x += this.velocity;
+      setTimeout(() => rightGLow.style.boxShadow = '', 750);
     }
   }
 

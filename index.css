@@ -59,9 +59,19 @@ video {
 
 #game-div {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+
+}
+
+.sideglow{
+  display: block;
+  width: 1px;
+  height: 300px;
+  align-self: center;
+  width: 1px;
+  background-color: rgba(0, 128, 0, 0.5);
 }
 
 .webcam-box {
