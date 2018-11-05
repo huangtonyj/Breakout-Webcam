@@ -12,7 +12,7 @@ class Game {
     // this.TfWebcamControl = new TfWebcamControl(this.platform);
     
     this.bricks = [];
-    this.startGame = false;
+    this.playGame = false;
     this.score = 0;
 
     this.addBricks();   
@@ -47,7 +47,7 @@ class Game {
           break;
 
         case 'Space':
-          this.startGame = !this.startGame;
+          this.playGame = !this.playGame;
           break;
       }
     })
@@ -66,10 +66,15 @@ class Game {
   countScore() {
     this.score = Game.BRICK_POS.rows * Game.BRICK_POS.cols - this.bricks.length;
     document.getElementById('score-counter').innerText = this.score;
+
+    if (this.bricks.length === 0) {
+      document.getElementById('modal-win').style.display = 'block';
+    }
+    
   }
   
   step(timeDelta) {
-    if (this.startGame) {
+    if (this.playGame) {
       this.ball.move(timeDelta)
     } else {
       this.ball.resetBall();
@@ -93,7 +98,7 @@ class Game {
 }
 
 Game.BG_COLOR = "#000000";
-Game.DIM_X = window.innerWidth * 0.8;
+Game.DIM_X = Math.min(window.innerWidth * 0.8, 1250);
 Game.DIM_Y = window.innerHeight * 0.8;
 Game.FPS = 32;
 

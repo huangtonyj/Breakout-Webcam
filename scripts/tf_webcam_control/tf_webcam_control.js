@@ -15,16 +15,6 @@
  * =============================================================================
  */
 
-// import * as tf from '@tensorflow/tfjs';
-
-// import {
-//   ControllerDataset
-// } from './controller_dataset';
-// import * as ui from './ui';
-// import {
-//   Webcam
-// } from './webcam';
-
 const tf = require('@tensorflow/tfjs');
 const ControllerDataset = require ('./controller_dataset');
 const ui = require('./ui');

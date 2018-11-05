@@ -24362,16 +24362,18 @@ module.exports = Ball;
 
 const Game = __webpack_require__(/*! ./game */ "./scripts/game.js");
 const Gameview = __webpack_require__(/*! ./game_view */ "./scripts/game_view.js");
+const TfWebcamControl = __webpack_require__(/*! ./tf_webcam_control/tf_webcam_control */ "./scripts/tf_webcam_control/tf_webcam_control.js")
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('canvasRoot');
-    canvas.width = window.innerWidth * 0.8;
+    canvas.width = Math.min(window.innerWidth * 0.8, 1250);
     canvas.height = (window.innerHeight) * 0.6;
 
   const ctx = canvas.getContext('2d');
   const game = new Game(ctx);
   new Gameview(game, ctx).start();
 
+  // Modals to choose keyboard or webcam hand guestures.
   const modalInit = document.getElementById('modal-init');
   const modalLeft = document.getElementById('modal-left');
   const modalRight = document.getElementById('modal-right');
@@ -24386,6 +24388,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial model training steps
   document.getElementById('button-webcam')
     .addEventListener('click', () => {
+      new TfWebcamControl(game.platform);
+
       modalInit.style.display = 'none';
       modalLeft.style.display = 'block';
     });
@@ -24466,7 +24470,8 @@ class Game {
     // this.TfWebcamControl = new TfWebcamControl(this.platform);
     
     this.bricks = [];
-    this.startGame = false;
+    this.playGame = false;
+    this.score = 0;
 
     this.addBricks();   
     this.listenForMovements();
@@ -24500,7 +24505,7 @@ class Game {
           break;
 
         case 'Space':
-          this.startGame = !this.startGame;
+          this.playGame = !this.playGame;
           break;
       }
     })
@@ -24515,15 +24520,26 @@ class Game {
       }
     })
   }
+
+  countScore() {
+    this.score = Game.BRICK_POS.rows * Game.BRICK_POS.cols - this.bricks.length;
+    document.getElementById('score-counter').innerText = this.score;
+
+    if (this.bricks.length === 0) {
+      document.getElementById('modal-win').style.display = 'block';
+    }
+    
+  }
   
   step(timeDelta) {
-    if (this.startGame) {
+    if (this.playGame) {
       this.ball.move(timeDelta)
     } else {
       this.ball.resetBall();
     }
     
     this.checkCollisions();
+    this.countScore();
   }
   
   draw(ctx) {    
@@ -24540,7 +24556,7 @@ class Game {
 }
 
 Game.BG_COLOR = "#000000";
-Game.DIM_X = window.innerWidth * 0.8;
+Game.DIM_X = Math.min(window.innerWidth * 0.8, 1250);
 Game.DIM_Y = window.innerHeight * 0.8;
 Game.FPS = 32;
 
@@ -24608,11 +24624,11 @@ class Platform {
     this.ctx = ctx
 
     this.width = 150;
-    this.height = 15;
+    this.height = 10;
     this.fillStyle = 'white';
 
     this.x = (ctx.canvas.width - this.width) / 2;
-    this.y = (ctx.canvas.height - this.height) - 15;
+    this.y = (ctx.canvas.height - this.height) - 30;
 
     this.x_mid = this.x + (this.width / 2);
 
@@ -24734,16 +24750,6 @@ module.exports = ControllerDataset;
  * limitations under the License.
  * =============================================================================
  */
-
-// import * as tf from '@tensorflow/tfjs';
-
-// import {
-//   ControllerDataset
-// } from './controller_dataset';
-// import * as ui from './ui';
-// import {
-//   Webcam
-// } from './webcam';
 
 const tf = __webpack_require__(/*! @tensorflow/tfjs */ "./node_modules/@tensorflow/tfjs/dist/tf.esm.js");
 const ControllerDataset = __webpack_require__ (/*! ./controller_dataset */ "./scripts/tf_webcam_control/controller_dataset.js");
@@ -24979,7 +24985,7 @@ const statusElement = document.getElementById('status');
 const upButton = document.getElementById('up');
 const leftButton = document.getElementById('left');
 const rightButton = document.getElementById('right');
-
+// 
 
 function init() {
   document.getElementById('controller').style.display = '';
@@ -24996,7 +25002,6 @@ function startTfPrediction() {
 
 function predictClass(classId) {
   console.log(CONTROL_LOGS[classId]);
-  document.getElementById('webcamPredictions').innerText = CONTROL_LOGS[classId];
 }
 
 
@@ -25036,6 +25041,8 @@ async function handler(label) {
     addExampleHandler(label);
     document.body.setAttribute('data-active', CONTROLS[label]);
     total.innerText = totals[label]++;
+    console.log('captured');
+    
     await _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["nextFrame"]();
   }
   document.body.removeAttribute('data-active');

@@ -25,7 +25,7 @@ const statusElement = document.getElementById('status');
 const upButton = document.getElementById('up');
 const leftButton = document.getElementById('left');
 const rightButton = document.getElementById('right');
-
+// 
 
 export function init() {
   document.getElementById('controller').style.display = '';
@@ -42,7 +42,6 @@ export function startTfPrediction() {
 
 export function predictClass(classId) {
   console.log(CONTROL_LOGS[classId]);
-  document.getElementById('webcamPredictions').innerText = CONTROL_LOGS[classId];
 }
 
 
@@ -82,6 +81,8 @@ async function handler(label) {
     addExampleHandler(label);
     document.body.setAttribute('data-active', CONTROLS[label]);
     total.innerText = totals[label]++;
+    console.log('captured');
+    
     await tf.nextFrame();
   }
   document.body.removeAttribute('data-active');

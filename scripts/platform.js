@@ -4,11 +4,11 @@ class Platform {
     this.ctx = ctx
 
     this.width = 150;
-    this.height = 15;
+    this.height = 10;
     this.fillStyle = 'white';
 
     this.x = (ctx.canvas.width - this.width) / 2;
-    this.y = (ctx.canvas.height - this.height) - 15;
+    this.y = (ctx.canvas.height - this.height) - 30;
 
     this.x_mid = this.x + (this.width / 2);
 
