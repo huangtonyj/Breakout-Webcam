@@ -13,6 +13,7 @@ class Game {
     
     this.bricks = [];
     this.startGame = false;
+    this.score = 0;
 
     this.addBricks();   
     this.listenForMovements();
@@ -61,6 +62,11 @@ class Game {
       }
     })
   }
+
+  countScore() {
+    this.score = Game.BRICK_POS.rows * Game.BRICK_POS.cols - this.bricks.length;
+    document.getElementById('score-counter').innerText = this.score;
+  }
   
   step(timeDelta) {
     if (this.startGame) {
@@ -70,6 +76,7 @@ class Game {
     }
     
     this.checkCollisions();
+    this.countScore();
   }
   
   draw(ctx) {    
