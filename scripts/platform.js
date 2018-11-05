@@ -16,6 +16,8 @@ class Platform {
   }
 
   handleMove(dir) {
+    console.log(dir);
+    
     if ((dir === "ArrowLeft") && (this.x > 0)) {
       this.x -= this.velocity;
     } else if ((dir === "ArrowRight") && (this.x < this.ctx.canvas.width - this.width)) {

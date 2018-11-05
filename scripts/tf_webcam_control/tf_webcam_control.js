@@ -188,7 +188,7 @@ class TfWebcamControl {
       const classId = (await predictedClass.data())[0];
       predictedClass.dispose();
 
-      ui.predictClass(classId);
+      // ui.predictClass(classId);
       this.platform.handleMove(CONTROLS[classId])
       await tf.nextFrame();
     }
