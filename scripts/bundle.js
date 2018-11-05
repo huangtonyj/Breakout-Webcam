@@ -24326,8 +24326,8 @@ class Ball {
   }
 
   collideWithBrick(brick) {
-    const brickY = (this.y + this.radius >= brick.pos.y + brick.size.height) && (this.y <= brick.pos.y + brick.size.height);
-    const brickX = (this.x >= brick.pos.x) && (this.x <= brick.pos.x + brick.size.width);
+    const brickY = (this.y + this.radius >= brick.pos.y) && (this.y - this.radius <= brick.pos.y + brick.size.height);
+    const brickX = (this.x + this.radius >= brick.pos.x) && (this.x - this.radius <= brick.pos.x + brick.size.width);
     
     if (brickX && brickY) {
       this.dy *= -1;
