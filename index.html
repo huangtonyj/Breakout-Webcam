@@ -27,14 +27,14 @@
   <div class="webcam-box">
       <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
   </div>
-  <!-- <div class="webcam-box-outer">
-    <div class="webcam-box-inner">
-      <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
-    </div>
-  </div> -->
 
+  <div id='tf' class=''>
 
+    <div id="status"></div>
 
+    <div id='controller'></div>
+
+  </div>
 
 
   <!-- Greeting Modals -->
@@ -56,173 +56,118 @@
           👎 Keyboard please. ⌨️
         </button>
       </div>
-
+      
     </div>
   </div>
-
+  
   <div id='modal-left' class='modal'>
     <div class='modal-content'>
-      <h4>
+      <h3>
         First, you need to teach me what is left and right.
-      </h4>
+      </h3>
       <h4>
-        Please show me 100 pictures of a ✋ on the left side.
+        Please show me 100 pictures of a ✋on the left side.
       </h4>
-
-      <!-- <div class="webcam-box-outer">
-        <div class="webcam-box-inner">
-          <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
-        </div>
-      </div> -->
-
-      <!-- <div class="panel-cell panel-cell-left"> -->
-        <div class="thumb-box">
-          <!-- <div class="thumb-box-outer"> -->
-            <!-- <div class="thumb-box-inner"> -->
-              <canvas class="thumb" width=224 height=224 id="left-thumb"></canvas>
-            <!-- </div> -->
-            <button class="record-button" id="left" /><span>Add Sample</span></button>
-          <!-- </div> -->
-          <p>
-            <span id="left-total">0</span> examples
-          </p>
-        </div>
-      <!-- </div> -->
-
+      
+      <div class="thumb-box">
+        <canvas class="thumb" width=224 height=224 id="left-thumb"></canvas>
+        <button class="record-button" id="left" />Add Sample</button>
+        <p>
+          <span id="left-total">0</span> examples
+        </p>
+      </div>
+      
       <button id='button-right'>
         👉️ ️️Next Step 👉
       </button>
     </div>
   </div>
-
+  
   <div id='modal-right' class='modal'>
     <div class='modal-content'>
-      <h4>
+      <h3>
         Now the right hand.
       </h4>
       <h4>
         Please show me 100 pictures of a 🤚 on the right side.
       </h4>
-
-      <!-- <div class="webcam-box-outer">
-        <div class="webcam-box-inner">
-          <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
-        </div>
-      </div> -->
-
-      <div class="panel-cell panel-cell-right">
-        <div class="thumb-box">
-          <div class="thumb-box-outer">
-            <div class="thumb-box-inner">
-              <canvas class="thumb" width=224 height=224 id="right-thumb"></canvas>
-            </div>
-            <button class="record-button" id="right" /><span>Add Sample</span></button>
-          </div>
-          <p>
-            <span id="right-total">0</span> examples
-          </p>
-        </div>
-      </div><!-- ./panel-cell -->
-
+      
+      <div class="thumb-box">
+        <canvas class="thumb" width=224 height=224 id="right-thumb"></canvas>
+        <button class="record-button" id="right" />Add Sample</button>
+        <p>
+          <span id="right-total">0</span> examples
+        </p>
+      </div>
+      
       <button id='button-neutral'>
         👉️ ️️Next Step 👉
       </button>
     </div>
   </div>
-
+  
   <div id='modal-neutral' class='modal'>
     <div class='modal-content'>
-      <h4>
+      <h3>
         Thanks! I also need to know what is not left or right.
       </h4>
       <h4>
         Please show me 100 pictures of a 🖐 in the middle.
       </h4>
-
-      <!-- <div class="webcam-box-outer">
-        <div class="webcam-box-inner">
-          <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
-        </div>
-      </div> -->
-
-      <div class="panel-cell panel-cell-center">
-        <div class="thumb-box">
-          <div class="thumb-box-outer">
-            <div class="thumb-box-inner">
-              <canvas class="thumb" width=224 height=224 id="up-thumb"></canvas>
-            </div>
-            <button class="record-button" id="up" /><span>Add Sample</span></button>
-          </div>
-          <p>
-            <span id="up-total">0</span> examples
-          </p>
-        </div>
-      </div><!-- ./panel-cell -->
-
+      
+      <div class="thumb-box">
+        <canvas class="thumb" width=224 height=224 id="up-thumb"></canvas>            
+        <button class="record-button" id="up" /><span>Add Sample</span></button>
+        <p>
+          <span id="up-total">0</span> examples
+        </p>
+      </div>
+      
       <button id='button-train'>
         🎮 Train and Play 🕹
       </button>
-
+      
       <!-- Big buttons. -->
       <div class="panel-row big-buttons">
         <button id="train">
-          <span id="train-status">TRAIN MODEL</span>
+          <span id="train-status">Train Model</span>
         </button>
         <button id="predict">
-          <span>PLAY</span>
+          <span>Play</span>
         </button>
       </div><!-- /.panel-row -->
     </div>
   </div>
-
-
+  
+  
   <!-- Game Over Modal -->
   <div id='modal-win' class='modal'>
     <div class='modal-content'>
       <h1>
-        🎊 💯 Congrats! You win! 🎉 🎈
+        🎊 🏆 💯 Congrats! You win! 🎉 🎈 🥇
       </h1>  
-
+      
       <h3>
         Enjoyed the game? Check out my profile on:
       </h3>
-
+      
       <ul>
         <li> 
-        <a href='https://github.com/huangtonyj' target="_blank">
-        <i class="fab fa-github-square"></i> GitHub
+          <a href='https://github.com/huangtonyj' target="_blank">
+            <i class="fab fa-github-square"></i> GitHub
           </a>
         </li>
         
         <li> 
-        <a href='https://www.linkedin.com/in/tonyjhuang/' target="_blank">
+          <a href='https://www.linkedin.com/in/tonyjhuang/' target="_blank">
             <i class="fab fa-linkedin-in"></i> LinkedIn
           </a>
         </li>
       </ul>
-
+      
     </div>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-  <div id='tf' class=''>
-    
-    <div id="status"></div>
-
-    <div id='controller'></div>
-  
   </div>
     
 </body>
-<script src="./scripts/bundle.js"></script>
+  <script src="./scripts/bundle.js"></script>
 </html>
