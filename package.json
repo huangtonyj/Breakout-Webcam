@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@tensorflow/tfjs": "^0.13.3",
+    "buffer-loader": "^0.1.0",
     "css-loader": "^1.0.1",
     "node-sass": "^4.9.4",
     "sass-loader": "^7.1.0",
