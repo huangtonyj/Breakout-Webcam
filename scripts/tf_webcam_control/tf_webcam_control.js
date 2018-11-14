@@ -34,14 +34,13 @@ class TfWebcamControl {
     console.log('Loading spinner for loading trained model');
     
     this.init();
- 
   }
   
   async init() {
     await this.loadSetupWebcam();
 
     this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
-    
+
     // Load trained model
     this.model = await tf.loadModel('./scripts/tf_webcam_control/Breakout-model.json')
       console.log(this.model); 
@@ -59,8 +58,7 @@ class TfWebcamControl {
   }
 
   async loadDecapitatedMobilenet() {
-    const mobilenet = await tf.loadModel(
-      'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
+    const mobilenet = await tf.loadModel('https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
 
     // Return a model that outputs an internal activation.
     const layer = mobilenet.getLayer('conv_pw_13_relu');
