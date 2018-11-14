@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Modals to choose keyboard or webcam hand guestures.
   const modalInit = document.getElementById('modal-init');
-  const modalLeft = document.getElementById('modal-left');
-  const modalRight = document.getElementById('modal-right');
-  const modalNeutral = document.getElementById('modal-neutral');
+  // const modalLeft = document.getElementById('modal-left');
+  // const modalRight = document.getElementById('modal-right');
+  // const modalNeutral = document.getElementById('modal-neutral');
     
   // Use keyboard to play game
   document.getElementById('button-keyboard')
@@ -32,22 +32,22 @@ document.addEventListener('DOMContentLoaded', () => {
   //     modalLeft.style.display = 'block';
   //   });
 
-  document.getElementById('button-right')
-    .addEventListener('click', () => {
-      modalLeft.style.display = 'none';
-      modalRight.style.display = 'block';
-    });
+  // document.getElementById('button-right')
+  //   .addEventListener('click', () => {
+  //     modalLeft.style.display = 'none';
+  //     modalRight.style.display = 'block';
+  //   });
 
-  document.getElementById('button-neutral')
-    .addEventListener('click', () => {
-      modalRight.style.display = 'none';
-      modalNeutral.style.display = 'block';
-    });
+  // document.getElementById('button-neutral')
+  //   .addEventListener('click', () => {
+  //     modalRight.style.display = 'none';
+  //     modalNeutral.style.display = 'block';
+  //   });
 
-  document.getElementById('button-train')
-    .addEventListener('click', () => {
-      modalNeutral.style.display = 'none';
-    });
+  // document.getElementById('button-train')
+  //   .addEventListener('click', () => {
+  //     modalNeutral.style.display = 'none';
+  //   });
 
   document.getElementById('button-tf-webcam').addEventListener('click', () => {
     new TfWebcamControl(game.platform);

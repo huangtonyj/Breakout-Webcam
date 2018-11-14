@@ -30,26 +30,12 @@ class TfWebcamControl {
     this.webcam = new Webcam(document.getElementById('webcam'));
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
 
-    console.log('Please allow webcam');
+    alert('please allow webcam');
+    // console.log('Please allow webcam');
     console.log('Loading spinner for loading trained model');
     
-
-
     this.init();
-
-    document.getElementById('train').addEventListener('click', async () => {
-      ui.trainStatus('Training...');
-      await tf.nextFrame();
-      await tf.nextFrame();
-      this.isPredicting = false;
-      this.train();
-    });
-
-    document.getElementById('predict').addEventListener('click', () => {
-      ui.startTfPrediction();
-      this.isPredicting = true;
-      this.predict();
-    });      
+ 
   }
   
   async init() {

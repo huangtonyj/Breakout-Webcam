@@ -86,14 +86,14 @@ async function handler(label) {
   document.body.removeAttribute('data-active');
 }
 
-upButton.addEventListener('mousedown', () => handler(0));
-upButton.addEventListener('mouseup', () => mouseDown = false);
+// upButton.addEventListener('mousedown', () => handler(0));
+// upButton.addEventListener('mouseup', () => mouseDown = false);
 
-leftButton.addEventListener('mousedown', () => handler(1));
-leftButton.addEventListener('mouseup', () => mouseDown = false);
+// leftButton.addEventListener('mousedown', () => handler(1));
+// leftButton.addEventListener('mouseup', () => mouseDown = false);
 
-rightButton.addEventListener('mousedown', () => handler(2));
-rightButton.addEventListener('mouseup', () => mouseDown = false);
+// rightButton.addEventListener('mousedown', () => handler(2));
+// rightButton.addEventListener('mouseup', () => mouseDown = false);
 
 
 

@@ -24375,9 +24375,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Modals to choose keyboard or webcam hand guestures.
   const modalInit = document.getElementById('modal-init');
-  const modalLeft = document.getElementById('modal-left');
-  const modalRight = document.getElementById('modal-right');
-  const modalNeutral = document.getElementById('modal-neutral');
+  // const modalLeft = document.getElementById('modal-left');
+  // const modalRight = document.getElementById('modal-right');
+  // const modalNeutral = document.getElementById('modal-neutral');
     
   // Use keyboard to play game
   document.getElementById('button-keyboard')
@@ -24394,22 +24394,22 @@ document.addEventListener('DOMContentLoaded', () => {
   //     modalLeft.style.display = 'block';
   //   });
 
-  document.getElementById('button-right')
-    .addEventListener('click', () => {
-      modalLeft.style.display = 'none';
-      modalRight.style.display = 'block';
-    });
+  // document.getElementById('button-right')
+  //   .addEventListener('click', () => {
+  //     modalLeft.style.display = 'none';
+  //     modalRight.style.display = 'block';
+  //   });
 
-  document.getElementById('button-neutral')
-    .addEventListener('click', () => {
-      modalRight.style.display = 'none';
-      modalNeutral.style.display = 'block';
-    });
+  // document.getElementById('button-neutral')
+  //   .addEventListener('click', () => {
+  //     modalRight.style.display = 'none';
+  //     modalNeutral.style.display = 'block';
+  //   });
 
-  document.getElementById('button-train')
-    .addEventListener('click', () => {
-      modalNeutral.style.display = 'none';
-    });
+  // document.getElementById('button-train')
+  //   .addEventListener('click', () => {
+  //     modalNeutral.style.display = 'none';
+  //   });
 
   document.getElementById('button-tf-webcam').addEventListener('click', () => {
     new TfWebcamControl(game.platform);
@@ -24776,26 +24776,12 @@ class TfWebcamControl {
     this.webcam = new Webcam(document.getElementById('webcam'));
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
 
-    console.log('Please allow webcam');
+    alert('please allow webcam');
+    // console.log('Please allow webcam');
     console.log('Loading spinner for loading trained model');
     
-
-
     this.init();
-
-    document.getElementById('train').addEventListener('click', async () => {
-      ui.trainStatus('Training...');
-      await tf.nextFrame();
-      await tf.nextFrame();
-      this.isPredicting = false;
-      this.train();
-    });
-
-    document.getElementById('predict').addEventListener('click', () => {
-      ui.startTfPrediction();
-      this.isPredicting = true;
-      this.predict();
-    });      
+ 
   }
   
   async init() {
@@ -24995,14 +24981,14 @@ async function handler(label) {
   document.body.removeAttribute('data-active');
 }
 
-upButton.addEventListener('mousedown', () => handler(0));
-upButton.addEventListener('mouseup', () => mouseDown = false);
+// upButton.addEventListener('mousedown', () => handler(0));
+// upButton.addEventListener('mouseup', () => mouseDown = false);
 
-leftButton.addEventListener('mousedown', () => handler(1));
-leftButton.addEventListener('mouseup', () => mouseDown = false);
+// leftButton.addEventListener('mousedown', () => handler(1));
+// leftButton.addEventListener('mouseup', () => mouseDown = false);
 
-rightButton.addEventListener('mousedown', () => handler(2));
-rightButton.addEventListener('mouseup', () => mouseDown = false);
+// rightButton.addEventListener('mousedown', () => handler(2));
+// rightButton.addEventListener('mouseup', () => mouseDown = false);
 
 
 
