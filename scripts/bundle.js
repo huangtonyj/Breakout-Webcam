@@ -24411,6 +24411,11 @@ document.addEventListener('DOMContentLoaded', () => {
       modalNeutral.style.display = 'none';
     });
 
+  document.getElementById('button-tf-webcam').addEventListener('click', () => {
+    new TfWebcamControl(game.platform);
+    document.getElementById('modal-init').style.display = 'none';
+  });
+
 });
 
 
@@ -24789,7 +24794,7 @@ class TfWebcamControl {
       ui.startTfPrediction();
       this.isPredicting = true;
       this.predict();
-    });    
+    });      
   }
   
   async init() {
@@ -24811,10 +24816,14 @@ class TfWebcamControl {
         ui.drawThumb(img, label);
       });
     });
-
+    
     // Load trained model
     this.model = await tf.loadModel('./scripts/tf_webcam_control/Breakout-model.json')
     console.log(this.model); 
+
+    ui.startTfPrediction();
+    this.isPredicting = true;
+    this.predict();
   }
 
   async loadSetupWebcam () {
@@ -24906,8 +24915,8 @@ class TfWebcamControl {
   }
 
   async predict() {
-    console.log(this.model);
-    await this.model.save('downloads://Breakout-model')
+    // console.log(this.model);
+    // await this.model.save('downloads://Breakout-model')
 
 
     ui.isPredicting();

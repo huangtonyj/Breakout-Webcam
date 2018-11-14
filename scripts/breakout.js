@@ -49,5 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
       modalNeutral.style.display = 'none';
     });
 
+  document.getElementById('button-tf-webcam').addEventListener('click', () => {
+    new TfWebcamControl(game.platform);
+    document.getElementById('modal-init').style.display = 'none';
+  });
+
 });
 
