@@ -17,7 +17,6 @@
 
 const tf = require('@tensorflow/tfjs');
 const ControllerDataset = require ('./controller_dataset');
-const ui = require('./ui');
 const Webcam = require('./webcam');
 
 const NUM_CLASSES = 3;
@@ -31,7 +30,7 @@ class TfWebcamControl {
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
 
     alert('please allow webcam');
-    // console.log('Please allow webcam');
+    console.log('Please allow webcam');
     console.log('Loading spinner for loading trained model');
     
     this.init();
@@ -42,27 +41,11 @@ class TfWebcamControl {
     await this.loadSetupWebcam();
 
     this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
-
-    tf.tidy(() => this.decapitatedMobilenet.predict(this.webcam.capture()));
-
-    ui.init();
-
-    // REFACTOR THIS LATER
-    ui.setExampleHandler(label => {
-      tf.tidy(() => {
-        const img = this.webcam.capture();
-        this.controllerDataset.addExample(this.decapitatedMobilenet.predict(img), label);
-
-        // Draw the preview thumbnail.
-        ui.drawThumb(img, label);
-      });
-    });
     
     // Load trained model
     this.model = await tf.loadModel('./scripts/tf_webcam_control/Breakout-model.json')
-    console.log(this.model); 
+      console.log(this.model); 
 
-    ui.startTfPrediction();
     this.isPredicting = true;
     this.predict();
   }
@@ -88,11 +71,6 @@ class TfWebcamControl {
   }
 
   async predict() {
-    // console.log(this.model);
-    // await this.model.save('downloads://Breakout-model')
-
-
-    ui.isPredicting();
     while (this.isPredicting) {
       const predictedClass = tf.tidy(() => {
         // Capture the frame from the webcam.
@@ -114,11 +92,10 @@ class TfWebcamControl {
       const classId = (await predictedClass.data())[0];
       predictedClass.dispose();
 
-      ui.predictClass(classId);
+      console.log(CONTROLS[classId]);
       this.platform.handleMove(CONTROLS[classId])
       await tf.nextFrame();
     }
-    ui.donePredicting();
   }
 
 }

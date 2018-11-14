@@ -24763,7 +24763,6 @@ module.exports = ControllerDataset;
 
 const tf = __webpack_require__(/*! @tensorflow/tfjs */ "./node_modules/@tensorflow/tfjs/dist/tf.esm.js");
 const ControllerDataset = __webpack_require__ (/*! ./controller_dataset */ "./scripts/tf_webcam_control/controller_dataset.js");
-const ui = __webpack_require__(/*! ./ui */ "./scripts/tf_webcam_control/ui.js");
 const Webcam = __webpack_require__(/*! ./webcam */ "./scripts/tf_webcam_control/webcam.js");
 
 const NUM_CLASSES = 3;
@@ -24777,7 +24776,7 @@ class TfWebcamControl {
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
 
     alert('please allow webcam');
-    // console.log('Please allow webcam');
+    console.log('Please allow webcam');
     console.log('Loading spinner for loading trained model');
     
     this.init();
@@ -24788,27 +24787,11 @@ class TfWebcamControl {
     await this.loadSetupWebcam();
 
     this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
-
-    tf.tidy(() => this.decapitatedMobilenet.predict(this.webcam.capture()));
-
-    ui.init();
-
-    // REFACTOR THIS LATER
-    ui.setExampleHandler(label => {
-      tf.tidy(() => {
-        const img = this.webcam.capture();
-        this.controllerDataset.addExample(this.decapitatedMobilenet.predict(img), label);
-
-        // Draw the preview thumbnail.
-        ui.drawThumb(img, label);
-      });
-    });
     
     // Load trained model
     this.model = await tf.loadModel('./scripts/tf_webcam_control/Breakout-model.json')
-    console.log(this.model); 
+      console.log(this.model); 
 
-    ui.startTfPrediction();
     this.isPredicting = true;
     this.predict();
   }
@@ -24834,11 +24817,6 @@ class TfWebcamControl {
   }
 
   async predict() {
-    // console.log(this.model);
-    // await this.model.save('downloads://Breakout-model')
-
-
-    ui.isPredicting();
     while (this.isPredicting) {
       const predictedClass = tf.tidy(() => {
         // Capture the frame from the webcam.
@@ -24860,164 +24838,15 @@ class TfWebcamControl {
       const classId = (await predictedClass.data())[0];
       predictedClass.dispose();
 
-      ui.predictClass(classId);
+      console.log(CONTROLS[classId]);
       this.platform.handleMove(CONTROLS[classId])
       await tf.nextFrame();
     }
-    ui.donePredicting();
   }
 
 }
 
 module.exports = TfWebcamControl;
-
-/***/ }),
-
-/***/ "./scripts/tf_webcam_control/ui.js":
-/*!*****************************************!*\
-  !*** ./scripts/tf_webcam_control/ui.js ***!
-  \*****************************************/
-/*! exports provided: init, startTfPrediction, predictClass, isPredicting, donePredicting, trainStatus, addExampleHandler, setExampleHandler, drawThumb, draw */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "init", function() { return init; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startTfPrediction", function() { return startTfPrediction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "predictClass", function() { return predictClass; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isPredicting", function() { return isPredicting; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "donePredicting", function() { return donePredicting; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "trainStatus", function() { return trainStatus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addExampleHandler", function() { return addExampleHandler; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setExampleHandler", function() { return setExampleHandler; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "drawThumb", function() { return drawThumb; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "draw", function() { return draw; });
-/* harmony import */ var _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @tensorflow/tfjs */ "./node_modules/@tensorflow/tfjs/dist/tf.esm.js");
-/**
- * @license
- * Copyright 2018 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-
-
-const CONTROLS = ['up', 'left', 'right'];
-const CONTROL_LOGS = ['__', 'left', 'right'];
-
-const trainStatusElement = document.getElementById('train-status');
-const statusElement = document.getElementById('status');
-
-const upButton = document.getElementById('up');
-const leftButton = document.getElementById('left');
-const rightButton = document.getElementById('right');
-// 
-
-function init() {
-  // document.getElementById('controller').style.display = '';
-  // statusElement.style.display = 'none';
-  // console.log('ui was called!');
-}
-
-
-function startTfPrediction() {
-  // console.log('starting tf prediction');  
-}
-
-
-
-function predictClass(classId) {
-  console.log(CONTROL_LOGS[classId]);
-}
-
-
-
-function isPredicting() {
-  statusElement.style.visibility = 'visible';
-}
-function donePredicting() {
-  statusElement.style.visibility = 'hidden';
-}
-function trainStatus(status) {
-  trainStatusElement.innerText = status;
-}
-
-
-
-
-let addExampleHandler;
-function setExampleHandler(handler) {
-  addExampleHandler = handler;
-}
-
-
-
-let mouseDown = false;
-const totals = [0, 0, 0];
-
-
-const thumbDisplayed = {};
-
-async function handler(label) {
-  mouseDown = true;
-  const className = CONTROLS[label];
-  const button = document.getElementById(className);
-  const total = document.getElementById(className + '-total');
-  while (mouseDown) {
-    addExampleHandler(label);
-    document.body.setAttribute('data-active', CONTROLS[label]);
-    total.innerText = totals[label]++;
-    await _tensorflow_tfjs__WEBPACK_IMPORTED_MODULE_0__["nextFrame"]();
-  }
-  document.body.removeAttribute('data-active');
-}
-
-// upButton.addEventListener('mousedown', () => handler(0));
-// upButton.addEventListener('mouseup', () => mouseDown = false);
-
-// leftButton.addEventListener('mousedown', () => handler(1));
-// leftButton.addEventListener('mouseup', () => mouseDown = false);
-
-// rightButton.addEventListener('mousedown', () => handler(2));
-// rightButton.addEventListener('mouseup', () => mouseDown = false);
-
-
-
-
-function drawThumb(img, label) {
-  if (thumbDisplayed[label] == null) {
-    const thumbCanvas = document.getElementById(CONTROLS[label] + '-thumb');
-    draw(img, thumbCanvas);
-  }
-}
-
-
-
-
-function draw(image, canvas) {
-  const [width, height] = [224, 224];
-  const ctx = canvas.getContext('2d');
-  const imageData = new ImageData(width, height);
-  const data = image.dataSync();
-  for (let i = 0; i < height * width; ++i) {
-    const j = i * 4;
-    imageData.data[j + 0] = (data[i * 3 + 0] + 1) * 127;
-    imageData.data[j + 1] = (data[i * 3 + 1] + 1) * 127;
-    imageData.data[j + 2] = (data[i * 3 + 2] + 1) * 127;
-    imageData.data[j + 3] = 255;
-  }
-  ctx.putImageData(imageData, 0, 0);
-}
-
 
 /***/ }),
 
