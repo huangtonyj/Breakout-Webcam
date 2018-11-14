@@ -155,3 +155,17 @@ video {
   font-size: 26px;
 }
 
+.fas,
+.far,
+.fab {
+  font-size: 25px;
+  cursor: pointer;
+  margin: 5px;
+  color: black;
+}
+
+.fas:hover,
+.far:hover,
+.fab:hover {
+  color: blue;
+}
