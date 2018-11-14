@@ -24761,8 +24761,6 @@ const ControllerDataset = __webpack_require__ (/*! ./controller_dataset */ "./sc
 const ui = __webpack_require__(/*! ./ui */ "./scripts/tf_webcam_control/ui.js");
 const Webcam = __webpack_require__(/*! ./webcam */ "./scripts/tf_webcam_control/webcam.js");
 
-// const model = require('../../Breakout-model.json')
-
 const NUM_CLASSES = 3;
 const getLearningRate = 0.0001;
 const getBatchSizeFraction = 0.4;
@@ -24814,34 +24812,9 @@ class TfWebcamControl {
       });
     });
 
-    // console.log(model)
-    // this.model = await tf.loadModel(model)
-
-    
-    // this.model = await tf.loadModel('https://www.huangtonyj.com/assets/Breakout-model.json')
-    // this.model = await tf.loadModel('../../Breakout-model.json')
+    // Load trained model
     this.model = await tf.loadModel('./scripts/tf_webcam_control/Breakout-model.json')
-
-    // this.model = await tf.loadModel(tf.io.browserHTTPRequest(
-    //   'https://www.huangtonyj.com/assets/Breakout-model.json', {
-    //     method: 'GET',
-    //     headers: {
-    //       'mode': 'cors'
-    //     }
-    //   }));
-
-
-    // const jsonUpload = document.getElementById('json-upload');
-    // const weightsUpload = document.getElementById('weights-upload');
-
-    // console.log(jsonUpload);
-    // console.log(weightsUpload);
-
-    // this.model = await tf.loadModel(
-    //   tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
-
-    console.log(this.model);
-          
+    console.log(this.model); 
   }
 
   async loadSetupWebcam () {
@@ -24930,9 +24903,6 @@ class TfWebcamControl {
         }
       }
     });
-
-    
-    
   }
 
   async predict() {
