@@ -78,7 +78,8 @@ class TfWebcamControl {
 
     
     // this.model = await tf.loadModel('https://www.huangtonyj.com/assets/Breakout-model.json')
-    this.model = await tf.loadModel('../../Breakout-model.json')
+    // this.model = await tf.loadModel('../../Breakout-model.json')
+    this.model = await tf.loadModel('./Breakout-model.json')
 
     // this.model = await tf.loadModel(tf.io.browserHTTPRequest(
     //   'https://www.huangtonyj.com/assets/Breakout-model.json', {
