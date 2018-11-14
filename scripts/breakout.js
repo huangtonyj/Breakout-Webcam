@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   // Initial model training steps
-  document.getElementById('button-webcam')
-    .addEventListener('click', () => {
-      new TfWebcamControl(game.platform);
+  // document.getElementById('button-webcam')
+  //   .addEventListener('click', () => {
+  //     new TfWebcamControl(game.platform);
 
-      modalInit.style.display = 'none';
-      modalLeft.style.display = 'block';
-    });
+  //     modalInit.style.display = 'none';
+  //     modalLeft.style.display = 'block';
+  //   });
 
   document.getElementById('button-right')
     .addEventListener('click', () => {

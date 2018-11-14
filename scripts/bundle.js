@@ -439,7 +439,7 @@ var extendStatics=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&functio
 /*!******************************************************!*\
   !*** ./node_modules/@tensorflow/tfjs/dist/tf.esm.js ***!
   \******************************************************/
-/*! exports provided: version, setBackend, getBackend, disposeVariables, memory, version_core, nextFrame, environment, io, math, serialization, test_util, util, webgl, AdadeltaOptimizer, AdagradOptimizer, AdamOptimizer, AdamaxOptimizer, MomentumOptimizer, Optimizer, RMSPropOptimizer, SGDOptimizer, Tensor, TensorBuffer, variable, Variable, Rank, Reduction, ENV, Environment, DataStorage, image, linalg, losses, spectral, op, batchNormalization2d, batchNormalization3d, batchNormalization4d, batchNormalization, complex, real, imag, concat, concat1d, concat2d, concat3d, concat4d, split, conv1d, conv2d, conv2dDerFilter, depthwiseConv2d, separableConv2d, conv2dTranspose, matMul, dot, outerProduct, reverse, reverse1d, reverse2d, reverse3d, reverse4d, maxPool, avgPool, pool, slice, slice1d, slice2d, slice3d, slice4d, abs, acos, acosh, asin, asinh, atan, atanh, ceil, clipByValue, cos, cosh, erf, exp, expm1, floor, log, log1p, logSigmoid, neg, reciprocal, round, rsqrt, sigmoid, sign, sin, sinh, softplus, sqrt, square, step, tan, tanh, all, any, argMax, argMin, logSumExp, max, mean, min, moments, sum, prod, equal, equalStrict, greater, greaterEqual, greaterEqualStrict, greaterStrict, less, lessEqual, lessEqualStrict, lessStrict, notEqual, notEqualStrict, add, addN, addStrict, atan2, div, divStrict, floorDiv, maximum, maximumStrict, minimum, minimumStrict, mod, modStrict, mul, mulStrict, pow, powStrict, squaredDifference, squaredDifferenceStrict, sub, subStrict, elu, leakyRelu, prelu, relu, selu, logicalAnd, logicalNot, logicalOr, logicalXor, where, whereAsync, buffer, toPixels, print, batchToSpaceND, cast, clone, cumsum, depthToSpace, expandDims, eye, fromPixels, multinomial, oneHot, pad, pad1d, pad2d, pad3d, pad4d, rand, randomNormal, randomUniform, reshape, spaceToBatchND, squeeze, stack, tile, truncatedNormal, unstack, fill, linspace, ones, range, scalar, tensor, tensor1d, tensor2d, tensor3d, tensor4d, tensor5d, tensor6d, zeros, onesLike, zerosLike, transpose, softmax, localResponseNormalization, norm, gather, unsortedSegmentSum, basicLSTMCell, multiRNNCell, movingAverage, stridedSlice, topk, scatterND, fft, sparseToDense, gatherND, train, tidy, keep, dispose, time, profile, customGrad, grad, grads, valueAndGrad, valueAndGrads, variableGrads, constraints, initializers, layers, models, metrics, regularizers, CallbackList, CustomCallback, History, Callback, InputSpec, SymbolicTensor, Model, input, loadModel, model, registerCallbackConstructor, sequential, RNN, Sequential, LayerVariable, version_layers, FrozenModel, loadFrozenModel, version_converter */
+/*! exports provided: setBackend, getBackend, disposeVariables, memory, version_core, nextFrame, environment, io, math, serialization, test_util, util, webgl, AdadeltaOptimizer, AdagradOptimizer, AdamOptimizer, AdamaxOptimizer, MomentumOptimizer, Optimizer, RMSPropOptimizer, SGDOptimizer, Tensor, TensorBuffer, variable, Variable, Rank, Reduction, ENV, Environment, DataStorage, image, linalg, losses, spectral, op, batchNormalization2d, batchNormalization3d, batchNormalization4d, batchNormalization, complex, real, imag, concat, concat1d, concat2d, concat3d, concat4d, split, conv1d, conv2d, conv2dDerFilter, depthwiseConv2d, separableConv2d, conv2dTranspose, matMul, dot, outerProduct, reverse, reverse1d, reverse2d, reverse3d, reverse4d, maxPool, avgPool, pool, slice, slice1d, slice2d, slice3d, slice4d, abs, acos, acosh, asin, asinh, atan, atanh, ceil, clipByValue, cos, cosh, erf, exp, expm1, floor, log, log1p, logSigmoid, neg, reciprocal, round, rsqrt, sigmoid, sign, sin, sinh, softplus, sqrt, square, step, tan, tanh, all, any, argMax, argMin, logSumExp, max, mean, min, moments, sum, prod, equal, equalStrict, greater, greaterEqual, greaterEqualStrict, greaterStrict, less, lessEqual, lessEqualStrict, lessStrict, notEqual, notEqualStrict, add, addN, addStrict, atan2, div, divStrict, floorDiv, maximum, maximumStrict, minimum, minimumStrict, mod, modStrict, mul, mulStrict, pow, powStrict, squaredDifference, squaredDifferenceStrict, sub, subStrict, elu, leakyRelu, prelu, relu, selu, logicalAnd, logicalNot, logicalOr, logicalXor, where, whereAsync, buffer, toPixels, print, batchToSpaceND, cast, clone, cumsum, depthToSpace, expandDims, eye, fromPixels, multinomial, oneHot, pad, pad1d, pad2d, pad3d, pad4d, rand, randomNormal, randomUniform, reshape, spaceToBatchND, squeeze, stack, tile, truncatedNormal, unstack, fill, linspace, ones, range, scalar, tensor, tensor1d, tensor2d, tensor3d, tensor4d, tensor5d, tensor6d, zeros, onesLike, zerosLike, transpose, softmax, localResponseNormalization, norm, gather, unsortedSegmentSum, basicLSTMCell, multiRNNCell, movingAverage, stridedSlice, topk, scatterND, fft, sparseToDense, gatherND, train, tidy, keep, dispose, time, profile, customGrad, grad, grads, valueAndGrad, valueAndGrads, variableGrads, constraints, initializers, layers, models, metrics, regularizers, CallbackList, CustomCallback, History, Callback, InputSpec, SymbolicTensor, Model, input, loadModel, model, registerCallbackConstructor, sequential, RNN, Sequential, LayerVariable, version_layers, version, FrozenModel, loadFrozenModel, version_converter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24386,13 +24386,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   // Initial model training steps
-  document.getElementById('button-webcam')
-    .addEventListener('click', () => {
-      new TfWebcamControl(game.platform);
+  // document.getElementById('button-webcam')
+  //   .addEventListener('click', () => {
+  //     new TfWebcamControl(game.platform);
 
-      modalInit.style.display = 'none';
-      modalLeft.style.display = 'block';
-    });
+  //     modalInit.style.display = 'none';
+  //     modalLeft.style.display = 'block';
+  //   });
 
   document.getElementById('button-right')
     .addEventListener('click', () => {
@@ -24767,10 +24767,6 @@ const ui = __webpack_require__(/*! ./ui */ "./scripts/tf_webcam_control/ui.js");
 const Webcam = __webpack_require__(/*! ./webcam */ "./scripts/tf_webcam_control/webcam.js");
 
 const NUM_CLASSES = 3;
-const getLearningRate = 0.0001;
-const getBatchSizeFraction = 0.4;
-const getEpochs = 20;
-const getDenseUnits = 100;
 const CONTROLS = ['__', 'ArrowLeft', 'ArrowRight'];
 
 class TfWebcamControl {
@@ -24779,6 +24775,11 @@ class TfWebcamControl {
     this.platform = platform;
     this.webcam = new Webcam(document.getElementById('webcam'));
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
+
+    console.log('Please allow webcam');
+    console.log('Loading spinner for loading trained model');
+    
+
 
     this.init();
 
@@ -24843,74 +24844,6 @@ class TfWebcamControl {
     return tf.model({
       inputs: mobilenet.inputs,
       outputs: layer.output
-    });
-  }
-
-  async train() {
-    if (this.controllerDataset.xs == null) {
-      throw new Error('Add some examples before training!');
-    }
-
-    // Creates a 2-layer fully connected model. By creating a separate model,
-    // rather than adding layers to the mobilenet model, we "freeze" the weights
-    // of the mobilenet model, and only train weights from the new model.
-    this.model = tf.sequential({
-      layers: [
-        // Flattens the input to a vector so we can use it in a dense layer. While
-        // technically a layer, this only performs a reshape (and has no training
-        // parameters).
-        tf.layers.flatten({
-          inputShape: this.decapitatedMobilenet.outputs[0].shape.slice(1)
-        }),
-        // Layer 1.
-        tf.layers.dense({
-          units: getDenseUnits,
-          activation: 'relu',
-          kernelInitializer: 'varianceScaling',
-          useBias: true
-        }),
-        // Layer 2. The number of units of the last layer should correspond
-        // to the number of classes we want to predict.
-        tf.layers.dense({
-          units: NUM_CLASSES,
-          kernelInitializer: 'varianceScaling',
-          useBias: false,
-          activation: 'softmax'
-        })
-      ]
-    });
-
-    // Creates the optimizers which drives training of the model.
-    const optimizer = tf.train.adam(getLearningRate);
-
-    // We use categoricalCrossentropy which is the loss function we use for
-    // categorical classification which measures the error between our predicted
-    // probability distribution over classes (probability that an input is of each
-    // class), versus the label (100% probability in the true class)>
-    this.model.compile({
-      optimizer: optimizer,
-      loss: 'categoricalCrossentropy'
-    });
-
-    // We parameterize batch size as a fraction of the entire dataset because the
-    // number of examples that are collected depends on how many examples the user
-    // collects. This allows us to have a flexible batch size.
-    const batchSize =
-      Math.floor(this.controllerDataset.xs.shape[0] * getBatchSizeFraction);
-    if (!(batchSize > 0)) {
-      throw new Error(
-        `Batch size is 0 or NaN. Please choose a non-zero fraction.`);
-    }
-
-    // Train the model! Model.fit() will shuffle xs & ys so we don't have to.
-    this.model.fit(this.controllerDataset.xs, this.controllerDataset.ys, {
-      batchSize,
-      epochs: getEpochs,
-      callbacks: {
-        onBatchEnd: async (batch, logs) => {
-          ui.trainStatus('Loss: ' + logs.loss.toFixed(5));
-        }
-      }
     });
   }
 
