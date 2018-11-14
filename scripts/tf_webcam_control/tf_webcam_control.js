@@ -20,7 +20,7 @@ const ControllerDataset = require ('./controller_dataset');
 const ui = require('./ui');
 const Webcam = require('./webcam');
 
-const model = require('../../Breakout-model.json')
+// const model = require('../../Breakout-model.json')
 
 const NUM_CLASSES = 3;
 const getLearningRate = 0.0001;
@@ -73,8 +73,12 @@ class TfWebcamControl {
       });
     });
 
-    console.log(model)
-    this.model = await tf.loadModel(model)
+    // console.log(model)
+    // this.model = await tf.loadModel(model)
+
+    
+    this.model = await tf.loadModel('https://www.huangtonyj.com/assets/Breakout-model.json')
+
 
     // const jsonUpload = document.getElementById('json-upload');
     // const weightsUpload = document.getElementById('weights-upload');

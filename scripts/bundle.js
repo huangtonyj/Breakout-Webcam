@@ -86,17 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./Breakout-model.json":
-/*!*****************************!*\
-  !*** ./Breakout-model.json ***!
-  \*****************************/
-/*! exports provided: modelTopology, weightsManifest, default */
-/***/ (function(module) {
-
-module.exports = {"modelTopology":{"class_name":"Sequential","config":[{"class_name":"Flatten","config":{"name":"flatten_Flatten1","trainable":true,"batch_input_shape":[null,7,7,256],"dtype":"float32"}},{"class_name":"Dense","config":{"units":100,"activation":"relu","use_bias":true,"kernel_initializer":{"class_name":"VarianceScaling","config":{"scale":1,"mode":null,"distribution":null,"seed":null}},"bias_initializer":{"class_name":"Zeros","config":{}},"kernel_regularizer":null,"bias_regularizer":null,"activity_regularizer":null,"kernel_constraint":null,"bias_constraint":null,"name":"dense_Dense1","trainable":true}},{"class_name":"Dense","config":{"units":3,"activation":"softmax","use_bias":false,"kernel_initializer":{"class_name":"VarianceScaling","config":{"scale":1,"mode":null,"distribution":null,"seed":null}},"bias_initializer":{"class_name":"Zeros","config":{}},"kernel_regularizer":null,"bias_regularizer":null,"activity_regularizer":null,"kernel_constraint":null,"bias_constraint":null,"name":"dense_Dense2","trainable":true}}],"keras_version":"tfjs-layers 0.8.3","backend":"tensor_flow.js"},"weightsManifest":[{"paths":["./Breakout-model.weights.bin"],"weights":[{"name":"dense_Dense1/kernel","shape":[12544,100],"dtype":"float32"},{"name":"dense_Dense1/bias","shape":[100],"dtype":"float32"},{"name":"dense_Dense2/kernel","shape":[100,3],"dtype":"float32"}]}]};
-
-/***/ }),
-
 /***/ "./node_modules/@tensorflow/tfjs-converter/dist/tf-converter.esm.js":
 /*!**************************************************************************!*\
   !*** ./node_modules/@tensorflow/tfjs-converter/dist/tf-converter.esm.js ***!
@@ -24772,7 +24761,7 @@ const ControllerDataset = __webpack_require__ (/*! ./controller_dataset */ "./sc
 const ui = __webpack_require__(/*! ./ui */ "./scripts/tf_webcam_control/ui.js");
 const Webcam = __webpack_require__(/*! ./webcam */ "./scripts/tf_webcam_control/webcam.js");
 
-const model = __webpack_require__(/*! ../../Breakout-model.json */ "./Breakout-model.json")
+// const model = require('../../Breakout-model.json')
 
 const NUM_CLASSES = 3;
 const getLearningRate = 0.0001;
@@ -24825,8 +24814,12 @@ class TfWebcamControl {
       });
     });
 
-    console.log(model)
-    this.model = await tf.loadModel(model)
+    // console.log(model)
+    // this.model = await tf.loadModel(model)
+
+    
+    this.model = await tf.loadModel('https://www.huangtonyj.com/assets/Breakout-model.json')
+
 
     // const jsonUpload = document.getElementById('json-upload');
     // const weightsUpload = document.getElementById('weights-upload');
