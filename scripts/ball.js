@@ -44,7 +44,7 @@ class Ball {
   resetBall() {
     this.x = this.platform.x + (this.platform.width / 2);
     this.y = this.platform.y - 20;
-    this.dx = this.ballVelocity;
+    this.dx = this.ballVelocity * (Math.random() < 0.5 ? -1 : 1);
     this.dy = -this.ballVelocity;
   }
 
@@ -63,8 +63,8 @@ class Ball {
     const platformX = (this.x + this.radius >= this.platform.x) && (this.x - this.radius <= this.platform.x + this.platform.width);
 
     if (platformY && platformX) {
-      this.dy *= -1 * 1.1;
-      this.dx *= Math.sqrt((1 + Math.cos(this.x - this.platform.x + (this.platform.width / 2))));
+      this.dy *= -1 * 1.05;
+      // this.dx *= Math.sqrt((1 + Math.cos(this.x - this.platform.x + (this.platform.width / 2))));
     }
   }
   
