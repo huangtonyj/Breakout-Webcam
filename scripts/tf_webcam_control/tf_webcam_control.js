@@ -27,10 +27,6 @@ const getEpochs = 20;
 const getDenseUnits = 100;
 const CONTROLS = ['__', 'ArrowLeft', 'ArrowRight'];
 
-
-const jsonFile = require('../../Breakout-model.json')
-const weightsFile = require("buffer-loader!../../Breakout-model.weights.bin");
-
 class TfWebcamControl {
 
   constructor(platform) {
@@ -81,18 +77,9 @@ class TfWebcamControl {
 
     console.log(jsonUpload);
     console.log(weightsUpload);
-    
-    jsonUpload.files.append(jsonFile);
-    weightsUpload.files.append(weightsFile);
 
     this.model = await tf.loadModel(
       tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
-
-        
-    // this.model = await tf.loadModel(tf.io.browserFiles([
-    //     jsonFile,
-    //     weightsFile
-    //   ]));
 
     console.log(this.model);
           
