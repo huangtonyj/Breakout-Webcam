@@ -3,7 +3,7 @@ class Platform {
   constructor(ctx) {    
     this.ctx = ctx
 
-    this.width = 150;
+    this.width = 225;
     this.height = 10;
     this.fillStyle = 'white';
 
