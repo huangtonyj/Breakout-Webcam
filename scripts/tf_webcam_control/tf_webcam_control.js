@@ -20,6 +20,8 @@ const ControllerDataset = require ('./controller_dataset');
 const ui = require('./ui');
 const Webcam = require('./webcam');
 
+const model = require('../../Breakout-model.json')
+
 const NUM_CLASSES = 3;
 const getLearningRate = 0.0001;
 const getBatchSizeFraction = 0.4;
@@ -71,15 +73,17 @@ class TfWebcamControl {
       });
     });
 
+    console.log(model)
+    this.model = await tf.loadModel(model)
 
-    const jsonUpload = document.getElementById('json-upload');
-    const weightsUpload = document.getElementById('weights-upload');
+    // const jsonUpload = document.getElementById('json-upload');
+    // const weightsUpload = document.getElementById('weights-upload');
 
-    console.log(jsonUpload);
-    console.log(weightsUpload);
+    // console.log(jsonUpload);
+    // console.log(weightsUpload);
 
-    this.model = await tf.loadModel(
-      tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
+    // this.model = await tf.loadModel(
+    //   tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
 
     console.log(this.model);
           
