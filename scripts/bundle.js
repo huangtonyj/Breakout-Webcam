@@ -24321,7 +24321,7 @@ class Ball {
   resetBall() {
     this.x = this.platform.x + (this.platform.width / 2);
     this.y = this.platform.y - 20;
-    this.dx = this.ballVelocity;
+    this.dx = this.ballVelocity * (Math.random() < 0.5 ? -1 : 1);
     this.dy = -this.ballVelocity;
   }
 
@@ -24340,8 +24340,8 @@ class Ball {
     const platformX = (this.x + this.radius >= this.platform.x) && (this.x - this.radius <= this.platform.x + this.platform.width);
 
     if (platformY && platformX) {
-      this.dy *= -1 * 1.1;
-      this.dx *= Math.sqrt((1 + Math.cos(this.x - this.platform.x + (this.platform.width / 2))));
+      this.dy *= -1 * 1.05;
+      // this.dx *= Math.sqrt((1 + Math.cos(this.x - this.platform.x + (this.platform.width / 2))));
     }
   }
   
@@ -24620,7 +24620,7 @@ class Platform {
   constructor(ctx) {    
     this.ctx = ctx
 
-    this.width = 150;
+    this.width = 225;
     this.height = 10;
     this.fillStyle = 'white';
 
@@ -24761,6 +24761,10 @@ const ControllerDataset = __webpack_require__ (/*! ./controller_dataset */ "./sc
 const ui = __webpack_require__(/*! ./ui */ "./scripts/tf_webcam_control/ui.js");
 const Webcam = __webpack_require__(/*! ./webcam */ "./scripts/tf_webcam_control/webcam.js");
 
+// const theModel = require('../../Breakout-model.json');
+// const theModelWeights = require('../../Breakout-model.weights.bin');
+// const tfModel = tf.loadModel(tf.io.browserFiles([theModel, theModelWeights]));
+
 const NUM_CLASSES = 3;
 const getLearningRate = 0.0001;
 const getBatchSizeFraction = 0.4;
@@ -24789,14 +24793,14 @@ class TfWebcamControl {
       ui.startTfPrediction();
       this.isPredicting = true;
       this.predict();
-    });
+    });    
   }
   
   async init() {
     await this.loadSetupWebcam();
 
     this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
-      console.log(this.decapitatedMobilenet);
+      // console.log(this.decapitatedMobilenet);
 
     tf.tidy(() => this.decapitatedMobilenet.predict(this.webcam.capture()));
 
@@ -24812,6 +24816,28 @@ class TfWebcamControl {
         ui.drawThumb(img, label);
       });
     });
+
+        // console.log(theModel);
+        // // console.log(theModelWeights);
+
+        // // const tfModel = tf.loadModel(tf.io.browserFiles([theModel, theModelWeights]));
+        // const tfModel = await tf.loadModel(theModel);
+
+        // console.log(tfModel);
+
+        const jsonUpload = document.getElementById('json-upload');
+        const weightsUpload = document.getElementById('weights-upload');
+
+        console.log(jsonUpload);
+        console.log(weightsUpload);
+        
+
+        // const this.model = await tf.loadModel(
+        this.model = await tf.loadModel(
+          tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
+          // console.log(model);
+          console.log(this.model);
+          
   }
 
   async loadSetupWebcam () {
@@ -24902,11 +24928,17 @@ class TfWebcamControl {
       }
     });
 
-    console.log(this.model);
+    
     
   }
 
   async predict() {
+    console.log(this.model);
+
+    await this.model.save('downloads://Breakout-model')
+    // await this.model.save('localstorage://my-model-1');
+
+    
     ui.isPredicting();
     while (this.isPredicting) {
       const predictedClass = tf.tidy(() => {
@@ -24929,7 +24961,7 @@ class TfWebcamControl {
       const classId = (await predictedClass.data())[0];
       predictedClass.dispose();
 
-      // ui.predictClass(classId);
+      ui.predictClass(classId);
       this.platform.handleMove(CONTROLS[classId])
       await tf.nextFrame();
     }

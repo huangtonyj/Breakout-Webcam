@@ -48,14 +48,13 @@ class TfWebcamControl {
       ui.startTfPrediction();
       this.isPredicting = true;
       this.predict();
-    });
+    });    
   }
   
   async init() {
     await this.loadSetupWebcam();
 
     this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
-      console.log(this.decapitatedMobilenet);
 
     tf.tidy(() => this.decapitatedMobilenet.predict(this.webcam.capture()));
 
@@ -71,6 +70,18 @@ class TfWebcamControl {
         ui.drawThumb(img, label);
       });
     });
+
+
+        const jsonUpload = document.getElementById('json-upload');
+        const weightsUpload = document.getElementById('weights-upload');
+
+        console.log(jsonUpload);
+        console.log(weightsUpload);
+        
+        this.model = await tf.loadModel(
+          tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
+          console.log(this.model);
+          
   }
 
   async loadSetupWebcam () {
@@ -161,11 +172,15 @@ class TfWebcamControl {
       }
     });
 
-    console.log(this.model);
+    
     
   }
 
   async predict() {
+    console.log(this.model);
+    await this.model.save('downloads://Breakout-model')
+
+
     ui.isPredicting();
     while (this.isPredicting) {
       const predictedClass = tf.tidy(() => {
@@ -188,7 +203,7 @@ class TfWebcamControl {
       const classId = (await predictedClass.data())[0];
       predictedClass.dispose();
 
-      // ui.predictClass(classId);
+      ui.predictClass(classId);
       this.platform.handleMove(CONTROLS[classId])
       await tf.nextFrame();
     }
