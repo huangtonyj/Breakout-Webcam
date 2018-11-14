@@ -24864,7 +24864,6 @@ class TfWebcamControl {
         }),
         // Layer 1.
         tf.layers.dense({
-          // units: ui.getDenseUnits(),
           units: getDenseUnits,
           activation: 'relu',
           kernelInitializer: 'varianceScaling',
