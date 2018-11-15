@@ -41,7 +41,7 @@ button {
   font-size: 16px;
   margin: 10px;
   padding: 10px 15px;
-  box-shadow: 1px 1px 1px 1px gray;
+  box-shadow: 1px 1px 2px 2px gray;
 }
 
 button:hover {
@@ -65,7 +65,6 @@ video {
 
 .sideglow{
   display: block;
-  width: 1px;
   height: 300px;
   align-self: center;
   width: 1px;
@@ -112,6 +111,10 @@ video {
 
 #modal-loading{
   display: none;
+}
+
+#loading{
+  top: 50%;
 }
 
 #modal-win {

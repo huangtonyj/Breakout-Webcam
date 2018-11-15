@@ -20,14 +20,14 @@ class Platform {
     const rightGLow = document.getElementById('sideglow-right');
    
     if ((dir === "ArrowLeft") && (this.x > 0)) {
-      leftGlow.style.boxShadow = "0px 0px 50px 20px rgba(0, 128, 0, 0.5)";
+      leftGlow.style.boxShadow = "0px 0px 50px 75px rgba(0, 128, 0, 0.5)";
       this.x -= this.velocity;
-      setTimeout(() => leftGlow.style.boxShadow = '', 750);
+      setTimeout(() => leftGlow.style.boxShadow = '', 667);
 
     } else if ((dir === "ArrowRight") && (this.x < this.ctx.canvas.width - this.width)) {
-      rightGLow.style.boxShadow = "0px 0px 50px 20px rgba(0, 128, 0, 0.5)";
+      rightGLow.style.boxShadow = "0px 0px 50px 75px rgba(0, 128, 0, 0.5)";
       this.x += this.velocity;
-      setTimeout(() => rightGLow.style.boxShadow = '', 750);
+      setTimeout(() => rightGLow.style.boxShadow = '', 667);
     }
   }
 
