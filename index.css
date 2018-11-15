@@ -56,6 +56,13 @@ video {
   height: 150px;
 }
 
+.divider {
+  height: 1px;
+  width: 100%;
+  margin: 40px 0px;
+  background-color: lightgray;
+}
+
 #game-div {
   display: flex;
   flex-direction: row;
@@ -73,7 +80,7 @@ video {
 
 .webcam-box {
   margin: 15px;
-  z-index: 2;
+  z-index: 1;
 }
 
 .modal {
@@ -112,14 +119,16 @@ video {
 }
 
 #video-sample{
-  margin: 50px 25px;
-  border: 3px solid lightgray;
+  margin: 0px 15px;
+  border: 1px solid lightgray;
 }
 
 #video-sample video{
   width: 100%;
   height: 300px;
   max-height: 100%; 
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
 }
 
 #modal-loading{
