@@ -5,7 +5,7 @@ class Ball {
 
     this.platform = platform;
     
-    this.ballVelocity = 6;
+    this.ballVelocity = 5;
     this.radius = 8;
     this.fillStyle = 'orange';
     this.strokeStyle = 'black';
