@@ -11,7 +11,7 @@
 </head>
 <body>
   
-  <div class='header'>
+  <div id='header'>
     <h1 id='Greeting'>
       Breakout-Webcam
     </h1>  
@@ -35,42 +35,32 @@
       <video autoplay playsinline muted id="webcam" width="224" height="224"></video>
   </div>
 
-  <!-- <div id='tf' class=''>
+  <div id="contacts-container">
+    <a href="https://www.huangtonyj.com" target="_blank">
+      <!-- <i class="far fa-id-card" /> -->
+      <i class="far fa-id-card"></i>
+    </a>
 
-    <div id="status"></div>
+    <a href="https://www.linkedin.com/in/tonyjhuang/" target="_blank">
+      <i class="fab fa-linkedin"></i>
+    </a>
 
-    <div id='controller'></div>
+    <a href="https://github.com/huangtonyj" target="_blank">
+      <i class="fab fa-github-square"></i>
+    </a>
 
-  </div> -->
+    <a href="mailto:huangtonyj91@gmail.com?Subject=Hello%20Tony">
+      <i class="far fa-envelope"></i>
+    </a>
 
-  <div class="get-the-app-container">
-    <p>Lets, GET IN TOUCH!</p>
-    <div>
-      <a href="https://www.huangtonyj.com" target="_blank">
-        <!-- <i class="far fa-id-card" /> -->
-        <i class="far fa-id-card"></i>
-      </a>
+    <a href="https://angel.co/tony-huang-10" target="_blank">
+      <i class="fab fa-angellist"></i>
+    </a>
 
-      <a href="https://www.linkedin.com/in/tonyjhuang/" target="_blank">
-        <i class="fab fa-linkedin"></i>
-      </a>
-
-      <a href="https://github.com/huangtonyj" target="_blank">
-        <i class="fab fa-github-square"></i>
-      </a>
-
-      <a href="mailto:huangtonyj91@gmail.com?Subject=Hello%20Tony">
-        <i class="far fa-envelope"></i>
-      </a>
-
-      <a href="https://angel.co/tony-huang-10" target="_blank">
-        <i class="fab fa-angellist"></i>
-      </a>
-
-      <a href="https://www.instagram.com/futuretony/" target="_blank">
-        <i class="fab fa-instagram"></i>
-      </a>
-    </div>
+    <a href="https://www.instagram.com/futuretony/" target="_blank">
+      <i class="fab fa-instagram"></i>
+    </a>
+  </div>
 
 
   <!-- Greeting Modals -->
@@ -91,8 +81,28 @@
           👎 Keyboard please. ⌨️
         </button>
       </div>
+
+      <div class="loader">
+        <div class="platform"></div>
+        <div class="ball"></div>
+      </div>
       
     </div>
+  </div> 
+
+  <!-- Loading Modals -->
+  <div id='modal-loading' class='modal'>
+    <!-- <div class='modal-content'> -->
+      <!-- <h1 id='loading'>
+        Loading...
+      </h1> -->
+      
+      <div class="loader">
+        <div class="platform"></div>
+        <div class="ball"></div>
+      </div>
+      
+    <!-- </div> -->
   </div> 
   
   <!-- Game Over Modal -->

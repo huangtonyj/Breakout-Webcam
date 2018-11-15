@@ -16,6 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // const modalLeft = document.getElementById('modal-left');
   // const modalRight = document.getElementById('modal-right');
   // const modalNeutral = document.getElementById('modal-neutral');
+
+  // Use webcam hand guesture controls to play game
+  document.getElementById('button-tf-webcam').addEventListener('click', () => {
+    new TfWebcamControl(game.platform);
+    modalInit.style.display = 'none';
+  });
     
   // Use keyboard to play game
   document.getElementById('button-keyboard')
@@ -48,11 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
   //   .addEventListener('click', () => {
   //     modalNeutral.style.display = 'none';
   //   });
-
-  document.getElementById('button-tf-webcam').addEventListener('click', () => {
-    new TfWebcamControl(game.platform);
-    document.getElementById('modal-init').style.display = 'none';
-  });
 
 });
 

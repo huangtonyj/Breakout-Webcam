@@ -19,12 +19,6 @@ h3 {
   margin: 10px;
 }
 
-h4 {
-  font-size: 20px;
-  font-weight: 500;
-  margin: 0px 5px 10px 5px;
-}
-
 p {
   font-size: 20px;
   font-weight: 500;
@@ -57,12 +51,16 @@ video {
   transform: scaleX(-1);
 }
 
+#header {
+  flex: 1
+}
+
 #game-div {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
+  flex: 1
 }
 
 .sideglow{
@@ -155,6 +153,10 @@ video {
   font-size: 26px;
 }
 
+#contacts-container {
+  flex: 1
+}
+
 .fas,
 .far,
 .fab {
@@ -168,4 +170,78 @@ video {
 .far:hover,
 .fab:hover {
   color: blue;
+}
+
+
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 510px;
+  height: 500px;
+  overflow: hidden;
+}
+
+.platform {
+  height: 10px;
+  width: 0;
+  background: white;
+  position: fixed;
+  top: 77%;
+  -webkit-animation: platform 2s ease-in-out infinite;
+  animation: platform 2s ease-in-out infinite;
+}
+
+@keyframes platform {
+  0% {
+    left: 0;
+    width: 100px;
+  }
+
+  50% {
+    left: 400px;
+    width: 100px;
+  }
+
+  100% {
+    left: 0;
+    width: 100px;
+  }
+}
+
+.ball {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background: orange;
+  position: fixed;
+  top: 50%;
+
+  -webkit-animation: ball 2s ease-in-out infinite;
+  animation: ball 2s ease-in-out infinite;
+}
+
+@keyframes ball {
+  0% {
+    top: 10%;
+    left: 0px;
+  }
+  25% {
+    top: 75%;
+  }
+  50% {
+    left: 500px;
+    top: 10%;
+  }
+  75% {
+    top: 75%;
+  } 
+  100% {
+    left: 0px;
+    top: 10%;
+  }
 }
