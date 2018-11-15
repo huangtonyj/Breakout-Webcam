@@ -51,6 +51,8 @@ If webcam controls was chosen, the webcam starts up and the trained model starts
 
 While the webcam is starting and model is loading up, I created a custom spinner that mimics the game with CSS.
 
+![alt text](assets/images/breakout-loading-spinner.gif "Breakout Loading Spinner GIF")
+
 ```html
 <div class="loader">
   <div class="platform"></div>
@@ -136,7 +138,7 @@ ___
 
 ## Features in the Pipeline:
 
-* Improve model prediction accuracy by
+* Train a more accurate model by
     * Training with both a dark and bright background.
     * Sampling from a diverse set of skin toned players.
 * Visual/Audio cue that hand was out of webcam frame.
