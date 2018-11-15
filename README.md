@@ -5,7 +5,7 @@ ___
 
 [Breakout-Webcam](https://huangtonyj.github.io/Breakout-Webcam/) is a classic Atari Breakout game powered by machine learning to play with hand gestures. It can be played with a keyboard or waving hand gestures.
 
-![alt text](assets/images/breakout.gif "Breakout Intro GIF")
+![Breakout Intro GIF](assets/images/breakout.gif "Breakout Intro GIF")
 
 ___
 
