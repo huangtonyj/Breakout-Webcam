@@ -1,34 +1,38 @@
 # Breakout-Webcam
+
 ___
 [Live Link](https://huangtonyj.github.io/Breakout-Webcam/)
 
-[Breakout-Webcam](https://huangtonyj.github.io/Breakout-Webcam/) is a classic Atari Breakout game powered by machine learning to play with hand gestures.
+[Breakout-Webcam](https://huangtonyj.github.io/Breakout-Webcam/) is a classic Atari Breakout game powered by machine learning to play with hand gestures. It can be played with a keyboard and waving hand gestures.
+
+![alt text](assets/images/breakout.gif "Breakout Intro GIF")
+
 ___
-## Features
-  * Feature 1
-  * Feature 2
-___
+
 ## Technologies Used
-  * Tech 1
-  * Tech 2
+
+* TensorFlow.js
+* JavaScript
+* HTML5 + Canvas
+* CSS3
+* Webpack
+
 ___
+
+## How does it work?
 ## Feature Challenges/Highlights
+
+Given a week time to complete this project, implementing some sort of machine learning was defintely a stretch. The very first set of MVPs were to build a product playable with the keyboard inputs. There were minor bugs and hiccups along the way like ball gained too much speed and skipped frames thus avoided some collision detection logic.
+
+After the game was playable with keyboard inputs, the next step was to incorporate webcam controls. This was no easy feat but I have to thank the [Google TensorFlow.js](https://js.tensorflow.org/) team for wonderful examples to wrok from.
+
 ### Incorporating TensorFlow
+
 0. Build functional game with keyboard controls
 1. Training a model
 2. Incorporating predictions
 3. model accuracy and black box
 
-
-![alt text](assets/images/breakout.mp4 "Post Index")
-
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/pv3ReW3SCIM/0.jpg)](https://www.youtube.com/watch?v=pv3ReW3SCIM)
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=pv3ReW3SCIM
-" target="_blank"><img src="http://img.youtube.com/vi/pv3ReW3SCIM/0.jpg" 
-alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
-
-To take full advantage of React, I simplified my codebase by reusing these components in both places.
 
 ```javascript
   <div className='post-index-item'>
