@@ -49,7 +49,7 @@ If webcam controls was chosen, the webcam starts up and the trained model starts
 
 ## Loading Spinner Easter Egg
 
-While the webcam is starting and model is loading up, I created a custom spinner that mimics the game with CSS.
+While the webcam is starting and model is loading, I created a custom spinner that mimics the game with CSS.
 
 ![alt text](assets/images/breakout-loading-spinner.gif "Breakout Loading Spinner GIF")
 
