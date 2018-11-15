@@ -39,7 +39,7 @@ class TfWebcamControl {
 
     // Load trained model
     this.model = await tf.loadModel('./scripts/tf_webcam_control/Breakout-model.json')
-      console.log(this.model); 
+      // console.log(this.model); 
       
     setTimeout(() => {
       document.getElementById('modal-loading').style.display = 'none';
@@ -89,7 +89,7 @@ class TfWebcamControl {
       const classId = (await predictedClass.data())[0];
       predictedClass.dispose();
 
-      console.log(CONTROLS[classId]);
+      // console.log(CONTROLS[classId]);
       this.platform.handleMove(CONTROLS[classId])
       await tf.nextFrame();
     }

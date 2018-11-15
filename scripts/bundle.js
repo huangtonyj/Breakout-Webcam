@@ -24596,7 +24596,7 @@ class Platform {
   constructor(ctx) {    
     this.ctx = ctx
 
-    this.width = 225;
+    this.width = 240;
     this.height = 10;
     this.fillStyle = 'white';
 
@@ -24605,7 +24605,7 @@ class Platform {
 
     this.x_mid = this.x + (this.width / 2);
 
-    this.velocity = 20;
+    this.velocity = 24;
   }
 
   handleMove(dir) {
@@ -24633,7 +24633,7 @@ class Platform {
   
 }
 
-const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
+const NORMAL_FRAME_TIME_DELTA = 1000 / 120;
 
 module.exports = Platform;
 
@@ -24756,7 +24756,7 @@ class TfWebcamControl {
 
     // Load trained model
     this.model = await tf.loadModel('./scripts/tf_webcam_control/Breakout-model.json')
-      console.log(this.model); 
+      // console.log(this.model); 
       
     setTimeout(() => {
       document.getElementById('modal-loading').style.display = 'none';
@@ -24806,7 +24806,7 @@ class TfWebcamControl {
       const classId = (await predictedClass.data())[0];
       predictedClass.dispose();
 
-      console.log(CONTROLS[classId]);
+      // console.log(CONTROLS[classId]);
       this.platform.handleMove(CONTROLS[classId])
       await tf.nextFrame();
     }
