@@ -36,7 +36,8 @@ ul {
 }
 
 button {
-  border-radius: 15px;
+  color: #385185;
+  border-radius: 5px;
   font-size: 16px;
   margin: 10px;
   padding: 10px 15px;
@@ -95,7 +96,7 @@ video {
   margin: 5% auto;
   padding: 20px;
   border: 1px solid #888;
-  border-radius: 10px;
+  border-radius: 5px;
   width: 80%;
   max-width: 750px;
   display: flex;
@@ -113,7 +114,7 @@ video {
 }
 
 #modal-win {
-  display: none;
+  display: block;
 }
 
 #modal-win ul {
@@ -123,7 +124,7 @@ video {
 
 #modal-win li {
   margin: 15px;
-  font-size: 26px;
+  font-size: 16px;
 }
 
 .fas,
@@ -141,7 +142,18 @@ video {
   color: blue;
 }
 
+#button-tf-webcam {
+  animation: shake 0.70s;
+  animation-iteration-count: infinite;
+}
 
+@keyframes shake {
+  0% {transform: rotate(0deg);}
+  25% {transform: rotate(0.5deg);}
+  50% {transform: rotate(0deg) scale(1.1);}
+  75% {transform: rotate(-0.5deg);}
+  100% {transform: rotate(0deg);}
+}
 
 .loader {
   position: absolute;
