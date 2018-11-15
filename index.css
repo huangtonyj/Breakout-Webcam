@@ -117,7 +117,7 @@ video {
 }
 
 #modal-loading{
-  display: none;
+  display: flex;
 }
 
 #loading{

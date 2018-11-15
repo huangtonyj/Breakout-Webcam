@@ -67,7 +67,7 @@ class Game {
     document.getElementById('score-counter').innerText = this.score;
 
     if (this.bricks.length === 0) {
-      document.getElementById('modal-win').style.display = 'block';
+      document.getElementById('modal-win').style.display = 'flex';
     }
     
   }

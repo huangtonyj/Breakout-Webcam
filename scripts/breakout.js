@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('button-tf-webcam').addEventListener('click', () => {
     new TfWebcamControl(game.platform);
     document.getElementById('modal-init').style.display = 'none';
-    document.getElementById('modal-loading').style.display = 'block';
+    document.getElementById('modal-loading').style.display = 'flex';
   });
     
   // Use keyboard to play game
