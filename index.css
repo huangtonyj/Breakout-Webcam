@@ -11,16 +11,17 @@ h1 {
   color: rgb(95, 167, 190);
   font-weight: 500;
   margin: 10px;
+  font-size: 24px;
 }
 
 h3 {
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 400;
   margin: 10px;
 }
 
 p {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 400;
   margin: 10px;
   text-align: center;
@@ -36,7 +37,7 @@ ul {
 
 button {
   border-radius: 15px;
-  font-size: 20px;
+  font-size: 16px;
   margin: 10px;
   padding: 10px 15px;
   box-shadow: 1px 1px 1px 1px gray;
@@ -49,10 +50,9 @@ button:hover {
 video {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
-}
-
-#header {
-  flex: 1
+  max-height: 15%;
+  width: 150px;
+  height: 150px;
 }
 
 #game-div {
@@ -60,7 +60,6 @@ video {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  flex: 1
 }
 
 .sideglow{
@@ -75,24 +74,6 @@ video {
 .webcam-box {
   margin: 15px;
   z-index: 2;
-}
-
-.thumb-box{
-  border: 1px solid rgb(190, 190, 190);
-  width: 350px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: space-around;
-  justify-content: center;
-}
-
-.thumb{
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-  width: 224px;
-  height: 224px;
-  margin: 10px auto;
 }
 
 .modal {
@@ -143,10 +124,6 @@ video {
 #modal-win li {
   margin: 15px;
   font-size: 26px;
-}
-
-#contacts-container {
-  flex: 1
 }
 
 .fas,
