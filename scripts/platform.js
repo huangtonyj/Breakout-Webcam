@@ -3,7 +3,7 @@ class Platform {
   constructor(ctx) {    
     this.ctx = ctx
 
-    this.width = 225;
+    this.width = 240;
     this.height = 10;
     this.fillStyle = 'white';
 
@@ -12,7 +12,7 @@ class Platform {
 
     this.x_mid = this.x + (this.width / 2);
 
-    this.velocity = 20;
+    this.velocity = 24;
   }
 
   handleMove(dir) {
@@ -40,6 +40,6 @@ class Platform {
   
 }
 
-const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
+const NORMAL_FRAME_TIME_DELTA = 1000 / 120;
 
 module.exports = Platform;
