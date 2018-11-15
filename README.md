@@ -25,7 +25,7 @@ Given a week to complete this project, implementing some sort of machine learnin
 
 After building a playable game with keyboard inputs, the immediate next step was to incorporate webcam controls. This was no easy feat but I have to thank the [Google TensorFlow.js](https://js.tensorflow.org/) team for wonderful examples to reference from. 
 
-Before I dive in deeper into my design process, it is crucial to understand how it was built overall. A convolutional neural network (1 hidden layer) was used to train a model predicting 3 classes (left, right, neutral). A couple hundred images of a hand on the left side was used to classify left. Another couple hundred for the right. The neutral class (no hands and a happy face) is crucial in interpreting no movement.
+Before I dive in deeper into my design process, it is crucial to understand how it was built overall. A convolutional neural network (1 hidden layer) was used to train a model predicting 3 classes (left, right, neutral). A couple hundred images of a hand on the left side was used to classify left. Another couple hundred for the right. The neutral class (no hands but a happy face) is crucial in interpreting no movement.
 
 Before building the interface, I was faced with two product design approaches and each one has their strength and weakness. The two approaches are:
 
