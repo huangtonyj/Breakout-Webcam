@@ -33,8 +33,6 @@ class TfWebcamControl {
   }
   
   async init() {
-    alert('Enable webcam please. 🙃');
-
     await this.loadSetupWebcam();
 
     this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
@@ -44,9 +42,9 @@ class TfWebcamControl {
       console.log(this.model); 
       
     setTimeout(() => {
+      document.getElementById('modal-loading').style.display = 'none';
       this.isPredicting = true;
       this.predict();
-      document.getElementById('modal-loading').style.display = 'none';
     }, 3000);    
   }
 
