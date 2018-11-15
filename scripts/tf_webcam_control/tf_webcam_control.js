@@ -29,14 +29,12 @@ class TfWebcamControl {
     this.webcam = new Webcam(document.getElementById('webcam'));
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
 
-    alert('please allow webcam');
-    console.log('Please allow webcam');
-    console.log('Loading spinner for loading trained model');
-    
     this.init();
   }
   
   async init() {
+    alert('Enable webcam please. 🙃');
+
     await this.loadSetupWebcam();
 
     this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
@@ -44,9 +42,12 @@ class TfWebcamControl {
     // Load trained model
     this.model = await tf.loadModel('./scripts/tf_webcam_control/Breakout-model.json')
       console.log(this.model); 
-
-    this.isPredicting = true;
-    this.predict();
+      
+    setTimeout(() => {
+      this.isPredicting = true;
+      this.predict();
+      document.getElementById('modal-loading').style.display = 'none';
+    }, 3000);    
   }
 
   async loadSetupWebcam () {

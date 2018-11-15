@@ -439,7 +439,7 @@ var extendStatics=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&functio
 /*!******************************************************!*\
   !*** ./node_modules/@tensorflow/tfjs/dist/tf.esm.js ***!
   \******************************************************/
-/*! exports provided: setBackend, getBackend, disposeVariables, memory, version_core, nextFrame, environment, io, math, serialization, test_util, util, webgl, AdadeltaOptimizer, AdagradOptimizer, AdamOptimizer, AdamaxOptimizer, MomentumOptimizer, Optimizer, RMSPropOptimizer, SGDOptimizer, Tensor, TensorBuffer, variable, Variable, Rank, Reduction, ENV, Environment, DataStorage, image, linalg, losses, spectral, op, batchNormalization2d, batchNormalization3d, batchNormalization4d, batchNormalization, complex, real, imag, concat, concat1d, concat2d, concat3d, concat4d, split, conv1d, conv2d, conv2dDerFilter, depthwiseConv2d, separableConv2d, conv2dTranspose, matMul, dot, outerProduct, reverse, reverse1d, reverse2d, reverse3d, reverse4d, maxPool, avgPool, pool, slice, slice1d, slice2d, slice3d, slice4d, abs, acos, acosh, asin, asinh, atan, atanh, ceil, clipByValue, cos, cosh, erf, exp, expm1, floor, log, log1p, logSigmoid, neg, reciprocal, round, rsqrt, sigmoid, sign, sin, sinh, softplus, sqrt, square, step, tan, tanh, all, any, argMax, argMin, logSumExp, max, mean, min, moments, sum, prod, equal, equalStrict, greater, greaterEqual, greaterEqualStrict, greaterStrict, less, lessEqual, lessEqualStrict, lessStrict, notEqual, notEqualStrict, add, addN, addStrict, atan2, div, divStrict, floorDiv, maximum, maximumStrict, minimum, minimumStrict, mod, modStrict, mul, mulStrict, pow, powStrict, squaredDifference, squaredDifferenceStrict, sub, subStrict, elu, leakyRelu, prelu, relu, selu, logicalAnd, logicalNot, logicalOr, logicalXor, where, whereAsync, buffer, toPixels, print, batchToSpaceND, cast, clone, cumsum, depthToSpace, expandDims, eye, fromPixels, multinomial, oneHot, pad, pad1d, pad2d, pad3d, pad4d, rand, randomNormal, randomUniform, reshape, spaceToBatchND, squeeze, stack, tile, truncatedNormal, unstack, fill, linspace, ones, range, scalar, tensor, tensor1d, tensor2d, tensor3d, tensor4d, tensor5d, tensor6d, zeros, onesLike, zerosLike, transpose, softmax, localResponseNormalization, norm, gather, unsortedSegmentSum, basicLSTMCell, multiRNNCell, movingAverage, stridedSlice, topk, scatterND, fft, sparseToDense, gatherND, train, tidy, keep, dispose, time, profile, customGrad, grad, grads, valueAndGrad, valueAndGrads, variableGrads, constraints, initializers, layers, models, metrics, regularizers, CallbackList, CustomCallback, History, Callback, InputSpec, SymbolicTensor, Model, input, loadModel, model, registerCallbackConstructor, sequential, RNN, Sequential, LayerVariable, version_layers, version, FrozenModel, loadFrozenModel, version_converter */
+/*! exports provided: version, setBackend, getBackend, disposeVariables, memory, version_core, nextFrame, environment, io, math, serialization, test_util, util, webgl, AdadeltaOptimizer, AdagradOptimizer, AdamOptimizer, AdamaxOptimizer, MomentumOptimizer, Optimizer, RMSPropOptimizer, SGDOptimizer, Tensor, TensorBuffer, variable, Variable, Rank, Reduction, ENV, Environment, DataStorage, image, linalg, losses, spectral, op, batchNormalization2d, batchNormalization3d, batchNormalization4d, batchNormalization, complex, real, imag, concat, concat1d, concat2d, concat3d, concat4d, split, conv1d, conv2d, conv2dDerFilter, depthwiseConv2d, separableConv2d, conv2dTranspose, matMul, dot, outerProduct, reverse, reverse1d, reverse2d, reverse3d, reverse4d, maxPool, avgPool, pool, slice, slice1d, slice2d, slice3d, slice4d, abs, acos, acosh, asin, asinh, atan, atanh, ceil, clipByValue, cos, cosh, erf, exp, expm1, floor, log, log1p, logSigmoid, neg, reciprocal, round, rsqrt, sigmoid, sign, sin, sinh, softplus, sqrt, square, step, tan, tanh, all, any, argMax, argMin, logSumExp, max, mean, min, moments, sum, prod, equal, equalStrict, greater, greaterEqual, greaterEqualStrict, greaterStrict, less, lessEqual, lessEqualStrict, lessStrict, notEqual, notEqualStrict, add, addN, addStrict, atan2, div, divStrict, floorDiv, maximum, maximumStrict, minimum, minimumStrict, mod, modStrict, mul, mulStrict, pow, powStrict, squaredDifference, squaredDifferenceStrict, sub, subStrict, elu, leakyRelu, prelu, relu, selu, logicalAnd, logicalNot, logicalOr, logicalXor, where, whereAsync, buffer, toPixels, print, batchToSpaceND, cast, clone, cumsum, depthToSpace, expandDims, eye, fromPixels, multinomial, oneHot, pad, pad1d, pad2d, pad3d, pad4d, rand, randomNormal, randomUniform, reshape, spaceToBatchND, squeeze, stack, tile, truncatedNormal, unstack, fill, linspace, ones, range, scalar, tensor, tensor1d, tensor2d, tensor3d, tensor4d, tensor5d, tensor6d, zeros, onesLike, zerosLike, transpose, softmax, localResponseNormalization, norm, gather, unsortedSegmentSum, basicLSTMCell, multiRNNCell, movingAverage, stridedSlice, topk, scatterND, fft, sparseToDense, gatherND, train, tidy, keep, dispose, time, profile, customGrad, grad, grads, valueAndGrad, valueAndGrads, variableGrads, constraints, initializers, layers, models, metrics, regularizers, CallbackList, CustomCallback, History, Callback, InputSpec, SymbolicTensor, Model, input, loadModel, model, registerCallbackConstructor, sequential, RNN, Sequential, LayerVariable, version_layers, FrozenModel, loadFrozenModel, version_converter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24373,50 +24373,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const game = new Game(ctx);
   new Gameview(game, ctx).start();
 
-  // Modals to choose keyboard or webcam hand guestures.
-  const modalInit = document.getElementById('modal-init');
-  // const modalLeft = document.getElementById('modal-left');
-  // const modalRight = document.getElementById('modal-right');
-  // const modalNeutral = document.getElementById('modal-neutral');
-
   // Use webcam hand guesture controls to play game
   document.getElementById('button-tf-webcam').addEventListener('click', () => {
     new TfWebcamControl(game.platform);
-    modalInit.style.display = 'none';
+    document.getElementById('modal-init').style.display = 'none';
+    document.getElementById('modal-loading').style.display = 'block';
   });
     
   // Use keyboard to play game
   document.getElementById('button-keyboard')
     .addEventListener('click', () => {
-      modalInit.style.display = 'none';
+      document.getElementById('modal-init').style.display = 'none';
     });
-
-  // Initial model training steps
-  // document.getElementById('button-webcam')
-  //   .addEventListener('click', () => {
-  //     new TfWebcamControl(game.platform);
-
-  //     modalInit.style.display = 'none';
-  //     modalLeft.style.display = 'block';
-  //   });
-
-  // document.getElementById('button-right')
-  //   .addEventListener('click', () => {
-  //     modalLeft.style.display = 'none';
-  //     modalRight.style.display = 'block';
-  //   });
-
-  // document.getElementById('button-neutral')
-  //   .addEventListener('click', () => {
-  //     modalRight.style.display = 'none';
-  //     modalNeutral.style.display = 'block';
-  //   });
-
-  // document.getElementById('button-train')
-  //   .addEventListener('click', () => {
-  //     modalNeutral.style.display = 'none';
-  //   });
-
 });
 
 
@@ -24470,7 +24438,6 @@ class Game {
     this.ctx = ctx;
     this.platform = new Platform(ctx);
     this.ball = new Ball(ctx, this.platform);
-    // this.TfWebcamControl = new TfWebcamControl(this.platform);
     
     this.bricks = [];
     this.playGame = false;
@@ -24776,14 +24743,12 @@ class TfWebcamControl {
     this.webcam = new Webcam(document.getElementById('webcam'));
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
 
-    alert('please allow webcam');
-    console.log('Please allow webcam');
-    console.log('Loading spinner for loading trained model');
-    
     this.init();
   }
   
   async init() {
+    alert('Enable webcam please. 🙃');
+
     await this.loadSetupWebcam();
 
     this.decapitatedMobilenet = await this.loadDecapitatedMobilenet();
@@ -24791,9 +24756,12 @@ class TfWebcamControl {
     // Load trained model
     this.model = await tf.loadModel('./scripts/tf_webcam_control/Breakout-model.json')
       console.log(this.model); 
-
-    this.isPredicting = true;
-    this.predict();
+      
+    setTimeout(() => {
+      this.isPredicting = true;
+      this.predict();
+      document.getElementById('modal-loading').style.display = 'none';
+    }, 3000);    
   }
 
   async loadSetupWebcam () {

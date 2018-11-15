@@ -9,7 +9,6 @@ class Game {
     this.ctx = ctx;
     this.platform = new Platform(ctx);
     this.ball = new Ball(ctx, this.platform);
-    // this.TfWebcamControl = new TfWebcamControl(this.platform);
     
     this.bricks = [];
     this.playGame = false;

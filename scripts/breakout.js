@@ -11,49 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const game = new Game(ctx);
   new Gameview(game, ctx).start();
 
-  // Modals to choose keyboard or webcam hand guestures.
-  const modalInit = document.getElementById('modal-init');
-  // const modalLeft = document.getElementById('modal-left');
-  // const modalRight = document.getElementById('modal-right');
-  // const modalNeutral = document.getElementById('modal-neutral');
-
   // Use webcam hand guesture controls to play game
   document.getElementById('button-tf-webcam').addEventListener('click', () => {
     new TfWebcamControl(game.platform);
-    modalInit.style.display = 'none';
+    document.getElementById('modal-init').style.display = 'none';
+    document.getElementById('modal-loading').style.display = 'block';
   });
     
   // Use keyboard to play game
   document.getElementById('button-keyboard')
     .addEventListener('click', () => {
-      modalInit.style.display = 'none';
+      document.getElementById('modal-init').style.display = 'none';
     });
-
-  // Initial model training steps
-  // document.getElementById('button-webcam')
-  //   .addEventListener('click', () => {
-  //     new TfWebcamControl(game.platform);
-
-  //     modalInit.style.display = 'none';
-  //     modalLeft.style.display = 'block';
-  //   });
-
-  // document.getElementById('button-right')
-  //   .addEventListener('click', () => {
-  //     modalLeft.style.display = 'none';
-  //     modalRight.style.display = 'block';
-  //   });
-
-  // document.getElementById('button-neutral')
-  //   .addEventListener('click', () => {
-  //     modalRight.style.display = 'none';
-  //     modalNeutral.style.display = 'block';
-  //   });
-
-  // document.getElementById('button-train')
-  //   .addEventListener('click', () => {
-  //     modalNeutral.style.display = 'none';
-  //   });
-
 });
 
