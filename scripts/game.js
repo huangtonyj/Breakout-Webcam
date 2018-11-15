@@ -103,7 +103,7 @@ Game.FPS = 32;
 
 Game.BRICK_POS = {
   rows: 3,
-  cols: 7,
+  cols: 6,
   gap: 10
 }
 

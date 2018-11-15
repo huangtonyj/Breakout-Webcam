@@ -24287,6 +24287,8 @@ class Ball {
     this.fillStyle = 'orange';
     this.strokeStyle = 'black';
 
+    this.lifeCounter = 0;
+
     this.resetBall();
   }
 
@@ -24302,8 +24304,9 @@ class Ball {
 
     if (this.y < this.radius) { 
       this.dy *= -1;
-    } else if (this.y > (this.ctx.canvas.height - this.radius)) { 
-      console.log('Lose');      
+    } else if (this.y > (this.ctx.canvas.height - this.radius)) {  
+      this.lifeCounter += 1;
+      document.getElementById('life-counter').innerText = this.lifeCounter;
       this.resetBall();
     }    
   }
@@ -24532,7 +24535,7 @@ Game.FPS = 32;
 
 Game.BRICK_POS = {
   rows: 3,
-  cols: 7,
+  cols: 6,
   gap: 10
 }
 
