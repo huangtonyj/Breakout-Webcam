@@ -70,6 +70,12 @@ video {
   justify-content: space-between;
 }
 
+#start-game-message{
+  color: white;
+  position: fixed;
+  left: 45%;
+}
+
 .sideglow{
   display: block;
   height: 300px;

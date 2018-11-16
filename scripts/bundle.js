@@ -24478,7 +24478,8 @@ class Game {
           break;
 
         case 'Space':
-          this.playGame = !this.playGame;
+          this.playGame = true;
+          document.getElementById('start-game-message').style.display = 'none';
           break;
       }
     })
