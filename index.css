@@ -138,11 +138,7 @@ video {
 }
 
 #modal-loading{
-  display: none;
-}
-
-#loading{
-  top: 50%;
+  display: flex;
 }
 
 #modal-win {
@@ -257,4 +253,20 @@ video {
     left: 0px;
     top: 10%;
   }
+}
+
+
+
+.modal-loading-content{
+  align-self: center;
+  justify-content: 
+  color: white;
+  /* background-color: white; */
+  z-index: 5;
+}
+
+.modal-loading{
+  /* color: white; */
+  /* background-color: white; */
+  /* z-index: 5; */
 }
