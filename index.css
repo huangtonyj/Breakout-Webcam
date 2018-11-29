@@ -258,15 +258,11 @@ video {
 
 
 .modal-loading-content{
+  position: absolute;
   align-self: center;
-  justify-content: 
+  top: 50%;
+  justify-self: flex-end;
   color: white;
   /* background-color: white; */
   z-index: 5;
-}
-
-.modal-loading{
-  /* color: white; */
-  /* background-color: white; */
-  /* z-index: 5; */
 }
