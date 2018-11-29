@@ -200,9 +200,9 @@ video {
   width: 0;
   background: white;
   position: fixed;
-  top: 77%;
-  -webkit-animation: platform 2s ease-in-out infinite;
-  animation: platform 2s ease-in-out infinite;
+  top: 67%;
+  -webkit-animation: platform 2.5s ease-in-out infinite;
+  animation: platform 2.5s ease-in-out infinite;
 }
 
 @keyframes platform {
@@ -230,28 +230,28 @@ video {
   position: fixed;
   top: 50%;
 
-  -webkit-animation: ball 2s ease-in-out infinite;
-  animation: ball 2s ease-in-out infinite;
+  -webkit-animation: ball 2.5s ease-in-out infinite;
+  animation: ball 2.5s ease-in-out infinite;
 }
 
 @keyframes ball {
   0% {
-    top: 10%;
+    top: 25%;
     left: 0px;
   }
   25% {
-    top: 75%;
+    top: 65%;
   }
   50% {
     left: 500px;
-    top: 10%;
+    top: 25%;
   }
   75% {
-    top: 75%;
+    top: 65%;
   } 
   100% {
     left: 0px;
-    top: 10%;
+    top: 25%;
   }
 }
 
@@ -259,10 +259,6 @@ video {
 
 .modal-loading-content{
   position: absolute;
-  align-self: center;
-  top: 50%;
-  justify-self: flex-end;
+  top: 30%;
   color: white;
-  /* background-color: white; */
-  z-index: 5;
 }
