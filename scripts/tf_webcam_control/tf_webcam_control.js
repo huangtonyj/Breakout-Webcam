@@ -29,6 +29,7 @@ class TfWebcamControl {
     this.webcam = new Webcam(document.getElementById('webcam'));
     this.controllerDataset = new ControllerDataset(NUM_CLASSES);
 
+    this.timeCountDown = 4;
     this.init();
   }
   
@@ -40,12 +41,17 @@ class TfWebcamControl {
     // Load trained model
     this.model = await tf.loadModel('./scripts/tf_webcam_control/Breakout-model.json')
       // console.log(this.model); 
-      
+    
+    setInterval(() => {
+      this.timeCountDown -= 1;
+      document.getElementById('modal-loading-content').innerHTML = this.timeCountDown;
+    }, 1000);
+
     setTimeout(() => {
       document.getElementById('modal-loading').style.display = 'none';
       this.isPredicting = true;
       this.predict();
-    }, 3000);    
+    }, 4500);    
   }
 
   async loadSetupWebcam () {
